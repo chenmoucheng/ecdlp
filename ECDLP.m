@@ -4,6 +4,8 @@
 
 // Utility functions
 
+SetColumns(0);
+
 InSupport := function(v,f)
   return Degree(f,v) gt 0;
 end function;
