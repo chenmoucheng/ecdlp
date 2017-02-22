@@ -80,30 +80,17 @@ S2 := quo<PolynomialRing(S1)|DefiningPolynomial(k,K)>;
 isoRS := hom<R2->S2|hom<kK->S2|S2.1>,[S1.i : i in [1..Rank(S1)]]>;
 isoSR := hom<S2->R2|hom<S1->R2|[R2.i : i in [1..Rank(R2)]]>,W>;
 
+phi := phi12 * phi23 * phi32 * isoRS;
+
+U := [Coefficients(phi(x)) : x in u];
+T := [Coefficients(phi(x)) : x in t];
+S := [Coefficients(phi(x)) : x in s];
+
 // From variety of S1's ideal to variable assignment in R1
 
 psi := function(Z,x)
   return isoKk([Z[(i - 1)*n + j] : j in [1..n]]) where i is Index([R1.i : i in [1..M]],x);
 end function;
-
-// Weil descent
-
-WeilDescent := function(I)
-  phi := phi12 * phi23 * phi32 * isoRS;
-  case Type(I):
-    when RngMPol:
-      J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
-    when SeqEnum:
-      J := [Coefficients(phi(f)) : f in I];
-    else
-      J := [];
-  end case;
-  return J;
-end function;
-
-U := WeilDescent(u);
-T := WeilDescent(t);
-S := WeilDescent(s);
 
 // START
 
@@ -167,6 +154,17 @@ SetVerbose("Faugere",2);
 Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s cat v)) + E["Iauxiliary"];
 SetVerbose("Faugere",0);
 print "";
+
+// Weil descent
+
+WeilDescent := function(I)
+  phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.ind : j in [1..n] | not S1.ind in E["Jcondition"] where ind := (i - 1)*n + j]),W) : i in [1..M]]>;
+  phi := phi12 * phi23 * phi32 * isoRS;
+  t0 := Cputime();
+  J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
+  print "Weil descent time:",Cputime(t0);
+  return J;
+end function;
 
 // Point decomposition
 
