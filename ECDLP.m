@@ -18,10 +18,10 @@ end function;
 
 EasyGB := function(I)
   R := Generic(I);
-  F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := SequenceToSet(Basis(I)) diff F;
+  F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
   U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
   S := #K eq 2 select BooleanPolynomialRing(#U,"grevlex") else PolynomialRing(K,#U,"grevlex") where K is BaseRing(R);
-  V := []; v := 0;
+  V := [S|]; v := 0;
   for i in [1..Rank(R)] do
     if R.i in U then
       v := v + 1;
@@ -61,12 +61,13 @@ isoKk := hom<kK->k|w>;
 
 // Various structures for performing Weil descent
 
-M := 3*m - 2;
+M := 3*m - 1;
 
 R1 := PolynomialRing(k,M);
-t := [R1.i : i in [1..m]];
-s := [R1.i : i in [(m + 1)..(2*m)]];
-u := [R1.i : i in [(2*m + 1)..(3*m - 2)]];
+u := [R1.i : i in [       1 ..(  m - 2)]];
+t := [R1.i : i in [(  m - 1)..(2*m - 2)]];
+s := [R1.i : i in [(2*m - 1)..(3*m - 2)]];
+v := [R1.M];
 
 R2 := PolynomialRing(kK,M*n);
 phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]]>;
@@ -78,6 +79,12 @@ S1 := PolynomialRing(K,M*n);
 S2 := quo<PolynomialRing(S1)|DefiningPolynomial(k,K)>;
 isoRS := hom<R2->S2|hom<kK->S2|S2.1>,[S1.i : i in [1..Rank(S1)]]>;
 isoSR := hom<S2->R2|hom<S1->R2|[R2.i : i in [1..Rank(R2)]]>,W>;
+
+// From variety of S1's ideal to variable assignment in R1
+
+psi := function(Z,x)
+  return isoKk([Z[(i - 1)*n + j] : j in [1..n]]) where i is Index([R1.i : i in [1..M]],x);
+end function;
 
 // Weil descent
 
@@ -94,9 +101,9 @@ WeilDescent := function(I)
   return J;
 end function;
 
+U := WeilDescent(u);
 T := WeilDescent(t);
 S := WeilDescent(s);
-U := WeilDescent(u);
 
 // START
 
@@ -148,28 +155,36 @@ end function;
 
 // END
 
+// Variables rewriting
+
+if m eq 2 then
+  Isummation := Ideal({E["f3"](t[1],t[2],v[1])});
+else
+  Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],v[1])});
+end if;
+print "Rewriting variables";
+SetVerbose("Faugere",2);
+Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s cat v)) + E["Iauxiliary"];
+SetVerbose("Faugere",0);
+print "";
+
 // Point decomposition
 
 ECDLPDecompose := function(Qs)
   print "Decomposing",Qs;
   Q := Type(Qs) eq SeqEnum select &+Qs else Qs;
+  z := E["FBtoV"](-Q);
+  phi := func<I|Ideal([hom<R1->R1|Append([R1.i : i in [1..(M - 1)]],z)>(f) : f in Basis(I)])>;
 
-  if m eq 2 then
-    I := Ideal({E["f3"](t[1],t[2],E["FBtoV"](-Q))});
-  else
-    I := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],E["FBtoV"](-Q))});
-  end if;
-  II := EliminationIdeal(E["Iauxiliary"] + I,SequenceToSet(t cat s));
-  JJ := E["Jcondition"] + WeilDescent(II);
-
-  // EliminationIdeal eliminates information about u in I, while EasyGB removes information from V in Jcondition
-  V := Variety(WeilDescent(I) + E["Jcondition"] + EasyGB(JJ));
+  // Needs Isummation because u's information is eliminated in EliminationIdeal
+  // Needs Jcondition because its information is eliminated in EasyGB
+  Z := Variety(WeilDescent(Ideal(v[1] - z) + phi(Isummation)) + EasyGB(WeilDescent(phi(Irewritten)) + E["Jcondition"]) + E["Jcondition"]);
 
   Qs := [];
-  for v in V do
+  for z in Z do
     L := [[]];
     for i in [1..m] do
-      L := [Append(Ps,PP) : Ps in L, PP in E["VtoFB"](isoKk([v[j] : j in [((i - 1)*n + 1)..((i - 1)*n + n)]]))];
+      L := [Append(Ps,PP) : Ps in L, PP in E["VtoFB"](psi(z,t[i]))];
     end for;
     Qs cat:= [Ps : Ps in L | &+Ps eq Q];
   end for;
