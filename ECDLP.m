@@ -45,10 +45,12 @@ end function;
 
 // Parameters
 
-l := 5;   print "l =", l;
-m := 3;   print "m =", m;
-n := 17;  print "n =", n;
-q := 2;   print "q =", q;
+l := 4;   print "l =", l;
+m := 2;   print "m =", m;
+n := 13;  print "n =", n;
+q := 241; print "q =", q;
+
+SetNthreads(8);
 
 // Base and extension fields
 
@@ -94,7 +96,7 @@ end function;
 
 // Curve-specific definitions
 
-load "bEdwards.m";
+load "Weierstrass.m";
 
 // Variables rewriting
 
