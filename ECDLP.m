@@ -22,7 +22,7 @@ EasyGB := function(I)
   U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
   S := #K eq 2 select BooleanPolynomialRing(#U,"grevlex") else PolynomialRing(K,#U,"grevlex") where K is BaseRing(R);
   V := [S|]; v := 0;
-  for i in [1..Rank(R)] do
+  for i := 1 to Rank(R) do
     if R.i in U then
       v := v + 1;
       Append(~V,S.v);
@@ -37,8 +37,20 @@ EasyGB := function(I)
   J := Ideal({g : f in Basis(I) | g ne 0 where g is phiRS(f)});
 
   SetVerbose("Faugere",2);
-  G := GroebnerBasis(J);
+  G := GroebnerBasis(Basis(J));
   SetVerbose("Faugere",0);
+
+  d := Maximum({Degree(f) : f in Basis(J)});
+  H := [[] : i in [1..(d - 1)]];
+  H[d] := GroebnerBasis(Basis(J),d);
+  repeat
+    d := d + 1;
+    H[d] := GroebnerBasis(Basis(J),d);
+    HH := {f : f in H[d] | Degree(f) lt d and NormalForm(f,H[d - 1]) ne 0};
+    if not IsEmpty(HH) then
+      print "Gap degree and size:",d,#HH;
+    end if;
+  until Seqset(G) eq Seqset(H[d]);
 
   return Ideal({phiSR(g) : g in G});
 end function;
@@ -137,7 +149,7 @@ ECDLPDecompose := function(Qs)
   Qs := [];
   for z in Z do
     L := [[]];
-    for i in [1..m] do
+    for i := 1 to m do
       L := [Append(Ps,PP) : Ps in L, PP in E["VtoFB"](psi(z,t[i]))];
     end for;
     Qs cat:= [Ps : Ps in L | &+Ps eq Q];
@@ -169,10 +181,10 @@ repeat
 until Order(P) ge q^(n - 4);
 print "Base point P",P; print "Order",Order(P);
 
-for point in [1..1] do
+for point := 1 to 1 do
   print "Point A",point; Qs := ECDLPDecompose([RandomFB() : i in [1..m]]); Qs; assert not IsEmpty(Qs);
 
-  for trial in [1..1] do
+  for trial := 1 to 1 do
     print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
   end for;
 end for;
