@@ -40,27 +40,28 @@ EasyGB := function(I)
   G := GroebnerBasis(Basis(J));
   SetVerbose("Faugere",0);
 
-  d := Maximum({Degree(f) : f in Basis(J)});
-  H := [[] : i in [1..(d - 1)]];
-  H[d] := GroebnerBasis(Basis(J),d);
+  D := Maximum({Degree(f) : f in Basis(J)});
+  H := [[] : d in [1..(D - 1)]];
+  H[D] := GroebnerBasis(Basis(J),D);
   repeat
-    d := d + 1;
-    H[d] := GroebnerBasis(Basis(J),d);
-    HH := {f : f in H[d] | Degree(f) lt d and NormalForm(f,H[d - 1]) ne 0};
+    D := D + 1;
+    H[D] := GroebnerBasis(Basis(J),D);
+    HH := {f : f in H[D] | Degree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
+    Hd := [#{f : f in HH | Degree(f) eq d} : d in [0..(D - 1)]];
     if not IsEmpty(HH) then
-      print "Gap degree and size:",d,#HH;
+      print "Gap degree and sizes:",D,#HH,"=",Hd;
     end if;
-  until Seqset(G) eq Seqset(H[d]);
+  until Seqset(G) eq Seqset(H[D]);
 
   return Ideal({phiSR(g) : g in G});
 end function;
 
 // Parameters
 
-l := 4;   print "l =", l;
-m := 2;   print "m =", m;
-n := 13;  print "n =", n;
-q := 241; print "q =", q;
+l := 5;   print "l =", l;
+m := 3;   print "m =", m;
+n := 17;  print "n =", n;
+q := 2;   print "q =", q;
 
 SetNthreads(8);
 
@@ -108,7 +109,8 @@ end function;
 
 // Curve-specific definitions
 
-load "Weierstrass.m";
+load "bEdwards.m";
+// load "Weierstrass.m";
 
 // Variables rewriting
 
@@ -121,7 +123,6 @@ print "Rewriting variables";
 SetVerbose("Faugere",2);
 Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s cat v)) + E["Iauxiliary"];
 SetVerbose("Faugere",0);
-print "";
 
 // Weil descent
 
@@ -176,16 +177,11 @@ end function;
 
 // Experiments
 
-repeat
-  P := Random(E["curve"](k));
-until Order(P) ge q^(n - 4);
-print "Base point P",P; print "Order",Order(P);
-
 for point := 1 to 1 do
-  print "Point A",point; Qs := ECDLPDecompose([RandomFB() : i in [1..m]]); Qs; assert not IsEmpty(Qs);
+  print ""; print "Point A",point; Qs := ECDLPDecompose([RandomFB() : i in [1..m]]); Qs; assert not IsEmpty(Qs);
 
   for trial := 1 to 1 do
-    print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
+    print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
   end for;
 end for;
 

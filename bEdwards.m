@@ -3,14 +3,21 @@
  */
 
 E := AssociativeArray();
-E["form"] := "bEdwards"; E["form"];
+E["form"] := "bEdwards";
 assert q eq 2;
 repeat
-  d1 := Random(k);
-  d2 := Random(k);
-until d1 ne 0 and d2 ne d1^2 + d1;
-E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
+  repeat
+    d1 := Random(k);
+    d2 := Random(k);
+  until d1 ne 0 and d2 ne d1^2 + d1;
+  E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
+  Q := Random(E["curve"](k));
+  p := fs[#fs][1] where fs is Factorization(Order(Q));
+until p ge q^(n - 4);
 E["curve"]; Coefficients(E["curve"]);
+cofactor := Integers()!(Order(Q)/p);
+P := cofactor*Q;
+print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
