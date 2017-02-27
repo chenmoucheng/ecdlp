@@ -1,6 +1,6 @@
-/*
- * Montgomery
- */
+/*  Montgomery */
+
+assert q ne 2;
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
