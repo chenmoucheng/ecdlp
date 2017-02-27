@@ -1,27 +1,45 @@
-/*
- * Montgomery
- */
+/* Montgomery */
 
-E := AssociativeArray();
-E["form"] := "Montgomery"; E["form"];
-repeat
-	A := Random(k);
-	B := Random(k);
-until B*(A^2-4) ne 0;
-E["curve"] := EllipticCurve([(3-A^2)/(3*B^2), (2*A^3-9*A)/(27*B^3)]);
-E["curve"]; Coefficients(E["curve"]);
+assert q ne 2;
+if IsPrime(n) then assert l eq 1; end if;
 
-// V: l-dimensional linear subspace of k over K that determines factor base FB
+ E := AssociativeArray();
+ E["form"] := "Montgomery"; E["form"];
+ repeat
+ 	repeat
+ 		A := Random(k);
+ 		B := Random(k);
+ 	until B*(A^2-4) ne 0;
+ 	E["curve"] := EllipticCurve([(3-A^2)/(3*B^2), (2*A^3-9*A)/(27*B^3)]);
+ 	Q := Random(E["curve"](k));
+ 	p := fs[#fs][1] where fs is Factorization(Order(Q));
+ until p ge q^(n - 4);
+ E["curve"]; Coefficients(E["curve"]);
+ cofactor := Integers()!(Order(Q)/p);
+ P := cofactor*Q;
+ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
-E["FBtoV"] := function(Q)
-  return Q[1]/Q[3];
-end function;
+ // V: l-dimensional linear subspace of k over K that determines factor base FB
+ WeitoMon := function(Q)
+ 	u := Q[1]/Q[3];
+ 	v := Q[2]/Q[3];
+ 	x := B*u-1/3*A;
+ 	y := B*v;
+ 	return [x, y];
+ end function;
+
+ // V: l-dimensional linear subspace of k over K that determines factor base FB
+ // FB is on Weierstrass, but V is on Montgomery
+ E["FBtoV"] := function(Q)
+   return WeitoMon(Q)[1];
+ end function;
+
 
 // V is constructed on Montgomery curve
 E["VtoFB"] := function(t)
   R<X,Y> := PolynomialRing(k,2);
-  Z := Roots(Evaluate(f,[t,R.1,1]))
-    where f is -B*Y^2+X^3+A*X^2+X;
+  Z := Roots(Evaluate(f,[t,R.1]))
+    where f is -B*Y^2+X^3+A*X^2+X
     where R is PolynomialRing(k);
   return [E["curve"]![t/B + A/(3*B),z[1]/B] : z in Z];
 end function;
