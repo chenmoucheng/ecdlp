@@ -24,7 +24,7 @@ EasyGB := function(I)
   V := [S|]; v := 0;
   for i := 1 to Rank(R) do
     if R.i in U then
-      v := v + 1;
+      v +:= 1;
       Append(~V,S.v);
     else
       G := {UnivariatePolynomial(f) : f in F | InSupport(R.i,f)};
@@ -44,8 +44,10 @@ EasyGB := function(I)
   H := [[] : d in [1..(D - 1)]];
   H[D] := GroebnerBasis(Basis(J),D);
   repeat
-    D := D + 1;
+    D +:= 1;
+    t0 := Cputime();
     H[D] := GroebnerBasis(Basis(J),D);
+    print "Groebner basis time:",Cputime(t0),D;
     HH := {f : f in H[D] | Degree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
     Hd := [#{f : f in HH | Degree(f) eq d} : d in [0..(D - 1)]];
     if not IsEmpty(HH) then
