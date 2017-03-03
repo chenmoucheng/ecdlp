@@ -89,15 +89,20 @@ v := [R1.M];
 R2 := PolynomialRing(kK,M*n);
 phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]]>;
 
-R3,phi23 := R2/Ideal({R2.i^q - R2.i : i in [1..Rank(R2)]});
-phi32 := hom<R3->R2|[R2.i : i in [1..Rank(R2)]]>;
+if q lt 65536 then
+  R3,phi23 := R2/Ideal({R2.i^q - R2.i : i in [1..Rank(R2)]});
+  phi32 := hom<R3->R2|[R2.i : i in [1..Rank(R2)]]>;
+  phi22 := phi23 * phi32;
+else
+  phi22 := hom<R2->R2|[R2.i : i in [1..Rank(R2)]]>;
+end if;
 
 S1 := PolynomialRing(K,M*n);
 S2 := quo<PolynomialRing(S1)|DefiningPolynomial(k,K)>;
 isoRS := hom<R2->S2|hom<kK->S2|S2.1>,[S1.i : i in [1..Rank(S1)]]>;
 isoSR := hom<S2->R2|hom<S1->R2|[R2.i : i in [1..Rank(R2)]]>,W>;
 
-phi := phi12 * phi23 * phi32 * isoRS;
+phi := phi12 * phi22 * isoRS;
 
 U := [Coefficients(phi(x)) : x in u];
 T := [Coefficients(phi(x)) : x in t];
@@ -130,7 +135,7 @@ SetVerbose("Faugere",0);
 
 WeilDescent := function(I)
   phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.ind : j in [1..n] | not S1.ind in E["Jcondition"] where ind := (i - 1)*n + j]),W) : i in [1..M]]>;
-  phi := phi12 * phi23 * phi32 * isoRS;
+  phi := phi12 * phi22 * isoRS;
   t0 := Cputime();
   J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
   print "Weil descent time:",Cputime(t0);
