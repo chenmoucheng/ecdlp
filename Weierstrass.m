@@ -9,11 +9,10 @@ repeat
     E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
   until Discriminant(E["curve"]) ne 0;
   Q := Random(E["curve"](k));
-  p := fs[#fs][1] where fs is Factorization(Order(Q));
-until p ge q^(n - 4);
+  cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
+  P := cofactor*Q;
+until cofactor lt 16;
 E["curve"]; Coefficients(E["curve"]);
-cofactor := Integers()!(Order(Q)/p);
-P := cofactor*Q;
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
