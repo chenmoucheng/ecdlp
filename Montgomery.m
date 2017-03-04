@@ -10,8 +10,11 @@ repeat
 		B := Random(k);
 	until B*(A^2-4) ne 0;
 	E["curve"] := EllipticCurve([(3-A^2)/(3*B^2), (2*A^3-9*A)/(27*B^3)]);
+  cofactor := Integers()!(Order(E["curve"])/fs[#fs][1]) where fs is Factorization(Order(E["curve"]));
+until cofactor lt 16;
+repeat
 	Q := Random(E["curve"](k));
-  cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
+	cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
 until cofactor lt 16;
 E["curve"]; Coefficients(E["curve"]);
 P := cofactor*Q;
