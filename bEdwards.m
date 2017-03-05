@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "bEdwards";
+E["form"] := "bEdwards"; E["form"];
 assert q eq 2;
 repeat
   repeat
@@ -46,7 +46,7 @@ end function;
 E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
-// Semaev's summation polynomial
+// Semaev's summation polynomial for binary Edwards curves
 
 E["f3"] := function(t1,t2,t3)
   return (d2*t1^2*t2^2 + d1*(t1^2*t2 + t1*t2^2 + t1*t2 + d1))*t3^2 + d1*(t1^2*t2^2 + t1^2*t2 + t1*t2^2 + t1*t2)*t3 +d1^2*(t1^2 + t2^2);
