@@ -64,7 +64,7 @@ l := 5;   print "l =", l;
 m := 3;   print "m =", m;
 n := 17;  print "n =", n;
 q := 2;   print "q =", q;
-
+T2 := true; print "T2 =", T2;
 SetNthreads(8);
 
 // Base and extension fields
@@ -118,6 +118,7 @@ end function;
 
 load "bEdwards.m";
 // load "Weierstrass.m";
+// load "Montgomery.m";
 
 // Variables rewriting
 
@@ -191,4 +192,3 @@ for point := 1 to 1 do
     print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
   end for;
 end for;
-
