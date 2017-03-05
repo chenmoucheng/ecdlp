@@ -60,12 +60,13 @@ end function;
 
 // Parameters
 
-l := 5;   print "l =", l;
-m := 3;   print "m =", m;
-n := 17;  print "n =", n;
-q := 2;   print "q =", q;
-T2 := true; print "T2 =", T2;
-SetNthreads(8);
+l  := 3;          print "l =", l;
+m  := 2;          print "m =", m;
+n  := 11;         print "n =", n;
+q  := 2^16 - 165; print "q =", q;
+T2 := false;      print "T2 =", T2;
+
+SetNthreads(1); print "Nthreads =",GetNthreads();
 
 // Base and extension fields
 
@@ -116,9 +117,9 @@ end function;
 
 // Curve-specific definitions
 
-load "bEdwards.m";
+// load "bEdwards.m";
+load "Montgomery.m";
 // load "Weierstrass.m";
-// load "Montgomery.m";
 
 // Variables rewriting
 
