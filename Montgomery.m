@@ -1,6 +1,10 @@
 /*  Montgomery */
 
 assert q ne 2;
+if T2 eq true then
+	if IsPrime(n) then assert l eq 1; end if;
+end if;
+
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
@@ -44,7 +48,29 @@ E["VtoFB"] := function(t)
   return [E["curve"]![t/B + A/(3*B),z[1]/B] : z in Z];
 end function;
 
-E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
+// return numerator after reduction to common denominator
+RewriteT2ESP := function(Vars,i)
+  R := Universe(Vars);
+  S := PolynomialRing(PolynomialRing(R),#Vars);
+  map := hom<S->R|[Vars[j]^2+1 : j in [1..m]]>;
+  Term := Terms(ElementarySymmetricPolynomial(S, i));
+  if i eq #Vars then
+    return map(Term)[1];
+  else
+    Poly :=  R ! 0;
+    for j in Term do
+      Diff := {S.i : i in [1..#Vars]} diff SequenceToSet([Factorization(j)[l][1] : l in[1..i] ]);
+      Poly +:= map(j) * &*hom<S->R|Vars>(SetToSequence(Diff));
+    end for;
+  end if;
+  return Poly;
+end function;
+
+if T2 eq true then
+	E["Iauxiliary"] := Ideal({RewriteESP(t,m)*s[i] - RewriteT2ESP(t,i) : i in [1..m]});
+else
+	E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
+end if;
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 // Semaev's summation polynomial
