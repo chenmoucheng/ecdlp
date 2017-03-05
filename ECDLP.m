@@ -60,11 +60,11 @@ end function;
 
 // Parameters
 
-l  := 3;          print "l =", l;
-m  := 2;          print "m =", m;
-n  := 11;         print "n =", n;
-q  := 2^16 - 165; print "q =", q;
-T2 := false;      print "T2 =", T2;
+l  := 1;          print "l =", l;
+m  := 3;          print "m =", m;
+n  := 5;          print "n =", n;
+q  := 2^32 - 5;   print "q =", q;
+T2 := true;       print "T2 =", T2;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
@@ -79,13 +79,12 @@ isoKk := hom<kK->k|w>;
 
 // Various structures for performing Weil descent
 
-M := 3*m - 1;
+M := 3*m - 2;
 
 R1 := PolynomialRing(k,M);
 u := [R1.i : i in [       1 ..(  m - 2)]];
 t := [R1.i : i in [(  m - 1)..(2*m - 2)]];
 s := [R1.i : i in [(2*m - 1)..(3*m - 2)]];
-v := [R1.M];
 
 R2 := PolynomialRing(kK,M*n);
 phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]]>;
@@ -121,18 +120,6 @@ end function;
 load "Montgomery.m";
 // load "Weierstrass.m";
 
-// Variables rewriting
-
-if m eq 2 then
-  Isummation := Ideal({E["f3"](t[1],t[2],v[1])});
-else
-  Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],v[1])});
-end if;
-print "Rewriting variables";
-SetVerbose("Faugere",2);
-Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s cat v)) + E["Iauxiliary"];
-SetVerbose("Faugere",0);
-
 // Weil descent
 
 WeilDescent := function(I)
@@ -150,11 +137,22 @@ ECDLPDecompose := function(Qs)
   print "Decomposing",Qs;
   Q := Type(Qs) eq SeqEnum select &+Qs else Qs;
   z := E["FBtoV"](-Q);
-  phi := func<I|Ideal([hom<R1->R1|Append([R1.i : i in [1..(M - 1)]],z)>(f) : f in Basis(I)])>;
+
+  // Variables rewriting
+
+  if m eq 2 then
+    Isummation := Ideal({E["f3"](t[1],t[2],z)});
+  else
+    Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],z)});
+  end if;
+  print "Rewriting variables";
+  SetVerbose("Faugere",2);
+  Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s)) + E["Iauxiliary"];
+  SetVerbose("Faugere",0);
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in EasyGB
-  Z := Variety(WeilDescent(Ideal(v[1] - z) + phi(Isummation)) + EasyGB(WeilDescent(phi(Irewritten)) + E["Jcondition"]) + E["Jcondition"]);
+  Z := Variety(WeilDescent(Isummation) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
 
   Qs := [];
   for z in Z do
@@ -193,3 +191,4 @@ for point := 1 to 1 do
     print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
   end for;
 end for;
+
