@@ -11,6 +11,7 @@ repeat
     d2 := Random(k);
   until d1 ne 0 and d2 ne d1^2 + d1;
   E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
+  assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
   Q := Random(E["curve"](k));
   cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
   P := cofactor*Q;
@@ -46,7 +47,11 @@ end function;
 E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
-// Semaev's summation polynomial for binary Edwards curves
+/*
+ * Semaev's summation polynomial for binary Edwards curves
+ *
+ * Source: page 7, http://dblp.org/rec/journals/iacr/GalbraithG14
+ */
 
 E["f3"] := function(t1,t2,t3)
   return (d2*t1^2*t2^2 + d1*(t1^2*t2 + t1*t2^2 + t1*t2 + d1))*t3^2 + d1*(t1^2*t2^2 + t1^2*t2 + t1*t2^2 + t1*t2)*t3 +d1^2*(t1^2 + t2^2);
