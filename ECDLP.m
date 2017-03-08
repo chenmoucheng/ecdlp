@@ -117,7 +117,8 @@ end function;
 // Curve-specific definitions
 
 // load "bEdwards.m";
-load "Montgomery.m";
+// load "Montgomery.m";
+load "tEdwards.m";
 // load "Weierstrass.m";
 
 // Weil descent
