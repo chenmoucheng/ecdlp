@@ -1,0 +1,655 @@
+%
+%
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{algpseudocode,amsfonts,amsmath,amssymb}
+%
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\res}{Res}
+\newcommand{\F}[1]{\ensuremath{\mathbb F_{#1}}}
+%\def\F{{\mathbb F}}
+\def\Fqn{{\mathbb F}_{p^n}}
+\def\Fqm{{\mathbb F}_{p^m}}
+\long\def\comment#1{}
+%
+\begin{document}
+%
+\title{Security evaluation of Montgomery-form elliptic curve
+  cryptography over optimal extension fields}
+%
+%\titlerunning{}
+%
+%\author{Kenta~Kodera \and Atsuko~Miyaji \and Chen-Mou~Cheng}
+%
+%\authorrunning{}
+%
+%\institute{Osaka University, Japan}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+%
+  The security of elliptic curve cryptography is closely related to
+  the complexity of solving the elliptic curve discrete logarithm
+  problem (ECDLP).
+%
+  Today, the best practical attacks against ECDLP are
+  exponential-time, generic discrete logarithm algorithms such as
+  Pollard's rho method~\cite{1978-pollard-kangaroo}.
+%
+  However, recently there is a line of research on index calculus
+  algorithms for ECDLP started by Semaev, Gaudry, and
+  Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
+%
+  Under certain heuristic assumptions, such algorithms could lead to
+  subexponential attacks to ECDLP in some
+  cases~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:journals/iacr/PetitQ12,DBLP:conf/iwsec/HuangPST13}.
+%
+  In this paper, we consider the complexity of solving ECDLP for
+  elliptic curves in Montgomery form~\cite{1987-montgomery} over
+  optimal extension fields (OEFs)~\cite{DBLP:conf/crypto/BaileyP98}
+  using index calculus algorithms.
+%
+  Recently, Montgomery curves such as
+  Curve25519~\cite{DBLP:conf/pkc/Bernstein06} have been drawing a lot
+  of attention in deployment, partly because their scalar
+  multiplication formula involves only the $x$-coordinates, allowing
+  fast implementation secure against timing-based side-channel
+  attacks.
+%
+  An OEF is an extension field from a prime field \F p with $p$ close
+  to $2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+%
+  Such primes fit nicely into the processor words of 8, 16, 32, or
+  64-bit microprocessors and hence are particularly suitable for
+  software implementation, allowing for efficient utilization of fast
+  integer arithmetics on modern
+  microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
+%
+  When it comes to security evaluation using index calculus
+  algorithms, there have been several papers on, e.g., Edwards
+  curves~\cite{DBLP:journals/joc/FaugereGHR14,DBLP:conf/indocrypt/GalbraithG14},
+  but to the best of our knowledge, this is the first work that
+  discusses the security of Montgomery curves over OEF from such a
+  viewpoint.
+%
+  The research question we would like to answer is: Using index
+  calculus algorithm, is there any significant difference in the
+  computational complexity of solving ECDLP for various OEFs?
+%
+  We will provide some empirical evidence showing an affirmative
+  answer in this paper.
+%
+  \keywords{ECDLP, index calculus, Montgomery curves, optimal
+    extension fields, security evaluation}
+\end{abstract}
+
+\section{Introduction}
+%
+In recent years, elliptic curve cryptography is gaining momentum in
+deployment, as it can achieve the same level of security as RSA using
+much shorter keys and ciphertexts.
+%
+The security of elliptic curve cryptography is closely related to the
+complexity of solving the elliptic curve discrete logarithm problem
+(ECDLP).
+%
+Let $p$ be a prime number, and $E$, a nonsingular elliptic curve over
+\F{p^n}, the finite field of $p^n$ elements for some positive integer
+$n$.
+%
+That is, $E$ is a plane algebraic curve defined by the equation
+$y^2=x^3+ax+b$ for $a,b\in\F{p^n}$ and $\Delta=-16(4a^3+27b^2)\neq 0$.
+%
+Along with a point at infinity $\mathcal O$, the set of rational
+points $E(\F{p^n})$ forms an abelian group with $\mathcal O$ being the
+identity.
+%
+Given $P\in E(\F{p^n})$ and $Q\in\langle P\rangle$, ECDLP is the
+problem of finding an integer $\alpha$ such that $Q=\alpha P$.
+
+Today, the best practical attacks against ECDLP are exponential-time,
+generic discrete logarithm algorithms such as Pollard's rho
+method~\cite{1978-pollard-kangaroo}.
+%
+However, recently there is a line of research on index calculus
+algorithms for ECDLP started by Semaev, Gaudry, and
+Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
+%
+Under certain heuristic assumptions, such algorithms could lead to
+subexponential attacks to ECDLP in some
+cases~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:journals/iacr/PetitQ12,DBLP:conf/iwsec/HuangPST13}.
+%
+The interested reader is referred to a survey paper by Galbraith and
+Gaudry for a more comprehensive and in-depth account of the recent
+development of ECDLP algorithms along various
+directions~\cite{DBLP:journals/dcc/GalbraithG16}.
+
+In this paper, we consider the complexity of solving ECDLP for
+elliptic curves in Montgomery form~\cite{1987-montgomery} over optimal
+extension fields (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index
+calculus algorithms.
+%
+Recently, Montgomery curves such as
+Curve25519~\cite{DBLP:conf/pkc/Bernstein06} have been drawing a lot of
+attention in deployment, partly because their scalar multiplication
+formula involves only the $x$-coordinates, allowing fast
+implementation secure against timing-based side-channel attacks.
+%
+In general, we can construct Montgomery curves not only over prime
+fields such as \F{2^{255}-19} as used in Curve25519 but also extension
+fields.
+%
+An OEF is an extension field from a prime field \F p with $p$ close to
+$2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+%
+Such primes fit nicely into the processor words of 8, 16, 32, or
+64-bit microprocessors and hence are particularly suitable for
+software implementation, allowing for efficient utilization of fast
+integer arithmetics on modern
+microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
+%
+When it comes to security evaluation using index calculus algorithms,
+there have been several papers on, e.g., Edwards
+curves~\cite{DBLP:journals/joc/FaugereGHR14,DBLP:conf/indocrypt/GalbraithG14},
+but to the best of our knowledge, this is the first work that
+discusses the security of Montgomery curves over OEF from such a
+viewpoint.
+
+The rest of this paper is organized as follows.
+%
+In Section~\ref{sec:index-calculus-ecdlp}, we will give an high-level
+overview of the index calculus algorithm for attacking ECDLP.
+%
+In Section~\ref{sec:montgomery-symmetry}, we will describe Montgomery
+curves and how we exploit the symmetry for speeding up index calculus
+on them.
+%
+We will then present our experimental results and conclude this paper
+in Section~\ref{sec:experimental-results}.
+
+\section{Index calculus for ECDLP}
+%
+\label{sec:index-calculus-ecdlp}
+%
+Let $E$ be an elliptic curve defined over a finite field \F{p^n}.
+%
+For cryptographic applications, we are mostly interested in a
+prime-order subgroup generated by a rational point $P\in E(\F{p^n})$.
+%
+To find an integer $\alpha$ such that $Q=\alpha P$ for
+$Q\in\langle P\rangle$ using an index calculus algorithm, one
+typically works as follows.
+%
+\begin{enumerate}
+%
+\item Determine a \emph{factor base} $\mathcal F\subset E(\F{p^n})$.
+%
+\item Collect a set $\mathcal R$ of \emph{relations} by decomposing
+  random points $a_iP+b_iQ$ into a sum of points from $\mathcal F$,
+  i.e.,
+  \[ \mathcal
+    R=\left\{a_iP+b_iQ=\sum_{j=1}^mP_{i,j}:P_{i,j}\in\mathcal
+      F\right\} \]
+%
+\item When $|\mathcal R|\approx|\mathcal F|$, eliminate the righthand
+  side using linear algebra to obtain an equation in the form
+  $aP+bQ=\mathcal O$, and $\alpha=-a/b\bmod\ord(P)$.
+%
+\end{enumerate} 
+
+\subsection{Semaev's summation polynomials}
+%
+\label{sec:summation-polynomials}
+%
+As we can see, an important step in index calculus algorithms for
+solving ECDLP is point decomposition on an elliptic curve.
+%
+It is straightforward that if two points sum to zero, then their
+$x$-coordinates must be equal.
+%
+Let us now consider the simplest nontrivial case where three points
+sum to the point at infinity.
+%
+Let $Z=\{(x_1,y_1),(x_2,y_2),(x_3,y_3)\in E(\F{p^n})$ and
+$(x_1,y_1)+(x_2,y_2)+(x_3,y_3)=\mathcal O:(x_i,y_i)\in E(\F{p^n})\}$.
+%
+Clearly, $Z$ is in the variety of the ideal
+$I\subset\F{p^n}[X_1,Y_1,X_2,Y_2,X_3,Y_3]$ generated by
+\[ \left\{\begin{aligned}
+      &  (X_3 - X_1)(Y_2 - Y_1) - (X_2 - X_1)(Y_3 - Y_1),\\
+      & Y_i^2 - (X_i^3 + aX_i + b),i=1,2,3
+    \end{aligned}\right\}. \]
+%
+Now let $J=I\cap\F{p^n}[X_1,X_2,X_3]$.
+%
+Using MAGMA's \texttt{EliminationIdeal} function, we obtain that $J$
+is actually a principal ideal generated by the polynomial
+$(X_2 - X_3)(X_1 - X_3)(X_1 - X_2)f_3$, where \[ \begin{aligned}
+    f_3 = & X_1^2X_2^2 - 2X_1^2X_2X_3 + X_1^2X_3^2 - 2X_1X_2^2X_3 - 2X_1X_2X_3^2 - 2aX_1X_2 - 2aX_1X_3 \\
+    & - 4bX_1 + X_2^2X_3^2 - 2aX_2X_3 - 4bX_2 - 4bX_3 + a^2.
+  \end{aligned} \]
+%
+Clearly, the linear factors of the generator correspond to the
+degenerated case where two or more points are the same, and $f_3$ is
+the 3rd \emph{summation polynomial}, that is, the summation polynomial
+for three distinct points summing to zero.
+
+Starting from the 2nd and 3rd summation polynomials, one can
+recursively obtain the subsequent summation polynomials via taking
+resultants.
+%
+This is the observation Semaev made in his seminal
+work~\cite{DBLP:journals/iacr/Semaev04}.
+%
+In short, his proposal is to consider factor bases of the following
+form: $\{(x,y)\in E(\F{p^n}):x\in V\subset\F{p^n})\}$, where $V$ is a
+subset of \F{p^n}.
+
+\subsection{Weil descent}
+%
+Restricting $x$-coordinates of the points in factor base to a subset
+of \F{p^n} is important from a viewpoint of polynomial system solving.
+%
+Take $f_3$ as an example.
+%
+When decomposing a random point $aP+bQ$, we first substitute its
+$x$-coordinate into say $X_3$, projecting $J$ to $\F{p^n}[X_1,X_2]$.
+%
+The dimension of the variety of this ideal is nonzero.
+%
+Therefore, we would like to pose some restrictions on $X_1$ and $X_2$
+to reduce the dimension to zero and make the solving time more
+manageable.
+
+When looking for solutions to a polynomial in $\F{p^n}[X]$ in \F{p^n},
+we can view it as a commutative affine algebra
+$\mathcal A=\F{p^n}/(X^{p^n} - X)\cong\F{p^n}[X_1,\ldots,X_n]/(X_1^p -
+X_1,\ldots,X_n^p - X_n)$.
+%
+This can be done by identifying the indeterminate $X$ as
+$X_1\theta_1+\cdots+X_n\theta_n$, where $(\theta_1,\ldots,\theta_n)$
+is a basis for \F{p^n} over \F p.
+%
+Hence, a polynomial $f=\sum a_iX^i\in\F{p^n}[X]$ can be identified as
+a polynomial $f_1\theta_1+\cdots+f_n\theta_n$, where
+$f_1,\ldots,f_n\in\mathcal A'=\F p[X_1,\ldots,X_n]/(X_1^p -
+X_1,\ldots,X_n^p - X_n)$, by appropriately sending any coefficient
+$a\in\F{p^n}$ to $a_1\theta_1+\cdots+a_n\theta_n$ for
+$a_1,\ldots,a_n\in\F p$.
+%
+Therefore, an equation $f=0$ over \F{p^n} will give rise to a system
+of equations $f_1=\cdots=f_n=0$ over \F p.
+%
+This technique is known as the \emph{Weil descent} and is used in the
+Gaudry-Diem attack, in which the factor base is chosen to consist of
+points whose $x$-coordinates lie in a subspace $V$ of \F{p^n} over \F
+p~\cite{DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
+
+\subsection{Exploiting symmetry}
+%
+\label{sec:exploit-symmetry}
+%
+Naturally, the symmetric group $S_m$ acts on a point decomposition
+$P_1+\ldots+P_m$ because elliptic curve groups are abelian.
+%
+As noted by Gaudry in his seminal work, we can therefore rewrite the
+variables $x_1,\ldots,x_m\in\F{p^n}$ by elementary symmetric
+polynomials $e_1,\ldots,e_m$, where $e_1=\sum x_i$,
+$e_2=\sum_{i\neq j}x_ix_j$,
+$e_3=\sum_{i\neq j,i\neq k,j\neq k}x_ix_jx_k$,
+etc~\cite{DBLP:journals/jsc/Gaudry09}.
+%
+Such rewriting can reduce the degree of summation polynomials, as well
+as significantly speeding up the solving
+time~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:conf/iwsec/HuangPST13}.
+
+One might be able to exploit further symmetry using actions by other
+groups.
+%
+For example, further speed-up has been reported for point
+decomposition by making the factor base invariant under addition of
+some small torsion
+points~\cite{DBLP:conf/eurocrypt/FaugereHJRV14,DBLP:conf/indocrypt/GalbraithG14}.
+%
+Such kind of speed-up is, of course, curve-specific in nature, and we
+will come back to it in more detail how we can exploit symmetry for
+Montgomery curves later in Section~\ref{sec:montgomery-symmetry}.
+
+%------------------------------
+\section{Montgomery curves}
+%------------------------------------
+\label{sec:montgomery-symmetry}
+%
+A Montgomery curve $M_{A,B}$ over \F{p^n} for $p\neq 2$ is defined by
+the equation \begin{equation}
+  By^2=x^3+Ax^2+x \label{eq:montgomery-curve} \end{equation} for
+$A,B\in\F{p^n}$ such that $A\neq\pm 2$, $B\neq 0$, and
+$B(A^2-4)\neq 0$~\cite{1987-montgomery}.
+%
+For $P=(x,y)\in M_{A,B}$, $-P=(x,-y)$.
+%
+Furthermore, the addition and doubling formulae for
+$(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
+%
+\begin{itemize}
+\item When $x_1\neq x_2$:
+  \begin{align*}
+    x_3 & = B\left(\frac{y_2 - y_1} {x_2 - x_1}\right)^2 - A - x_1 - x_2 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2} \\
+    y_3 & = \frac{(2x_1 + x_2 + A)(y_2 - y_1)} {x_2 - x_1} - \frac{B(y_2 - y_1)^3} {(x_2 - x_1)^3} - y_1
+  \end{align*}
+\item When $x_1=x_2$:
+  \begin{align*}
+    x_3 & = \frac{(x_1^2 - 1)^2} {4x_1(x_1^2 + Ax_1 + 1)}  \\
+    y_3 & = \frac{(2x_1 + x_1 + A)(3x_1^2 + 2Ax_1 + 1)} {2By_1} - \frac{B(3x_1^2 + 2Ax_1 + 1)^3} {(2By_1)^3} - y_1
+  \end{align*}
+\end{itemize}
+%
+It was noted by Montgomery himself in his original paper that such
+curves can give rise to efficient scalar multiplication
+algorithms~\cite{1987-montgomery}.
+%
+Consider a random point $P\in M_{A,B}(\F{p^n})$ and let
+$nP=(X_n:Y_n:Z_n)$ in projective coordinate for any integer $n$.
+%
+Then:
+%
+\begin{align*}
+  X_{m+n} & = Z_{m-n}[(X_m - Z_m)(X_n + Z_n) + (X_m + Z_m)(X_n - Z_n)]^2 \\
+  Z_{m+n} & = X_{m-n}[(X_m - Z_m)(X_n + Z_n) - (X_m + Z_m)(X_n - Z_n)]^2
+\end{align*}
+%
+In particular, when $m=n$:
+\begin{align*}
+  X_{2n} & = (X_n + Z_n)^2(X_n - Z_n)^2 \\
+  Z_{2n} & = (4X_nZ_n)\left((X_n - Z_n)^2 + ((A+2)/4)(4X_nZ_n)\right) \\
+  4X_nZ_n & = ( X_n + Z_n)^2 - (X_n - Z_n)^2
+\end{align*}
+%
+In this way, scalar multiplication on Montgomery curve can be
+performed without using $y$-coordinates, leading to fast
+implementation.
+
+\subsection{Summation polynomials for Montgomery curves}
+
+Following Semaev's approach~\cite{DBLP:journals/iacr/Semaev04}, we can
+construct summation polynomials for Montgomery curves as follows.
+%
+Like Weierstrass curves, the 2nd summation polynomial for Montgomery
+curves is simply $f_{M,2} = X_1 - X_2$.
+%
+Now consider $P,Q\in M_{A, B}$ where $P=(x_1, y_1)$, $Q=(x_2, y_2)$.
+%
+Let $P+Q=(x_3, y_3)$ and $P-Q=(x_4, y_4)$.
+%
+By addition formula, we have
+\[ x_3 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2},
+  x_4 =\frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 + x_1)^2}. \]
+%
+It follows that
+%
+\begin{align*}
+  x_3 + x_4&=\frac{2\left((x_1 + x_2)(x_1x_2 + 1) + 2Ax_1x_2\right)}{(x_1 - x_2)^2},\text{ and} \\
+  x_3x_4&=\frac{(1 - x_1x_2)^2}{(x_1 - x_2)^2}.
+\end{align*}
+%
+Using the relationship between the roots of a quadratic polynomial and
+its coefficients, we obtain
+\[ (x_1 - x_2)^2x^2 - 2\left((x_1 + x_2)(x_1x_2 + 1) +
+    2Ax_1x_2\right)x + (1 - x_1x_2)^2. \]
+%
+From here, we can obtain for Montgomery curve the 3rd summation
+polynomial:
+\[ f_{M,3}(X_1,X_2,X_3) = (X_1 - X_2)^2X_3^2 - 2\left((X_1 +
+    X_2)(X_1X_2 + 1) + 2AX_1X_2\right)X_3 + (1-X_1X_2)^2, \]
+%
+as well as the subsequent summation polynomials via taking resultants:
+\[ f_{M,m}(X_1,\ldots,X_m) =
+  \res_X\left(f_{m-k}(X_1,\ldots,X_{m-k-1},X),f_{k+2}(X_{m-k},\ldots,X_m,X)\right). \]
+%--------------------------------
+\subsection{Exploiting symmetry for Montgomery curves} \label{subsec:TSPL}
+%------------------------
+A Montgomery curve always contains an affine 2-torsion point $T_2$.
+%
+Since $T_2+T_2=2T_2=\mathcal O$, it follows that $-T_2=T_2$.
+%
+If we write $T_2=(x,y)$, then we can see that $y=0$ in order for
+$-T_2=T_2$, as $p\neq 2$.
+%
+Substituting $y=0$ into Equation~(\ref{eq:montgomery-curve}),
+we get an equation $x^3+Ax^2+x=0$.
+%
+The lefthand side factors into $x(x^2+Ax+1)=0$, so we get \[
+  x=0,\frac{-A\pm\sqrt{A^2 - 4}}{2}. \]
+%
+Therefore, the set of rational points on a Montgomery curve includes
+at least two 2-torsion points, namely, $\mathcal O$ and $(0,0)$.
+%
+The other 2-torsion points may or may not be rational, so we will
+first focus on the 2-torsion point $(0,0)$.
+%
+Substituting $(x_2,y_2)=(0,0)$ into the addition formula for
+Montgomery curves, we get that for any point $P=(x,y)\in M_{A,B}$,
+$P+(0,0)=(1/x,y')$ for some $y'$.
+
+Following the approach outlined by Galbraith and
+Gebregiyorgis~\cite{DBLP:conf/indocrypt/GalbraithG14}, we consider a
+relation $R:=P_1+\cdots+P_m$ under the action of addition of 2-torsion
+points $T_2=(0,0)$:
+\[ R' :=
+  (P_1+u_1T_2)+(P_2+u_2T_2)+\cdots+(P_{m-1}+u_{m-1}T_2)+\left(P_m+\left(\sum_{i=1}^{m-1}u_i\right)T_2\right). \]
+%
+Clearly if $R$ holds, then $R'$ also holds for any
+$u_1,\ldots,u_{m-1}\in\{0,1\}$, and
+$D_m=(\mathbb{Z}/2\mathbb{Z})^{m-1}\rtimes S_m$ acts on the summation
+polynomial $f_m$.
+%
+However, this assumes that the factor base
+$\mathcal F=\{(x,y)\in E(\F{p^n}):x\in V\subset\F{p^n}\}$ is invariant
+under addition of the 2-torsion point, which is indeed the case for
+binary Edwards curves but not necessarily true for Montgomery curves
+unless $V$ is closed under taking multiplicative inverses.
+%
+In other words, this means that for Montgomery curves, $V$ needs to be
+a \emph{subfield} of $\F{p^n}$, i.e., $V=\F{p^\ell}$ for some integer
+$\ell$ that divides $n$.
+%
+In this case, $f_m$ is invariant under the action of
+$x_i\mapsto 1/x_i$, and we should be able to rewrite $f_m$ in the
+variable $x+1/x$.
+%
+Unlike the case for binary Edwards
+curves~\cite{DBLP:conf/indocrypt/GalbraithG14}, the symmetry brought
+by addition of 2-torsion points can speed up point decomposition on
+Montgomery curves, as we will clearly see from the experimental
+results presented in Section~\ref{sec:experimental-results}.
+
+Finally, we can combine such variable rewriting with that for the
+symmetric group action $S_m$ using the following new variables:
+%
+\begin{align*}
+  s_1 & = (x_1+\frac{1}{x_1})+\cdots+(x_m+\frac{1}{x_m}) \\
+  s_2 & = (x_1+\frac{1}{x_1})(x_2+\frac{1}{x_2})+\cdots+(x_m+\frac{1}{x_m})(x_1+\frac{1}{x_1}) \\
+      &\vdots \\
+  s_m & = (x_1+\frac{1}{x_1})(x_2+\frac{1}{x_2})\cdots(x_m+\frac{1}{x_m}).
+\end{align*}
+%
+Then we can follow a similar idea outlined in
+Section~\ref{sec:summation-polynomials} to combine the recursive
+resultant computation in deriving the $m$-th summation polynomial with
+that for variable rewriting as follows.
+%
+Let
+$I\subset\F{p^n}[X_1,\ldots,X_m,U_1,\ldots,U_{m-2},S_1,\ldots,S_m]$ be
+the ideal generated by the following polynomials:
+%
+\[ \left\{\begin{aligned}
+      & f_{M,3}(X_1,X_2,U_1), \\
+      & f_{M,3}(U_1,X_3,U_2), \\
+      & \vdots \\
+      & f_{M,3}(U_{m-3},X_{m-1},U_{m-2}), \\
+      & f_{M,3}(U_{m-2},X_m,x), \\
+      & S\left((X_1+\frac{1}{X_1})+\cdots+(X_m+\frac{1}{X_m}) -
+        S_1\right), \\
+      &
+      S\left((X_1+\frac{1}{X_1})(X_2+\frac{1}{X_2})+\cdots+(X_m+\frac{1}{X_m})(X_1+\frac{1}{X_1})
+        - S_2\right), \\
+      & \vdots \\
+      &
+      S\left((X_1+\frac{1}{X_1})(X_2+\frac{1}{X_2})\cdots(X_m+\frac{1}{X_m})
+        - S_m\right)
+\end{aligned}\right\}, \]
+where $x\in\F{p^n}$ is the $x$-coordinate of the random point to be
+decomposed, and $S=X_1X_2\cdots X_m$ for clearing the denominators.
+%
+Again we will compute $J=I\cap\F{p^n}[S_1,\ldots,S_m]$ using MAGMA's
+\texttt{EliminationIdeal} function to arrive at the $m$-th summation
+polynomial in the rewriting variables $S_1,\ldots,S_m$.
+
+\section{Experimental results and concluding remarks}\label{sec:experimental-results}
+%
+\subsection{Security consideration of ECDLP over OEF}
+%
+An OEF $\Fqn$ is typically used to achieve highly efficient software
+implementation.
+%
+From the security point of view, $n$ is recommended to be a prime
+since $E(\Fqm) \subset E(\Fqn)$ yields $\#E(\Fqm) \mid \# E(\Fqn)$ for
+$m \mid n$.
+%
+However, we have not seen relation between parameters $(p, n)$ of OEF,
+and the security of ECDLP over an OEF $\Fqn$.
+%
+For example, suppose that we use OEFs of $\F{{p_{32}}^5}$,
+$\F{{p_{16}}^{11}}$, and $\F{{p_{8}}^{19}}$, where $p_{32}, p_{16}$,
+and $p_{8}$ are primes close to $2^8, 2^{16}$, and $2^{32}$,
+respectively.
+%
+These OEFs satisfy a condition of prime extension degree of 5, 11, and
+19, respectively, and have almost the same number of rational points,
+$\#E(\F{{p_{32}}^5}) \sim \#E(\F{{p_{16}}^{11}}) \sim
+\#E(\F{{p_{8}}^{19}})$.
+%
+Now we pose a question: Using index calculus algorithm described in
+Section~\ref{subsec:TSPL}, is there any significant difference in the
+computational complexity of solving ECDLP for $\F{{p_{32}}^5}$,
+$\F{{p_{16}}^{11}}$, and $\F{{p_{8}}^{19}}$?
+%
+We will provide some empirical evidence showing an affirmative answer
+in the next section.
+
+\subsection{Experiment 1: Exploiting the symmetry}
+%
+We conducted two experiments using (single-threaded) MAGMA on Intel
+Xeon CPU E7-4830 v4 running at 2~GHz.
+%
+First, we show that using symmetry on Montgomery curves can
+significantly speed up relation collection in index calculus.
+%
+Specifically, we choose $\F{2^{16} - 165}$, over which we generate
+several random Weierstrass and Montgomery curves.
+%
+We then try to decompose several random points into $m$ points from a
+factor base consisting of points whose $x$-coordinates are in \F p.
+%
+The results of the first experiment are summarized in
+Table~\ref{tab:exp-sym}.
+%
+\begin{table}
+  \begin{center}
+    \begin{tabular}{|r||r|r|r|r|r|r|}
+      \hline
+      & \multicolumn{2}{c|}{Weierstrass} & \multicolumn{2}{c|}{Montgomery (plain)} & \multicolumn{2}{c|}{Montgomery (sym.)} \\ \hline\hline
+      m & Dreg     & Matcost      & Dreg     & Matcost      & Dreg     & Matcost      \\ \hline
+      2 & 2        & 2406.6      & 3        & 3206.7      & 2        & 2406.6      \\ \hline
+      3 & 6        & 3466021.3    & 6        & 4344579.2    & 6        & 3465410.9    \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{Experimental results for symmetry exploiting on Montgomery curves.}
+  \label{tab:exp-sym}
+\end{table}
+%
+In Table~\ref{tab:exp-sym}, we report the degree of regularity (Dreg)
+and the matrix cost in MAGMA's F4 algorithm (Matcost).
+%
+As we can see, without using the symmetry, it generally takes longer
+time to decompose over Montgomery curves, whereas it roughly takes the
+same amount of time for Weierstrass curves and Montgomery curves after
+taking symmetry into account.
+
+\subsection{Experiment 2: Security evaluation for various OEFs}
+%
+In this experiment, we would like to evaluate the security of
+Montgomery curves over various OEFs; the results are summarized in
+Table~\ref{tab:experimental-results}.
+%
+All timing results are reported in seconds unless otherwise specified.
+%
+We choose several OEFs suggested by Bailey and
+Paar~\cite{DBLP:conf/crypto/BaileyP98}, over which we study the
+complexity of the relation collection phase of the index calculus
+algorithm for solving ECDLP on several random Montgomery curves.
+%
+Specifically, for each curve $E$ we first choose a random rational
+point $P$ whose order is prime and close to the size of the underlying
+OEF \F{p^n}.
+%
+We then decide a factor base $\mathcal F$ using a vector subspace $V$
+of \F{p^n} over \F p, i.e., $|\mathcal F|\approx p^{\dim V}$, which,
+together with the linear algebra constant, determines the linear
+algebra time (``T\textsubscript L'' in
+Table~\ref{tab:experimental-results}).
+%
+The bulk of our experimentation then involves generating random points
+in $\langle P\rangle$ \emph{known} to be decomposable into a sum of
+$m$ points from $\mathcal F$.
+%
+As noted by Galbraith and Gebregiyorgis, the time for solving such
+instances tends to be larger than that for attempting to decompose
+points that \emph{cannot} be decomposed
+so~\cite{DBLP:conf/indocrypt/GalbraithG14}.
+%
+In general, the success probability of such point decomposition is
+roughly $\mathcal O(p^{m\dim V - n}/m!)$ for $m\dim V<n$, which is
+taken into account in estimating the relation collection time
+(``T\textsubscript R'' in Table~\ref{tab:experimental-results}).
+%
+\begin{table}
+  \begin{center}
+    \begin{tabular}{llcr}
+      OEF & $\ord(P)$ & $\dim V$ & T\textsubscript R$+$T\textsubscript L \\ \hline
+      \F{241^{19}} & $\mathcal O(2^{147})$ & 5 & $212.4\times\mathcal O(2^{72})+\mathcal O(2^{80})$ \\
+      \F{65371^{11}} & $\mathcal O(2^{173})$ & 4 & $37.6\times\mathcal O(2^{49})+\mathcal O(2^{129})$ \\
+      \F{4294967291^5} & $\mathcal O(2^{154})$ & 2 & $0.04\times\mathcal O(2^{65})+\mathcal O(2^{129})$
+    \end{tabular}
+  \end{center}
+  \caption{Security evaluation of Montgomery curves of various OEFs for $m=2$.}
+  \label{tab:experimental-results}
+\end{table}
+%
+It is interesting to note that the complexity for the relation
+collection phase is quite different for different OEFs, even though we
+use the same Weil descent algorithm.
+%
+However, as we can see from Table~\ref{tab:experimental-results}, such
+index calculus algorithm cannot yet outperform the generic algorithms
+such as Pollard's rho method, as the linear algebra phase takes
+significantly longer time.
+
+% \section{Concluding remarks}
+% %
+% \label{sec:conclusions}
+%
+
+%
+% ---- Bibliography ----
+%
+\bibliographystyle{abbrv}
+\bibliography{dblp,local}
+
+\end{document}
