@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "Weierstrass";
+E["form"] := "Weierstrass"; E["form"];
 repeat
   repeat
     E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
@@ -31,7 +31,11 @@ end function;
 E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
-// Semaev's summation polynomial
+/*
+ * Semaev's summation polynomial for Weierstrass curves
+ *
+ * Source: page 15, http://dblp.org/rec/journals/iacr/HuangKY15
+ */
 
 E["f3"] := function(x0,x1,x2)
   a1 := Coefficients(E["curve"])[1];
