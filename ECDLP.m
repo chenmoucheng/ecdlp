@@ -65,6 +65,7 @@ m  := 3;          print "m =", m;
 n  := 5;          print "n =", n;
 q  := 2^32 - 5;   print "q =", q;
 T2 := true;       print "T2 =", T2;
+IX := true;       print "IX =", IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
@@ -148,12 +149,20 @@ ECDLPDecompose := function(Qs)
   end if;
   print "Rewriting variables";
   SetVerbose("Faugere",2);
-  Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s)) + E["Iauxiliary"];
+  if IX then
+    Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s)) + E["Iauxiliary"];
+  else
+    Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s));
+  end if;
   SetVerbose("Faugere",0);
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in EasyGB
-  Z := Variety(WeilDescent(Isummation) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+  if IX then
+    Z := Variety(WeilDescent(Isummation                  ) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+  else
+    Z := Variety(WeilDescent(Isummation + E["Iauxiliary"]) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+  end if;
 
   Qs := [];
   for z in Z do
