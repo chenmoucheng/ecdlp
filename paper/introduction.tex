@@ -1,0 +1,87 @@
+%
+% Introduction
+%
+
+\section{Introduction}
+%
+In recent years, elliptic curve cryptography is gaining momentum in
+deployment, as it can achieve the same level of security as RSA using
+much shorter keys and ciphertexts.
+%
+The security of elliptic curve cryptography is closely related to the
+complexity of solving the elliptic curve discrete logarithm problem
+(ECDLP).
+%
+Let $p$ be a prime number, and $E$, a nonsingular elliptic curve over
+\F{p^n}, the finite field of $p^n$ elements for some positive integer
+$n$.
+%
+That is, $E$ is a plane algebraic curve defined by the equation
+$y^2=x^3+ax+b$ for $a,b\in\F{p^n}$ and $\Delta=-16(4a^3+27b^2)\neq 0$.
+%
+Along with a point at infinity $\mathcal O$, the set of rational
+points $E(\F{p^n})$ forms an abelian group with $\mathcal O$ being the
+identity.
+%
+Given $P\in E(\F{p^n})$ and $Q\in\langle P\rangle$, ECDLP is the
+problem of finding an integer $\alpha$ such that $Q=\alpha P$.
+
+Today, the best practical attacks against ECDLP are exponential-time,
+generic discrete logarithm algorithms such as Pollard's rho
+method~\cite{1978-pollard-kangaroo}.
+%
+However, recently there is a line of research on index calculus
+algorithms for ECDLP started by Semaev, Gaudry, and
+Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
+%
+Under certain heuristic assumptions, such algorithms could lead to
+subexponential attacks to ECDLP in some
+cases~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:journals/iacr/PetitQ12,DBLP:conf/iwsec/HuangPST13}.
+%
+The interested reader is referred to a survey paper by Galbraith and
+Gaudry for a more comprehensive and in-depth account of the recent
+development of ECDLP algorithms along various
+directions~\cite{DBLP:journals/dcc/GalbraithG16}.
+
+In this paper, we consider the complexity of solving ECDLP for
+elliptic curves in Montgomery form~\cite{1987-montgomery} over optimal
+extension fields (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index
+calculus algorithms.
+%
+Recently, Montgomery curves such as
+Curve25519~\cite{DBLP:conf/pkc/Bernstein06} have been drawing a lot of
+attention in deployment, partly because their scalar multiplication
+formula involves only the $x$-coordinates, allowing fast
+implementation secure against timing-based side-channel attacks.
+%
+In general, we can construct Montgomery curves not only over prime
+fields such as \F{2^{255}-19} as used in Curve25519 but also extension
+fields.
+%
+An OEF is an extension field from a prime field \F p with $p$ close to
+$2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+%
+Such primes fit nicely into the processor words of 8, 16, 32, or
+64-bit microprocessors and hence are particularly suitable for
+software implementation, allowing for efficient utilization of fast
+integer arithmetics on modern
+microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
+%
+When it comes to security evaluation using index calculus algorithms,
+there have been several papers on, e.g., Edwards
+curves~\cite{DBLP:journals/joc/FaugereGHR14,DBLP:conf/indocrypt/GalbraithG14},
+but to the best of our knowledge, this is the first work that
+discusses the security of Montgomery curves over OEF from such a
+viewpoint.
+
+The rest of this paper is organized as follows.
+%
+In Section~\ref{sec:index-calculus-ecdlp}, we will give an high-level
+overview of the index calculus algorithm for attacking ECDLP.
+%
+In Section~\ref{sec:montgomery-symmetry}, we will describe Montgomery
+curves and how we exploit the symmetry for speeding up index calculus
+on them.
+%
+We will then present our experimental results and conclude this paper
+in Section~\ref{sec:experimental-results}.

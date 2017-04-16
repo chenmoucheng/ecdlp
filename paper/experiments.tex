@@ -1,0 +1,138 @@
+%
+% Experimental results
+%
+
+\section{Experimental results and concluding remarks}\label{sec:experimental-results}
+%
+\subsection{Security consideration of ECDLP over OEF}
+%
+An OEF $\Fqn$ is typically used to achieve highly efficient software
+implementation.
+%
+From the security point of view, $n$ is recommended to be a prime
+since $E(\Fqm) \subset E(\Fqn)$ yields $\#E(\Fqm) \mid \# E(\Fqn)$ for
+$m \mid n$.
+%
+However, we have not seen relation between parameters $(p, n)$ of OEF,
+and the security of ECDLP over an OEF $\Fqn$.
+%
+For example, suppose that we use OEFs of $\F{{p_{32}}^5}$,
+$\F{{p_{16}}^{11}}$, and $\F{{p_{8}}^{19}}$, where $p_{32}, p_{16}$,
+and $p_{8}$ are primes close to $2^8, 2^{16}$, and $2^{32}$,
+respectively.
+%
+These OEFs satisfy a condition of prime extension degree of 5, 11, and
+19, respectively, and have almost the same number of rational points,
+$\#E(\F{{p_{32}}^5}) \sim \#E(\F{{p_{16}}^{11}}) \sim
+\#E(\F{{p_{8}}^{19}})$.
+%
+Now we pose a question: Using index calculus algorithm described in
+Section~\ref{subsec:TSPL}, is there any significant difference in the
+computational complexity of solving ECDLP for $\F{{p_{32}}^5}$,
+$\F{{p_{16}}^{11}}$, and $\F{{p_{8}}^{19}}$?
+%
+We will provide some empirical evidence showing an affirmative answer
+in the next section.
+
+\subsection{Experiment 1: Exploiting the symmetry}
+%
+We conducted two experiments using (single-threaded) MAGMA on Intel
+Xeon CPU E7-4830 v4 running at 2~GHz.
+%
+First, we show that using symmetry on Montgomery curves can
+significantly speed up relation collection in index calculus.
+%
+Specifically, we choose $\F{2^{16} - 165}$, over which we generate
+several random Weierstrass and Montgomery curves.
+%
+We then try to decompose several random points into $m$ points from a
+factor base consisting of points whose $x$-coordinates are in \F p.
+%
+The results of the first experiment are summarized in
+Table~\ref{tab:exp-sym}.
+%
+\begin{table}
+  \begin{center}
+    \begin{tabular}{|r||r|r|r|r|r|r|}
+      \hline
+      & \multicolumn{2}{c|}{Weierstrass} & \multicolumn{2}{c|}{Montgomery (plain)} & \multicolumn{2}{c|}{Montgomery (sym.)} \\ \hline\hline
+      m & Dreg     & Matcost      & Dreg     & Matcost      & Dreg     & Matcost      \\ \hline
+      2 & 2        & 2406.6      & 3        & 3206.7      & 2        & 2406.6      \\ \hline
+      3 & 6        & 3466021.3    & 6        & 4344579.2    & 6        & 3465410.9    \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{Experimental results for symmetry exploiting on Montgomery curves.}
+  \label{tab:exp-sym}
+\end{table}
+%
+In Table~\ref{tab:exp-sym}, we report the degree of regularity (Dreg)
+and the matrix cost in MAGMA's F4 algorithm (Matcost).
+%
+As we can see, without using the symmetry, it generally takes longer
+time to decompose over Montgomery curves, whereas it roughly takes the
+same amount of time for Weierstrass curves and Montgomery curves after
+taking symmetry into account.
+
+\subsection{Experiment 2: Security evaluation for various OEFs}
+%
+In this experiment, we would like to evaluate the security of
+Montgomery curves over various OEFs; the results are summarized in
+Table~\ref{tab:experimental-results}.
+%
+All timing results are reported in seconds unless otherwise specified.
+%
+We choose several OEFs suggested by Bailey and
+Paar~\cite{DBLP:conf/crypto/BaileyP98}, over which we study the
+complexity of the relation collection phase of the index calculus
+algorithm for solving ECDLP on several random Montgomery curves.
+%
+Specifically, for each curve $E$ we first choose a random rational
+point $P$ whose order is prime and close to the size of the underlying
+OEF \F{p^n}.
+%
+We then decide a factor base $\mathcal F$ using a vector subspace $V$
+of \F{p^n} over \F p, i.e., $|\mathcal F|\approx p^{\dim V}$, which,
+together with the linear algebra constant, determines the linear
+algebra time (``T\textsubscript L'' in
+Table~\ref{tab:experimental-results}).
+%
+The bulk of our experimentation then involves generating random points
+in $\langle P\rangle$ \emph{known} to be decomposable into a sum of
+$m$ points from $\mathcal F$.
+%
+As noted by Galbraith and Gebregiyorgis, the time for solving such
+instances tends to be larger than that for attempting to decompose
+points that \emph{cannot} be decomposed
+so~\cite{DBLP:conf/indocrypt/GalbraithG14}.
+%
+In general, the success probability of such point decomposition is
+roughly $\mathcal O(p^{m\dim V - n}/m!)$ for $m\dim V<n$, which is
+taken into account in estimating the relation collection time
+(``T\textsubscript R'' in Table~\ref{tab:experimental-results}).
+%
+\begin{table}
+  \begin{center}
+    \begin{tabular}{llcr}
+      OEF & $\ord(P)$ & $\dim V$ & T\textsubscript R$+$T\textsubscript L \\ \hline
+      \F{241^{19}} & $\mathcal O(2^{147})$ & 5 & $212.4\times\mathcal O(2^{72})+\mathcal O(2^{80})$ \\
+      \F{65371^{11}} & $\mathcal O(2^{173})$ & 4 & $37.6\times\mathcal O(2^{49})+\mathcal O(2^{129})$ \\
+      \F{4294967291^5} & $\mathcal O(2^{154})$ & 2 & $0.04\times\mathcal O(2^{65})+\mathcal O(2^{129})$
+    \end{tabular}
+  \end{center}
+  \caption{Security evaluation of Montgomery curves of various OEFs for $m=2$.}
+  \label{tab:experimental-results}
+\end{table}
+%
+It is interesting to note that the complexity for the relation
+collection phase is quite different for different OEFs, even though we
+use the same Weil descent algorithm.
+%
+However, as we can see from Table~\ref{tab:experimental-results}, such
+index calculus algorithm cannot yet outperform the generic algorithms
+such as Pollard's rho method, as the linear algebra phase takes
+significantly longer time.
+
+% \section{Concluding remarks}
+% %
+% \label{sec:conclusions}
+%
