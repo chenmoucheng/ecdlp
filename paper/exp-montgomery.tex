@@ -1,0 +1,48 @@
+%
+% Experimental results
+%
+
+\section{Experimental results on security of Montgomery form}
+%
+\label{sec:experiments-montgomery}
+%
+
+\subsection{Experiment 1: Exploiting the symmetry}
+%
+We conducted two experiments using (single-threaded) MAGMA on Intel
+Xeon CPU E7-4830 v4 running at 2~GHz.
+%
+First, we show that using symmetry on Montgomery curves can
+significantly speed up relation collection in index calculus.
+%
+Specifically, we choose $\F{2^{16} - 165}$, over which we generate
+several random Weierstrass and Montgomery curves.
+%
+We then try to decompose several random points into $m$ points from a
+factor base consisting of points whose $x$-coordinates are in \F p.
+%
+The results of the first experiment are summarized in
+Table~\ref{tab:exp-sym}.
+%
+\begin{table}
+  \begin{center}
+    \begin{tabular}{|r||r|r|r|r|r|r|}
+      \hline
+      & \multicolumn{2}{c|}{Weierstrass} & \multicolumn{2}{c|}{Montgomery (plain)} & \multicolumn{2}{c|}{Montgomery (sym.)} \\ \hline\hline
+      m & Dreg     & Matcost      & Dreg     & Matcost      & Dreg     & Matcost      \\ \hline
+      2 & 2        & 2406.6      & 3        & 3206.7      & 2        & 2406.6      \\ \hline
+      3 & 6        & 3466021.3    & 6        & 4344579.2    & 6        & 3465410.9    \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{Experimental results for symmetry exploiting on Montgomery curves.}
+  \label{tab:exp-sym}
+\end{table}
+%
+In Table~\ref{tab:exp-sym}, we report the degree of regularity (Dreg)
+and the matrix cost in MAGMA's F4 algorithm (Matcost).
+%
+As we can see, without using the symmetry, it generally takes longer
+time to decompose over Montgomery curves, whereas it roughly takes the
+same amount of time for Weierstrass curves and Montgomery curves after
+taking symmetry into account.
+

@@ -1,8 +1,7 @@
 %
-% Experimental results
+\section{Experimental results on OEF security}
 %
-
-\section{Experimental results and concluding remarks}\label{sec:experimental-results}
+\label{sec:experiments-OEF}
 %
 \subsection{Security consideration of ECDLP over OEF}
 %
@@ -26,69 +25,36 @@ These OEFs satisfy a condition of prime extension degree of 5, 11, and
 $\#E(\F{{p_{32}}^5}) \sim \#E(\F{{p_{16}}^{11}}) \sim
 \#E(\F{{p_{8}}^{19}})$.
 %
-Now we pose a question: Using index calculus algorithm described in
-Section~\ref{subsec:TSPL}, is there any significant difference in the
+Now we pose a question: Using index calculus algorithm to Montgomery 
+curves described in Section~\ref{subsec:TSPL}, is there any significant 
+difference in the
 computational complexity of solving ECDLP for $\F{{p_{32}}^5}$,
 $\F{{p_{16}}^{11}}$, and $\F{{p_{8}}^{19}}$?
 %
+Such a difference occurs in the case of Weierstrass curves?
 We will provide some empirical evidence showing an affirmative answer
 in the next section.
 
-\subsection{Experiment 1: Exploiting the symmetry}
-%
-We conducted two experiments using (single-threaded) MAGMA on Intel
-Xeon CPU E7-4830 v4 running at 2~GHz.
-%
-First, we show that using symmetry on Montgomery curves can
-significantly speed up relation collection in index calculus.
-%
-Specifically, we choose $\F{2^{16} - 165}$, over which we generate
-several random Weierstrass and Montgomery curves.
-%
-We then try to decompose several random points into $m$ points from a
-factor base consisting of points whose $x$-coordinates are in \F p.
-%
-The results of the first experiment are summarized in
-Table~\ref{tab:exp-sym}.
-%
-\begin{table}
-  \begin{center}
-    \begin{tabular}{|r||r|r|r|r|r|r|}
-      \hline
-      & \multicolumn{2}{c|}{Weierstrass} & \multicolumn{2}{c|}{Montgomery (plain)} & \multicolumn{2}{c|}{Montgomery (sym.)} \\ \hline\hline
-      m & Dreg     & Matcost      & Dreg     & Matcost      & Dreg     & Matcost      \\ \hline
-      2 & 2        & 2406.6      & 3        & 3206.7      & 2        & 2406.6      \\ \hline
-      3 & 6        & 3466021.3    & 6        & 4344579.2    & 6        & 3465410.9    \\ \hline
-    \end{tabular}
-  \end{center}
-  \caption{Experimental results for symmetry exploiting on Montgomery curves.}
-  \label{tab:exp-sym}
-\end{table}
-%
-In Table~\ref{tab:exp-sym}, we report the degree of regularity (Dreg)
-and the matrix cost in MAGMA's F4 algorithm (Matcost).
-%
-As we can see, without using the symmetry, it generally takes longer
-time to decompose over Montgomery curves, whereas it roughly takes the
-same amount of time for Weierstrass curves and Montgomery curves after
-taking symmetry into account.
 
 \subsection{Experiment 2: Security evaluation for various OEFs}
 %
+As we discuss in the previous section, we examine how OEF influences the
+security of solving ECDLP.
+We choose several OEFs suggested by Bailey and
+Paar~\cite{DBLP:conf/crypto/BaileyP98}.
 In this experiment, we would like to evaluate the security of
-Montgomery curves over various OEFs; the results are summarized in
-Table~\ref{tab:experimental-results}.
+Montgomery curves over various OEFs.  By using the same OEFs,  
+the security of Weierstrass curves is also examined.
+To set the security level of both curves over the same OEF equal to 
+each other, the following elliptic curves are used for experiments:
+1. Montomery curves $E_M$ with cofactor = 2.  \\
+2. Weierstrass curves $E$ with prime order
+
+The results are summarized in Table~\ref{tab:experimental-results}.
 %
 All timing results are reported in seconds unless otherwise specified.
 %
-We choose several OEFs suggested by Bailey and
-Paar~\cite{DBLP:conf/crypto/BaileyP98}, over which we study the
-complexity of the relation collection phase of the index calculus
-algorithm for solving ECDLP on several random Montgomery curves.
 %
-Specifically, for each curve $E$ we first choose a random rational
-point $P$ whose order is prime and close to the size of the underlying
-OEF \F{p^n}.
 %
 We then decide a factor base $\mathcal F$ using a vector subspace $V$
 of \F{p^n} over \F p, i.e., $|\mathcal F|\approx p^{\dim V}$, which,
@@ -136,3 +102,4 @@ significantly longer time.
 % %
 % \label{sec:conclusions}
 %
+
