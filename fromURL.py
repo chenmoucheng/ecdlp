@@ -1,3 +1,4 @@
+from bottle import route, run
 import requests
 import lxml.html
 import os
@@ -23,6 +24,7 @@ def pickup(str, line, list):
         else: 
             list.append(c)
 
+@route('/do/<URL:path>')
 def do(URL):
     req = requests.get(URL)
     root = lxml.html.fromstring(req.text)
@@ -66,7 +68,7 @@ def do(URL):
         if (re.match("Point A 2",line) != None ):
             break;
     
-    print int(output_rows[-1][0])+2
+    # print int(output_rows[-1][0])+2
     
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
@@ -201,7 +203,7 @@ def do(URL):
     response = service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id,
                                                    body=body).execute()
     
-    print "https://docs.google.com/spreadsheets/d/" + spreadsheet_id
+    return '<p><a href="https://docs.google.com/spreadsheets/d/' + spreadsheet_id + '">Click here</a>'
     
     
     # with open("result.csv", "w") as fout:
@@ -211,6 +213,5 @@ def do(URL):
     #     for row in output_rows:
     #         csv.writer(fout).writerow(row)
 
-print "please input Log-URL:"
-do(raw_input())
+run(host='0.0.0.0', port=8888, debug=True)
 
