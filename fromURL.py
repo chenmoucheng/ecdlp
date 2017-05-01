@@ -6,6 +6,7 @@ import re
 import httplib2
 from apiclient import discovery
 from oauth2client.file import Storage
+import datetime
 
 def str_isfloat(str):
     try:
@@ -84,10 +85,28 @@ def do(URL):
     spreadsheet_id = "1opFSZCBUryQBTF2JrmRGKubJdd_j2aeAAPYQzWMb-Ys"
     
     values = output_rows
+    newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
     
+    create_sheet_body = {
+      "requests": [
+        {
+          "addSheet": {
+            "properties": {
+              "title": newsheet_title
+            }
+          }
+        }
+      ]
+    }  
+
+    request = service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=create_sheet_body)
+    response = request.execute()
+    newsheetId = response["replies"][0]["addSheet"]["properties"]["sheetId"]
+
+    newsheetrange = newsheet_title + "!A:F"
     data = [
         {
-            'range': "A:F",
+            'range': newsheetrange,
             'values': values
         }
     # Additional ranges to update ...
@@ -99,9 +118,43 @@ def do(URL):
     result = service.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheet_id, body=body).execute()
     
-    
+    l2 = []
+    for i in output_rows[3:]:
+      if str_isfloat(i[2]):
+        l2.append(float(i[2]))
+      else:
+        l2.append(0)
+
+    l3 = []
+    for i in output_rows[3:]:
+      if str_isfloat(i[3]):
+        l3.append(float(i[3]))
+      else:
+        l3.append(0)
+
+    for i,l in enumerate(output_rows[3:]):
+      l[2] = round(l2[i]/sum(l2), 3)*10
+      l[3] = round(l3[i]/sum(l3), 3)*10
+
+    newsheetrange = newsheet_title + "!G:L"
+
+    data = [
+        {
+            'range': newsheetrange,
+            'values': output_rows
+        }
+    ]
+    body = {
+        'valueInputOption': "RAW",
+        'data': data
+    }
+    result = service.spreadsheets().values().batchUpdate(
+        spreadsheetId=spreadsheet_id, body=body).execute()  
+
+
+
     chart_title = "Transition"
-    sourceSheetId = 0
+    sourceSheetId = newsheetId
     
     
     
@@ -130,8 +183,8 @@ def do(URL):
                               "sheetId": sourceSheetId,
                               "startRowIndex": 2,
                               "endRowIndex": len(output_rows),
-                              "startColumnIndex": 0,
-                              "endColumnIndex": 1
+                              "startColumnIndex": 6,
+                              "endColumnIndex": 7
                             }
                           ]
                         }
@@ -147,8 +200,8 @@ def do(URL):
                               "sheetId": sourceSheetId,
                               "startRowIndex": 2,
                               "endRowIndex": len(output_rows),
-                              "startColumnIndex": 1,
-                              "endColumnIndex": 2
+                              "startColumnIndex": 7,
+                              "endColumnIndex": 8
                             }
                           ]
                         }
@@ -163,8 +216,8 @@ def do(URL):
                               "sheetId": sourceSheetId,
                               "startRowIndex": 2,
                               "endRowIndex": len(output_rows),
-                              "startColumnIndex": 2,
-                              "endColumnIndex": 3
+                              "startColumnIndex": 8,
+                              "endColumnIndex": 9
                             }
                           ]
                         }
@@ -179,8 +232,8 @@ def do(URL):
                               "sheetId": sourceSheetId,
                               "startRowIndex": 2,
                               "endRowIndex": len(output_rows),
-                              "startColumnIndex": 3,
-                              "endColumnIndex": 4
+                              "startColumnIndex": 9,
+                              "endColumnIndex": 10
                             }
                           ]
                         }
@@ -205,13 +258,4 @@ def do(URL):
     
     return '<p><a href="https://docs.google.com/spreadsheets/d/' + spreadsheet_id + '">Click here</a>'
     
-    
-    # with open("result.csv", "w") as fout:
-    #     #writer = csv.writer(fout)
-    #     csv.writer(fout).writerow(output_fileindex)
-    #     csv.writer(fout).writerow(["Last fall Degree", last_D])
-    #     for row in output_rows:
-    #         csv.writer(fout).writerow(row)
-
 run(host='0.0.0.0', port=8888, debug=True)
-
