@@ -60,11 +60,11 @@ end function;
 
 // Parameters
 
-l  := 1;          print "l =", l;
-m  := 3;          print "m =", m;
-n  := 5;          print "n =", n;
-q  := 2^32 - 5;   print "q =", q;
-T2 := true;       print "T2 =", T2;
+l  := 4;          print "l =", l;
+m  := 2;          print "m =", m;
+n  := 19;         print "n =", n;
+q  := 241;        print "q =", q;
+T2 := false;      print "T2 =", T2;
 IX := true;       print "IX =", IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
@@ -118,8 +118,8 @@ end function;
 // Curve-specific definitions
 
 // load "bEdwards.m";
-// load "Montgomery.m";
-load "tEdwards.m";
+load "Montgomery.m";
+// load "tEdwards.m";
 // load "Weierstrass.m";
 
 // Weil descent
@@ -138,6 +138,7 @@ end function;
 ECDLPDecompose := function(Qs)
   print "Decomposing",Qs;
   Q := Type(Qs) eq SeqEnum select &+Qs else Qs;
+  if not IsPrime(Order(Q)) then return []; end if;
   z := E["FBtoV"](-Q);
 
   // Variables rewriting
@@ -195,7 +196,11 @@ end function;
 // Experiments
 
 for point := 1 to 1 do
-  print ""; print "Point A",point; Qs := ECDLPDecompose([RandomFB() : i in [1..m]]); Qs; assert not IsEmpty(Qs);
+  print ""; print "Point A",point;
+  repeat
+    Qs := ECDLPDecompose([RandomFB() : i in [1..m]]);
+  until not IsEmpty(Qs);
+  Qs;
 
   for trial := 1 to 1 do
     print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
