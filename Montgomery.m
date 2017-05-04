@@ -16,9 +16,8 @@ repeat
   until B*(A^2-4) ne 0;
   E["curve"] := EllipticCurve([(3-A^2)/(3*B^2),(2*A^3-9*A)/(27*B^3)]);
   Q := Random(E["curve"](k));
-  cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
-  P := cofactor*Q;
-until cofactor lt 16;
+  P := 4*Q;
+until IsPrime(Order(P));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
