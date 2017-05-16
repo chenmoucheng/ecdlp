@@ -2,9 +2,24 @@
  * Solving ECDLP using Semaev's summation polynomials
  */
 
+SetColumns(0);
+
 // Utility functions
 
-SetColumns(0);
+Degrees := function(F)
+  D := [];
+  for f in F do
+    d := TotalDegree(f);
+    if d eq 0 then continue; end if;
+    if IsDefined(D,d) then D[d] +:= 1;
+    else D[d] := 1; end if;
+  end for;
+  for d := 1 to #D do
+    if not IsDefined(D,d) then D[d] := 0; end if;
+  end for;
+
+  return D;
+end function;
 
 InSupport := function(v,f)
   return Degree(f,v) gt 0;
@@ -21,11 +36,10 @@ EasyGB := function(I)
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
   U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
   S := #K eq 2 select BooleanPolynomialRing(#U,"grevlex") else PolynomialRing(K,#U,"grevlex") where K is BaseRing(R);
-  V := [S|]; v := 0;
+  V := [S|];
   for i := 1 to Rank(R) do
     if R.i in U then
-      v +:= 1;
-      Append(~V,S.v);
+      Append(~V,S.Index(U,R.i));
     else
       G := {UnivariatePolynomial(f) : f in F | InSupport(R.i,f)};
       x := IsEmpty(G) select Random(BaseRing(R)) else Random(Roots(Random(G)))[1];
@@ -40,18 +54,19 @@ EasyGB := function(I)
   G := GroebnerBasis(Basis(J));
   SetVerbose("Faugere",0);
 
-  D := Maximum({Degree(f) : f in Basis(J)});
-  H := [[] : d in [1..(D - 1)]];
+  H := [];
+  D := 1;
+  t0 := Cputime();
   H[D] := GroebnerBasis(Basis(J),D);
+  print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
   repeat
     D +:= 1;
     t0 := Cputime();
     H[D] := GroebnerBasis(Basis(J),D);
-    print "Groebner basis time:",Cputime(t0),D;
+    print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
     HH := {f : f in H[D] | Degree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
-    Hd := [#{f : f in HH | Degree(f) eq d} : d in [0..(D - 1)]];
     if not IsEmpty(HH) then
-      print "Gap degree and sizes:",D,#HH,"=",Hd;
+      print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH);
     end if;
   until Seqset(G) eq Seqset(H[D]);
 
@@ -125,8 +140,6 @@ load "Montgomery.m";
 // Weil descent
 
 WeilDescent := function(I)
-  phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.ind : j in [1..n] | not S1.ind in E["Jcondition"] where ind := (i - 1)*n + j]),W) : i in [1..M]]>;
-  phi := phi12 * phi22 * isoRS;
   t0 := Cputime();
   J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
   print "Weil descent time:",Cputime(t0);
@@ -202,7 +215,7 @@ for point := 1 to 1 do
   until not IsEmpty(Qs);
   Qs;
 
-  for trial := 1 to 1 do
+  for trial := 1 to 0 do
     print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
   end for;
 end for;

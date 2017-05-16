@@ -15,9 +15,10 @@ repeat
     B := Random(k);
   until B*(A^2-4) ne 0;
   E["curve"] := EllipticCurve([(3-A^2)/(3*B^2),(2*A^3-9*A)/(27*B^3)]);
-  Q := Random(E["curve"](k));
-  P := 4*Q;
-until IsPrime(Order(P));
+  o := Order(E["curve"](k));
+  if not IsDivisibleBy(o,4) then continue; end if;
+until IsPrime(Integers()!(o/4));
+P := 4*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
