@@ -138,6 +138,30 @@ load "Montgomery.m";
 // load "tEdwards.m";
 // load "Weierstrass.m";
 
+E["f4"] := function(x0,x1,x2,x3)
+  R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
+  f31 := E["f3"](T,X0,X1);
+  f32 := E["f3"](T,X2,X3);
+  f4 := Resultant(f31,f32,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
+end function;
+
+E["f5"] := function(x0,x1,x2,x3,x4)
+  R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
+  f3 := E["f3"](T,X0,X1);
+  f4 := E["f4"](T,X2,X3,X4);
+  f5 := Resultant(f3,f4,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
+end function;
+
+E["f6"] := function(x0,x1,x2,x3,x4,x5)
+  R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
+  f41 := E["f4"](T,X0,X1,X2);
+  f42 := E["f4"](T,X3,X4,X5);
+  f6 := Resultant(f41,f42,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
+end function;
+
 // Weil descent
 
 WeilDescent := function(I)
@@ -164,12 +188,19 @@ ECDLPDecompose := function(Qs)
   end if;
   print "Rewriting variables";
   SetVerbose("Faugere",2);
-  if IX then
-    Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s)) + E["Iauxiliary"];
+  if m eq 2 then
+    Irewritten := EliminationIdeal(Ideal({E["f3"](t[1],t[2],               z)}) + E["Iauxiliary"],Seqset(s));
+  elif m eq 3 then
+    Irewritten := EliminationIdeal(Ideal({E["f4"](t[1],t[2],t[3],          z)}) + E["Iauxiliary"],Seqset(s));
+  elif m eq 4 then
+    Irewritten := EliminationIdeal(Ideal({E["f5"](t[1],t[2],t[3],t[4],     z)}) + E["Iauxiliary"],Seqset(s));
+  elif m eq 5 then
+    Irewritten := EliminationIdeal(Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],z)}) + E["Iauxiliary"],Seqset(s));
   else
     Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s));
   end if;
   SetVerbose("Faugere",0);
+  if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in EasyGB
