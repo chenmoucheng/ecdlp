@@ -44,7 +44,7 @@ E["VtoFB"] := function(t)
   return Qs;
 end function;
 
-E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
+E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Iauxiliary"]);
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 /*

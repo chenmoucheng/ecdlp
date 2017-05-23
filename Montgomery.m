@@ -63,7 +63,7 @@ RewriteT2ESP := function(Vars,i)
   return Poly;
 end function;
 
-E["Iauxiliary"] := T2 select Ideal({RewriteESP(t,m)*s[i] - RewriteT2ESP(t,i) : i in [1..m]}) else Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
+E["Iauxiliary"] := T2 select Ideal({RewriteESP(t,m)*s[i] - RewriteT2ESP(t,i) : i in [1..m]}) else Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Iauxiliary"]);
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 // Semaev's summation polynomial for Montgomery curves

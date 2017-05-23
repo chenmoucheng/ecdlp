@@ -8,10 +8,9 @@ repeat
   repeat
     E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
   until Discriminant(E["curve"]) ne 0;
-  Q := Random(E["curve"](k));
-  cofactor := Integers()!(Order(Q)/fs[#fs][1]) where fs is Factorization(Order(Q));
-  P := cofactor*Q;
-until cofactor lt 16;
+  o := Order(E["curve"](k));
+until IsPrime(o);
+P := Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
@@ -28,7 +27,7 @@ E["VtoFB"] := function(t)
   return [E["curve"]![t,z[1]] : z in Z];
 end function;
 
-E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]});
+E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Iauxiliary"]);
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 /*
