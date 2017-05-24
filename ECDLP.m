@@ -31,7 +31,7 @@ end function;
 
 // Substituting solution to easy part and computing GB
 
-EasyGB := function(I)
+CoreGB := function(I)
   R := Generic(I);
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
   U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
@@ -203,12 +203,8 @@ ECDLPDecompose := function(Qs)
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
-  // Needs Jcondition because its information is eliminated in EasyGB
-  if IX then
-    Z := Variety(WeilDescent(Isummation                  ) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
-  else
-    Z := Variety(WeilDescent(Isummation + E["Iauxiliary"]) + EasyGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
-  end if;
+  // Needs Jcondition because its information is eliminated in CoreGB
+  Z := Variety(WeilDescent(Isummation + E["Iauxiliary"]) + CoreGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
 
   Qs := [];
   for z in Z do
