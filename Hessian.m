@@ -7,7 +7,7 @@ E["form"] := "Hessian"; E["form"];
 repeat
   repeat
     d := Random(k);
-  until d^3 ne 1;
+  until (3*d)^3 ne 1;
   E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
   o := Order(E["curve"](k));
   assert IsDivisibleBy(o,3);
