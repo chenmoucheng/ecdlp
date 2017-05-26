@@ -22,7 +22,7 @@ Degrees := function(F)
 end function;
 
 InSupport := function(v,f)
-  return Degree(f,v) gt 0;
+  return TotalDegree(f,v) gt 0;
 end function;
 
 RewriteESP := function(V,i)
@@ -55,7 +55,7 @@ CoreGB := function(I)
   SetVerbose("Faugere",0);
 
   H := [];
-  D := 1;
+  D := Maximum({TotalDegree(f) : f in Basis(J)});
   t0 := Cputime();
   H[D] := GroebnerBasis(Basis(J),D);
   print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
@@ -64,7 +64,7 @@ CoreGB := function(I)
     t0 := Cputime();
     H[D] := GroebnerBasis(Basis(J),D);
     print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
-    HH := {f : f in H[D] | Degree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
+    HH := {f : f in H[D] | TotalDegree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
     if not IsEmpty(HH) then
       print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH);
     end if;
