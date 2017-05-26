@@ -5,6 +5,7 @@
 E := AssociativeArray();
 E["form"] := "bEdwards"; E["form"];
 assert q eq 2;
+cofactor := 4;
 repeat
   repeat
     d1 := Random(k);
@@ -12,10 +13,10 @@ repeat
   until d1 ne 0 and d2 ne d1^2 + d1;
   E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
   assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
-  o := Order(E["curve"](k));
-  if not IsDivisibleBy(o,4) then continue; end if;
-until IsPrime(Integers()!(o/4));
-P := 4*Random(E["curve"](k));
+  order := Order(E["curve"](k));
+  if not IsDivisibleBy(order,cofactor) then continue; end if;
+until IsPrime(Integers()!(order/cofactor));
+P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 

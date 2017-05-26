@@ -22,7 +22,7 @@ Degrees := function(F)
 end function;
 
 InSupport := function(v,f)
-  return TotalDegree(f,v) gt 0;
+  return Degree(f,v) gt 0;
 end function;
 
 RewriteESP := function(V,i)

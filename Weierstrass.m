@@ -4,13 +4,15 @@
 
 E := AssociativeArray();
 E["form"] := "Weierstrass"; E["form"];
+cofactor := q eq 2 select 2 else 1;
 repeat
   repeat
     E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
   until Discriminant(E["curve"]) ne 0;
-  o := Order(E["curve"](k));
-until IsPrime(o);
-P := Random(E["curve"](k));
+  order := Order(E["curve"](k));
+  assert IsDivisibleBy(order,cofactor);
+until IsPrime(Integers()!(order/cofactor));
+P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 

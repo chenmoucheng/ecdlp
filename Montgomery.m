@@ -9,16 +9,17 @@ end if;
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
+cofactor := 4;
 repeat
   repeat
     A := Random(k);
     B := Random(k);
   until B*(A^2-4) ne 0;
   E["curve"] := EllipticCurve([(3-A^2)/(3*B^2),(2*A^3-9*A)/(27*B^3)]);
-  o := Order(E["curve"](k));
-  if not IsDivisibleBy(o,4) then continue; end if;
-until IsPrime(Integers()!(o/4));
-P := 4*Random(E["curve"](k));
+  order := Order(E["curve"](k));
+  if not IsDivisibleBy(order,cofactor) then continue; end if;
+until IsPrime(Integers()!(order/cofactor));
+P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
