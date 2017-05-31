@@ -30,7 +30,8 @@ end function;
 
 // Substituting solution to easy part and computing GB
 
-CoreGB := function(I)
+CoreGB := function(L,...)
+  I := L[1];
   R := Generic(I);
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
   U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
@@ -50,22 +51,24 @@ CoreGB := function(I)
   J := Ideal({g : f in Basis(I) | g ne 0 where g is phiRS(f)});
 
   SetVerbose("Faugere",2);
-  G := GroebnerBasis(Basis(J));
+  G := GroebnerBasis(Basis(J),IsDefined(L,2) select L[2] else 1073741823);
   SetVerbose("Faugere",0);
 
-  H := [];
-  D := Maximum({TotalDegree(f) : f in Basis(J)});
-  t0 := Cputime();
-  H[D] := GroebnerBasis(Basis(J),D);
-  print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
-  repeat
-    D +:= 1;
+  if not IsDefined(L,2) then
+    H := [];
+    D := Maximum({TotalDegree(f) : f in Basis(J)});
     t0 := Cputime();
     H[D] := GroebnerBasis(Basis(J),D);
     print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
-    HH := {f : f in H[D] | TotalDegree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
-    if not IsEmpty(HH) then print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH); end if;
-  until Seqset(G) eq Seqset(H[D]);
+    repeat
+      D +:= 1;
+      t0 := Cputime();
+      H[D] := GroebnerBasis(Basis(J),D);
+      print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
+      HH := {f : f in H[D] | TotalDegree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
+      if not IsEmpty(HH) then print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH); end if;
+    until #G eq #H[D] and Seqset(G) eq Seqset(H[D]);
+  end if;
 
   return Ideal({phiSR(g) : g in G});
 end function;
@@ -92,12 +95,13 @@ isoKk := hom<kK->k|w>;
 
 // Various structures for performing Weil descent
 
-M := 3*m - 2;
+M := 3*m - 1;
 
 R1 := PolynomialRing(k,M);
 u := [R1.i : i in [       1 ..(  m - 2)]];
 t := [R1.i : i in [(  m - 1)..(2*m - 2)]];
 s := [R1.i : i in [(2*m - 1)..(3*m - 2)]];
+r :=  R1.M;
 
 R2 := PolynomialRing(kK,M*n);
 phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]]>;
@@ -120,6 +124,7 @@ phi := phi12 * phi22 * isoRS;
 U := [Coefficients(phi(x)) : x in u];
 T := [Coefficients(phi(x)) : x in t];
 S := [Coefficients(phi(x)) : x in s];
+R :=  Coefficients(phi(r));
 
 // From variety of S1's ideal to variable assignment in R1
 
@@ -160,6 +165,14 @@ E["f6"] := function(x0,x1,x2,x3,x4,x5)
   return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
 end function;
 
+// Semaev's summation ideal
+
+if m eq 2 then
+  Isummation := Ideal({E["f3"](t[1],t[2],r)});
+else
+  Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],r)});
+end if;
+
 // Weil descent
 
 WeilDescent := function(I)
@@ -169,44 +182,49 @@ WeilDescent := function(I)
   return J;
 end function;
 
-// Point decomposition
+// Batched core GB computation
 
-CoreDecompose := function(z)
-  // Variables rewriting
+BatchBasis := function(Icondition)
+  return CoreGB(WeilDescent(Isummation) + E["Jcondition"],4);
+end function;
 
-  if m eq 2 then
-    Isummation := Ideal({E["f3"](t[1],t[2],z)});
-  else
-    Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],z)});
-  end if;
+// Point-wise core GB computation
+
+PointBasis := function(Icondition)
   print "Rewriting variables";
   SetVerbose("Faugere",2);
   if m eq 2 then
-    Irewritten := EliminationIdeal(Ideal({E["f3"](t[1],t[2],               z)}) + E["Iauxiliary"],Seqset(s));
+    Irewritten := EliminationIdeal(Ideal({E["f3"](t[1],t[2],               r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   elif m eq 3 then
-    Irewritten := EliminationIdeal(Ideal({E["f4"](t[1],t[2],t[3],          z)}) + E["Iauxiliary"],Seqset(s));
+    Irewritten := EliminationIdeal(Ideal({E["f4"](t[1],t[2],t[3],          r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   elif m eq 4 then
-    Irewritten := EliminationIdeal(Ideal({E["f5"](t[1],t[2],t[3],t[4],     z)}) + E["Iauxiliary"],Seqset(s));
+    Irewritten := EliminationIdeal(Ideal({E["f5"](t[1],t[2],t[3],t[4],     r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   elif m eq 5 then
-    Irewritten := EliminationIdeal(Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],z)}) + E["Iauxiliary"],Seqset(s));
+    Irewritten := EliminationIdeal(Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   else
-    Irewritten := EliminationIdeal(Isummation + E["Iauxiliary"],Seqset(s));
+    Irewritten := EliminationIdeal(Isummation                                   + Icondition + E["Iauxiliary"],Seqset(s));
   end if;
   SetVerbose("Faugere",0);
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
-  // Needs Isummation because u's information is eliminated in EliminationIdeal
-  // Needs Jcondition because its information is eliminated in CoreGB
-  return Variety(WeilDescent(Isummation + E["Iauxiliary"]) + CoreGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+  return CoreGB(WeilDescent(Irewritten) + E["Jcondition"]);
 end function;
+
+// Point decomposition
 
 ECDLPDecompose := function(Q)
   print "Decomposing",Q;
   if not IsPrime(Order(Q)) then return []; end if;
-  Z := CoreDecompose(E["FBtoV"](-Q));
+  Icondition := Ideal({r - E["FBtoV"](-Q)});
+
+  // Needs Isummation because u's information is eliminated in EliminationIdeal
+  // Needs Jcondition because its information is eliminated in CoreGB
+  Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition) + E["Jcondition"]);
+  Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition) + E["Jcondition"]);
+  assert Seqset(Zb) eq Seqset(Zp);
 
   Qs := [];
-  for z in Z do
+  for z in Zb do
     L := [[]];
     for i := 1 to m do
       L := [Append(Ps,PP) : Ps in L, PP in E["VtoFB"](psi(z,t[i]))];
