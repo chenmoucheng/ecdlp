@@ -75,12 +75,13 @@ end function;
 
 // Parameters
 
-l  := 4;          print "l =", l;
-m  := 2;          print "m =", m;
-n  := 19;         print "n =", n;
-q  := 241;        print "q =", q;
-T2 := false;      print "T2 =", T2;
-IX := true;       print "IX =", IX;
+h  := 6;          print "h =",h;
+l  := 4;          print "l =",l;
+m  := 3;          print "m =",m;
+n  := 17;         print "n =",n;
+q  := 2;          print "q =",q;
+T2 := false;      print "T2 =",T2;
+IX := true;       print "IX =",IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
@@ -137,9 +138,9 @@ end function;
 // load "bEdwards.m";
 // load "gHessian.m";
 // load "Hessian.m";
-load "Montgomery.m";
+// load "Montgomery.m";
 // load "tEdwards.m";
-// load "Weierstrass.m";
+load "Weierstrass.m";
 
 E["f4"] := function(x0,x1,x2,x3)
   R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
@@ -184,8 +185,8 @@ end function;
 
 // Batched core GB computation
 
-BatchBasis := function(Icondition)
-  return CoreGB(WeilDescent(Isummation) + E["Jcondition"],4);
+BatchBasis := function(Icondition,Jcondition)
+  return CoreGB(CoreGB(WeilDescent(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilDescent(Icondition) ;
 end function;
 
 // Point-wise core GB computation
@@ -215,16 +216,25 @@ end function;
 ECDLPDecompose := function(Q)
   print "Decomposing",Q;
   if not IsPrime(Order(Q)) then return []; end if;
-  Icondition := Ideal({r - E["FBtoV"](-Q)});
+  z := E["FBtoV"](-Q);
+  Z := Coefficients(phi(z));
+  Icondition := Ideal({r - z});
+  Jcondition := Ideal({R[i] - Z[i] : i in [1..h]});
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in CoreGB
-  Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition) + E["Jcondition"]);
-  Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition) + E["Jcondition"]);
+  t0 := Cputime();
+  Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
+  print "Batch decomposition time:",Cputime(t0);
+
+  t0 := Cputime();
+  Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
+  print "Point decomposition time:",Cputime(t0);
+
   assert Seqset(Zb) eq Seqset(Zp);
 
   Qs := [];
-  for z in Zb do
+  for z in Zp do
     L := [[]];
     for i := 1 to m do
       L := [Append(Ps,PP) : Ps in L, PP in E["VtoFB"](psi(z,t[i]))];
