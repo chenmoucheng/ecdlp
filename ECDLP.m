@@ -11,11 +11,10 @@ Degrees := function(F)
   for f in F do
     d := TotalDegree(f);
     if d eq 0 then continue; end if;
-    if IsDefined(D,d) then D[d] +:= 1;
-    else D[d] := 1; end if;
+    D[d] := IsDefined(D,d) select D[d] + 1 else 1;
   end for;
   for d := 1 to #D do
-    if not IsDefined(D,d) then D[d] := 0; end if;
+    D[d] := IsDefined(D,d) select D[d]     else 0;
   end for;
 
   return D;
@@ -65,9 +64,7 @@ CoreGB := function(I)
     H[D] := GroebnerBasis(Basis(J),D);
     print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
     HH := {f : f in H[D] | TotalDegree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
-    if not IsEmpty(HH) then
-      print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH);
-    end if;
+    if not IsEmpty(HH) then print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH); end if;
   until Seqset(G) eq Seqset(H[D]);
 
   return Ideal({phiSR(g) : g in G});
@@ -133,6 +130,7 @@ end function;
 // Curve-specific definitions
 
 // load "bEdwards.m";
+// load "gHessian.m";
 // load "Hessian.m";
 load "Montgomery.m";
 // load "tEdwards.m";
@@ -173,12 +171,7 @@ end function;
 
 // Point decomposition
 
-ECDLPDecompose := function(Qs)
-  print "Decomposing",Qs;
-  Q := Type(Qs) eq SeqEnum select &+Qs else Qs;
-  if not IsPrime(Order(Q)) then return []; end if;
-  z := E["FBtoV"](-Q);
-
+CoreDecompose := function(z)
   // Variables rewriting
 
   if m eq 2 then
@@ -204,7 +197,13 @@ ECDLPDecompose := function(Qs)
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in CoreGB
-  Z := Variety(WeilDescent(Isummation + E["Iauxiliary"]) + CoreGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+  return Variety(WeilDescent(Isummation + E["Iauxiliary"]) + CoreGB(WeilDescent(Irewritten) + E["Jcondition"]) + E["Jcondition"]);
+end function;
+
+ECDLPDecompose := function(Q)
+  print "Decomposing",Q;
+  if not IsPrime(Order(Q)) then return []; end if;
+  Z := CoreDecompose(E["FBtoV"](-Q));
 
   Qs := [];
   for z in Z do
@@ -239,12 +238,15 @@ end function;
 for point := 1 to 1 do
   print ""; print "Point A",point;
   repeat
-    Qs := ECDLPDecompose([RandomFB() : i in [1..m]]);
+    Ps := [RandomFB() : i in [1..m]]; Ps;
+    Qs := ECDLPDecompose(&+Ps);
   until not IsEmpty(Qs);
   Qs;
 
   for trial := 1 to 0 do
-    print ""; print "Point B",point,trial; Qs := ECDLPDecompose(Random(Order(P))*P); Qs;
+    print ""; print "Point B",point,trial;
+    Qs := ECDLPDecompose(Random(Order(P))*P);
+    Qs;
   end for;
 end for;
 
