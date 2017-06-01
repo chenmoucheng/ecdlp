@@ -75,7 +75,7 @@ end function;
 
 // Parameters
 
-h  := 6;          print "h =",h;
+h  := -1;         print "h =",h;
 l  := 4;          print "l =",l;
 m  := 3;          print "m =",m;
 n  := 17;         print "n =",n;
@@ -219,19 +219,23 @@ ECDLPDecompose := function(Q)
   z := E["FBtoV"](-Q);
   Z := Coefficients(phi(z));
   Icondition := Ideal({r - z});
-  Jcondition := Ideal({R[i] - Z[i] : i in [1..h]});
+  Jcondition := ideal<S1|{R[i] - Z[i] : i in [1..h]}>;
 
   // Needs Isummation because u's information is eliminated in EliminationIdeal
   // Needs Jcondition because its information is eliminated in CoreGB
-  t0 := Cputime();
-  Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
-  print "Batch decomposition time:",Cputime(t0);
+  if h ge 0 then
+    t0 := Cputime();
+    Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
+    print "Batch decomposition time:",Cputime(t0);
+  end if;
 
-  t0 := Cputime();
-  Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
-  print "Point decomposition time:",Cputime(t0);
+    t0 := Cputime();
+    Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
+    print "Point decomposition time:",Cputime(t0);
 
-  assert Seqset(Zb) eq Seqset(Zp);
+  if h ge 0 then
+    assert Seqset(Zb) eq Seqset(Zp);
+  end if;
 
   Qs := [];
   for z in Zp do
