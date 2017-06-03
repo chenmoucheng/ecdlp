@@ -18,6 +18,7 @@ repeat
 until IsPrime(Integers()!(order/cofactor));
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
+print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB

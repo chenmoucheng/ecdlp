@@ -14,10 +14,12 @@ repeat
   E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
   assert jInvariant(E["curve"]) eq 16*(a^2 + 14*a*d + d^2)^3/(a*d*(a - d)^4);
   order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order); cofactor;
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 until cofactor le 256;
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
+print "cofactor:",cofactor;
+print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB

@@ -85,6 +85,11 @@ IX := true;       print "IX =",IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
+// Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
+
+assert not (l eq 1 and IX);
+elim := (l eq 1) or (l gt 1 and IX);
+
 // Base and extension fields
 
 K := FiniteField(q);
@@ -194,7 +199,10 @@ end function;
 PointBasis := function(Icondition)
   print "Rewriting variables";
   SetVerbose("Faugere",2);
-  if m eq 2 then
+  if not elim then
+    print "  ... skipped";
+    Irewritten := Isummation + Icondition;
+  elif m eq 2 then
     Irewritten := EliminationIdeal(Ideal({E["f3"](t[1],t[2],               r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   elif m eq 3 then
     Irewritten := EliminationIdeal(Ideal({E["f4"](t[1],t[2],t[3],          r)}) + Icondition + E["Iauxiliary"],Seqset(s));
@@ -221,8 +229,8 @@ ECDLPDecompose := function(Q)
   Icondition := Ideal({r - z});
   Jcondition := ideal<S1|{R[i] - Z[i] : i in [1..h]}>;
 
-  // Needs Isummation because u's information is eliminated in EliminationIdeal
-  // Needs Jcondition because its information is eliminated in CoreGB
+  // Needs    Isummation   because u's information may be eliminated in EliminationIdeal
+  // Needs E["Jcondition"] because its information may be eliminated in CoreGB
   if h ge 0 then
     t0 := Cputime();
     Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
