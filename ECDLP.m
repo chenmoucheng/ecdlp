@@ -76,12 +76,12 @@ end function;
 // Parameters
 
 h  := -1;         print "h =",h;
-l  := 4;          print "l =",l;
+l  := 1;          print "l =",l;
 m  := 3;          print "m =",m;
-n  := 17;         print "n =",n;
-q  := 2;          print "q =",q;
+n  := 4;          print "n =",n;
+q  := 65371;      print "q =",q;
 T2 := false;      print "T2 =",T2;
-IX := true;       print "IX =",IX;
+IX := false;      print "IX =",IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
@@ -141,11 +141,12 @@ end function;
 // Curve-specific definitions
 
 // load "bEdwards.m";
+load "Edwards.m";
 // load "gHessian.m";
 // load "Hessian.m";
 // load "Montgomery.m";
 // load "tEdwards.m";
-load "Weierstrass.m";
+// load "Weierstrass.m";
 
 E["f4"] := function(x0,x1,x2,x3)
   R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
