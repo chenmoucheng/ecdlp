@@ -21,7 +21,7 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
-  asseret Q ne E["curve"]!0;
+  assert Q ne E["curve"]!0;
   u := Q[1]/Q[3];
   v := Q[2]/Q[3];
   x := (36*(d^3 - 1) - v)/(6*(u + 9*d^2)) - d/2;
