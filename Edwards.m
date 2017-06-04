@@ -5,7 +5,6 @@
 E := AssociativeArray();
 E["form"] := "Edwards"; E["form"];
 assert q ne 2;
-cofactor := 4;
 repeat
   repeat
     c := 1;
@@ -14,11 +13,13 @@ repeat
   a0 := 1/(1 - d*c^4);
   E["curve"] := QuadraticTwist(EllipticCurve([0,4/(1 - d*c^4) - 2,0,1,0]),a0);
   order := Order(E["curve"](k));
-until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+until cofactor le 256;
 E["O"] := <k!0,k!c>;
 E["Q"] := <k!0,k!-c>;
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
+print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
