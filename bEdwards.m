@@ -14,8 +14,8 @@ repeat
   E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
   assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
   order := Order(E["curve"](k));
-  if not IsDivisibleBy(order,cofactor) then continue; end if;
-until IsPrime(Integers()!(order/cofactor));
+until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
+E["O"] := <k!0,k!0>;
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
@@ -24,24 +24,32 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
-  u := Q[1]/Q[3];
-  v := Q[2]/Q[3];
-  x := d1*(u + d1^2 + d1 + d2)/(u + v + (d1^2 + d1)*(d1^2 + d1 + d2));
-  y := d1*(u + d1^2 + d1 + d2)/(    v + (d1^2 + d1)*(d1^2 + d1 + d2));
+  if Q eq E["curve"]!0 then
+    x := E["O"][1];
+    y := E["O"][2];
+  else
+    u := Q[1]/Q[3];
+    v := Q[2]/Q[3];
+    x := d1*(u + d1^2 + d1 + d2)/(u + v + (d1^2 + d1)*(d1^2 + d1 + d2));
+    y := d1*(u + d1^2 + d1 + d2)/(    v + (d1^2 + d1)*(d1^2 + d1 + d2));
+  end if;
   return x + y;
 end function;
 
 E["VtoFB"] := function(t)
-  if t eq 0 then return []; end if;
   R<X,Y> := PolynomialRing(k,2);
   I := Ideal({X + Y - t,d1*(X + Y) + d2*(X^2 + Y^2) - (X*Y + X*Y*(X + Y) + X^2*Y^2)});
   Qs := [];
   for s in Variety(I) do
-    x := s[1];
-    y := s[2];
-    u := d1*(d1^2 + d1 + d2)*(x + y)/(x*y + d1*(x + y));
-    v := d1*(d1^2 + d1 + d2)*(x/(x*y + d1*(x + y)) + d1 + 1);
-    Append(~Qs,E["curve"]![u,v]);
+    if s eq E["O"] then
+      Append(~Qs,E["curve"]!0);
+    else
+      x := s[1];
+      y := s[2];
+      u := d1*(d1^2 + d1 + d2)*(x + y)/(x*y + d1*(x + y));
+      v := d1*(d1^2 + d1 + d2)*(x/(x*y + d1*(x + y)) + d1 + 1);
+      Append(~Qs,E["curve"]![u,v]);
+    end if;
   end for;
   return Qs;
 end function;

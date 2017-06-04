@@ -21,6 +21,7 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
+  asseret Q ne E["curve"]!0;
   u := Q[1]/Q[3];
   v := Q[2]/Q[3];
   x := (36*(d^3 - 1) - v)/(6*(u + 9*d^2)) - d/2;
@@ -29,7 +30,6 @@ E["FBtoV"] := function(Q)
 end function;
 
 E["VtoFB"] := function(t)
-  // if t eq 0 then return []; end if;
   R<X,Y> := PolynomialRing(k,2);
   I := Ideal({X + Y - t,X^3 + Y^3 + 1 - 3*d*X*Y});
   Qs := [];

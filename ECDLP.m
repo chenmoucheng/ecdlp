@@ -260,10 +260,7 @@ end function;
 // Random elements from V and FB
 
 RandomV := function()
-  repeat
-    v := isoKk([Random(K) : i in [1..l]]);
-  until v ne 0;
-  return v;
+  return isoKk([Random(K) : i in [1..l]]);
 end function;
 
 RandomFB := function()

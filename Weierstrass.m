@@ -10,8 +10,7 @@ repeat
     E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
   until Discriminant(E["curve"]) ne 0;
   order := Order(E["curve"](k));
-  assert IsDivisibleBy(order,cofactor);
-until IsPrime(Integers()!(order/cofactor));
+until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
@@ -20,6 +19,7 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
+  asseret Q ne E["curve"]!0;
   return Q[1]/Q[3];
 end function;
 

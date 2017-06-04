@@ -14,31 +14,26 @@ repeat
   repeat
     A := Random(k);
     B := Random(k);
-  until B*(A^2-4) ne 0;
-  E["curve"] := EllipticCurve([(3-A^2)/(3*B^2),(2*A^3-9*A)/(27*B^3)]);
+  until B*(A^2 - 4) ne 0;
+  E["curve"] := EllipticCurve([(3 - A^2)/(3*B^2),(2*A^3 - 9*A)/(27*B^3)]);
   order := Order(E["curve"](k));
-  if not IsDivisibleBy(order,cofactor) then continue; end if;
-until IsPrime(Integers()!(order/cofactor));
+until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
-WeitoMon := function(Q)
-  u := Q[1]/Q[3];
-  v := Q[2]/Q[3];
-  x := B*u - 1/3*A;
-  y := B*v;
-  return [x,y];
-end function;
 
-// FB is on Weierstrass curve, but V is on Montgomery curve
 E["FBtoV"] := function(Q)
-  return WeitoMon(Q)[1];
+  asseret Q ne E["curve"]!0;
+  // u := Q[1]/Q[3];
+  v := Q[2]/Q[3];
+  // x := B*u - 1/3*A;
+  y := B*v;
+  return y;
 end function;
 
-// V is constructed on Montgomery curve
 E["VtoFB"] := function(t)
   R<X,Y> := PolynomialRing(k,2);
   Z := Roots(Evaluate(f,[t,R.1]))

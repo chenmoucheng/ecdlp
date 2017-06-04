@@ -25,6 +25,7 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 zeta := AllRoots(k!1,3)[2];
 E["FBtoV"] := function(Q)
+  assert Q ne E["curve"]!0;
   u := Q[1]/Q[3];
   v := Q[2]/Q[3];
   x :=   zeta     *a1 + (zeta - 1)*v/u + (2*zeta + 1)*a3/u;
@@ -33,7 +34,6 @@ E["FBtoV"] := function(Q)
 end function;
 
 E["VtoFB"] := function(t)
-  // if t eq 0 then return []; end if;
   R<X,Y> := PolynomialRing(k,2);
   I := Ideal({X + Y - t,X^3 + Y^3 + c - d*X*Y});
   Qs := [];

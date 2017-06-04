@@ -16,6 +16,7 @@ repeat
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 until cofactor le 256;
+E["O"] := <k!0,k!1>;
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
@@ -25,23 +26,32 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
-  u := Q[1]/Q[3]/a0;
-  // v := Q[2]/Q[3]/(a0^2);
-  // x := 2*u/v;
-  y := (u - 1)/(u + 1);
+  if Q eq E["curve"]!0 then
+    x := E["O"][1];
+    y := E["O"][2];
+  else
+    u := Q[1]/Q[3]/a0;
+    // v := Q[2]/Q[3]/(a0^2);
+    // x := 2*u/v;
+    y := (u - 1)/(u + 1);
+  end if;
   return y;
 end function;
 
 E["VtoFB"] := function(t)
   R<X,Y> := PolynomialRing(k,2);
-  I := Ideal({Y - t, a*X^2 + Y^2 - (1 + d*X^2*Y^2)});
+  I := Ideal({Y - t,a*X^2 + Y^2 - (1 + d*X^2*Y^2)});
   Qs := [];
   for s in Variety(I) do
-    x := s[1];
-    y := s[2];
-    u := a0  *  (1 + y)/   (1 - y);
-    v := a0^2*2*(1 + y)/(x*(1 - y));
-    Append(~Qs,E["curve"]![u,v]);
+    if s eq E["O"] then
+      Append(~Qs,E["curve"]!0);
+    else
+      x := s[1];
+      y := s[2];
+      u := a0  *  (1 + y)/   (1 - y);
+      v := a0^2*2*(1 + y)/(x*(1 - y));
+      Append(~Qs,E["curve"]![u,v]);
+    end if;
   end for;
   return Qs;
 end function;
