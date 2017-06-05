@@ -141,9 +141,9 @@ end function;
 // Curve-specific definitions
 
 // load "bEdwards.m";
-load "Edwards.m";
+// load "Edwards.m";
 // load "gHessian.m";
-// load "Hessian.m";
+load "Hessian.m";
 // load "Montgomery.m";
 // load "tEdwards.m";
 // load "Weierstrass.m";
