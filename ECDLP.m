@@ -99,7 +99,7 @@ kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
 isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
 
-// Various structures for performing Weil descent
+// Various structures for performing Weil restriction
 
 M := 3*m - 1;
 
@@ -180,19 +180,19 @@ else
   Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],r)});
 end if;
 
-// Weil descent
+// Weil restriction
 
-WeilDescent := function(I)
+WeilRestriction := function(I)
   t0 := Cputime();
   J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
-  print "Weil descent time:",Cputime(t0);
+  print "Weil restriction time:",Cputime(t0);
   return J;
 end function;
 
 // Batched core GB computation
 
 BatchBasis := function(Icondition,Jcondition)
-  return CoreGB(CoreGB(WeilDescent(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilDescent(Icondition) ;
+  return CoreGB(CoreGB(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilRestriction(Icondition) ;
 end function;
 
 // Point-wise core GB computation
@@ -217,7 +217,7 @@ PointBasis := function(Icondition)
   SetVerbose("Faugere",0);
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
-  return CoreGB(WeilDescent(Irewritten) + E["Jcondition"]);
+  return CoreGB(WeilRestriction(Irewritten) + E["Jcondition"]);
 end function;
 
 // Point decomposition
@@ -234,12 +234,12 @@ ECDLPDecompose := function(Q)
   // Needs E["Jcondition"] because its information may be eliminated in CoreGB
   if h ge 0 then
     t0 := Cputime();
-    Zb := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
+    Zb := Variety(WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
     print "Batch decomposition time:",Cputime(t0);
   end if;
 
     t0 := Cputime();
-    Zp := Variety(WeilDescent(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
+    Zp := Variety(WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
     print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then

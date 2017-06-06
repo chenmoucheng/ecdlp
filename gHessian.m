@@ -53,7 +53,7 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
 /*
  * Semaev's summation polynomial for Hessian curves
  *
- * Source: Section 2, http://dblp.org/rec/journals/iacr/Farashahi10
+ * Source: Section 2, http://dblp.org/rec/conf/pkc/FarashahiJ10
  *
  * Computed using the following MAGMA code:
  *
