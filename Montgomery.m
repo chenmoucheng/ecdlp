@@ -27,11 +27,11 @@ print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
 E["FBtoV"] := function(Q)
   assert Q ne E["curve"]!0;
-  // u := Q[1]/Q[3];
-  v := Q[2]/Q[3];
-  // x := B*u - 1/3*A;
-  y := B*v;
-  return y;
+  u := Q[1]/Q[3];
+  // v := Q[2]/Q[3];
+  x := B*u - 1/3*A;
+  // y := B*v;
+  return x;
 end function;
 
 E["VtoFB"] := function(t)
