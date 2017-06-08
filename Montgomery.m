@@ -9,7 +9,6 @@ end if;
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
-cofactor := 4;
 repeat
   repeat
     A := Random(k);
@@ -17,9 +16,11 @@ repeat
   until B*(A^2 - 4) ne 0;
   E["curve"] := EllipticCurve([(3 - A^2)/(3*B^2),(2*A^3 - 9*A)/(27*B^3)]);
   order := Order(E["curve"](k));
-until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+until cofactor le 256;
 P := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
+print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
 
