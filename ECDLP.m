@@ -28,9 +28,60 @@ RewriteESP := function(V,i)
   return hom<S->R|V>(ElementarySymmetricPolynomial(S,i)) where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
 end function;
 
+// Number of missing monomials of zero-dimensional ideal
+// WARNING: Will get into infinite loop if I is not zero-dimensional
+
+NumMissingMonomials := function(I)
+  R := Generic(I);
+  S := PolynomialRing(BaseRing(R),Rank(R),"grevlex");
+  L := LeadingMonomialIdeal(J + Ideal({S.i^Characteristic(BaseRing(S)) - S.i : i in [1..Rank(S)]}))
+       where J is Ideal({phi(f) : f in Basis(I)}) where phi is hom<R->S|[S.i : i in [1..Rank(S)]]>;
+  c := 0;
+  d := 0;
+  repeat
+    M := [m : m in MonomialsOfDegree(S,d) | not m in L];
+    c +:= #M;
+    d +:= 1;
+  until IsEmpty(M);
+
+  return c;
+end function;
+
+// Computing (not necessarily Groebner) basis of zero-dimensional ideal using SAT solver
+
+SATGB := function(I : bound := 1073741823,GB := false)
+  t0 := Cputime();
+  V := [];
+  for i in [1..bound] do
+    sat,sol := SAT(Basis(I) : Exclude := V);
+    if sat then
+      assert not sol in V;
+      Append(~V,sol);
+      if i eq bound then
+        print "SAT time:",Cputime(t0);
+      end if;
+    else
+      if bound ne 1073741823 then
+        print "SAT solution(s) missing:",bound - i + 1;
+      end if;
+      print "SAT time:",Cputime(t0);
+      break;
+    end if;
+  end for;
+  R := Generic(I);
+  J := ideal<R|1>;
+  if GB then
+    for v in V do
+      J *:= Ideal([R.i - v[i] : i in [1..Rank(R)]]);
+    end for;
+  end if;
+
+  return J;
+end function;
+
 // Substituting solution to easy part and computing GB
 
-CoreGB := function(L,...)
+CoreGB := function(L,... : Sat := false)
   I := L[1];
   R := Generic(I);
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
@@ -70,18 +121,26 @@ CoreGB := function(L,...)
     until #G eq #H[D] and Seqset(G) eq Seqset(H[D]);
   end if;
 
+  if Sat then
+    assert BaseRing(S) eq GF(2);
+    b := SATGB(a : bound := 1) where a is Ideal(G);
+    b := SATGB(a : bound := 1) where a is Ideal(H[D - 1]);
+    b := SATGB(a : bound := NumMissingMonomials(a)) where a is Ideal(G);
+    b := SATGB(a : bound := NumMissingMonomials(a)) where a is Ideal(H[D - 1]);
+  end if;
+
   return Ideal({phiSR(g) : g in G});
 end function;
 
 // Parameters
 
 h  := -1;         print "h =",h;
-l  := 1;          print "l =",l;
+l  := 4;          print "l =",l;
 m  := 3;          print "m =",m;
-n  := 4;          print "n =",n;
-q  := 65371;      print "q =",q;
+n  := 17;         print "n =",n;
+q  := 2;          print "q =",q;
 T2 := false;      print "T2 =",T2;
-IX := false;      print "IX =",IX;
+IX := true;       print "IX =",IX;
 
 SetNthreads(1); print "Nthreads =",GetNthreads();
 
@@ -140,10 +199,10 @@ end function;
 
 // Curve-specific definitions
 
-// load "bEdwards.m";
+load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
-load "Hessian.m";
+// load "Hessian.m";
 // load "Montgomery.m";
 // load "tEdwards.m";
 // load "Weierstrass.m";
@@ -192,7 +251,7 @@ end function;
 // Batched core GB computation
 
 BatchBasis := function(Icondition,Jcondition)
-  return CoreGB(CoreGB(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilRestriction(Icondition) ;
+  return CoreGB(CoreGB(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilRestriction(Icondition);
 end function;
 
 // Point-wise core GB computation
@@ -217,7 +276,7 @@ PointBasis := function(Icondition)
   SetVerbose("Faugere",0);
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
-  return CoreGB(WeilRestriction(Irewritten) + E["Jcondition"]);
+  return CoreGB(WeilRestriction(Irewritten) + E["Jcondition"] : Sat := E["form"] eq "bEdwards");
 end function;
 
 // Point decomposition
