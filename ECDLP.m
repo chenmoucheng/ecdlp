@@ -28,55 +28,58 @@ RewriteESP := function(V,i)
   return hom<S->R|V>(ElementarySymmetricPolynomial(S,i)) where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
 end function;
 
-// Number of missing monomials of zero-dimensional ideal
+// Missing monomials of zero-dimensional ideal
 // WARNING: Will get into infinite loop if I is not zero-dimensional
 
-NumMissingMonomials := function(I)
+MissingMonomials := function(I)
   R := Generic(I);
   S := PolynomialRing(BaseRing(R),Rank(R),"grevlex");
   L := LeadingMonomialIdeal(J + Ideal({S.i^Characteristic(BaseRing(S)) - S.i : i in [1..Rank(S)]}))
        where J is Ideal({phi(f) : f in Basis(I)}) where phi is hom<R->S|[S.i : i in [1..Rank(S)]]>;
-  c := 0;
-  d := 0;
+  M := [];
+  D := 0;
   repeat
-    M := [m : m in MonomialsOfDegree(S,d) | not m in L];
-    c +:= #M;
-    d +:= 1;
-  until IsEmpty(M);
+    MD := [m : m in MonomialsOfDegree(S,D) | not m in L];
+    M cat:= MD;
+    D +:= 1;
+  until IsEmpty(MD);
 
-  return c;
+  return M;
 end function;
 
-// Computing (not necessarily Groebner) basis of zero-dimensional ideal using SAT solver
+// Ideal of zero-dimensional variety
 
-SATGB := function(I : bound := 1073741823,GB := false)
+IdealOfVariety := function(V)
+  assert not IsEmpty(V);
+  R := PolynomialRing(Universe(V[1]),#V[1],"grevlex");
+  I := ideal<R|1>;
+  for v in V do
+    I *:= Ideal([R.i - v[i] : i in [1..Rank(R)]]);
+  end for;
+
+  return I;
+end function;
+
+// Variety of zero-dimensional ideal using SAT solver
+
+SATVariety := function(I : Bound := 1073741823)
   t0 := Cputime();
   V := [];
-  for i in [1..bound] do
+  for i in [1..Bound] do
     sat,sol := SAT(Basis(I) : Exclude := V);
     if sat then
       assert not sol in V;
       Append(~V,sol);
-      if i eq bound then
-        print "SAT time:",Cputime(t0);
-      end if;
     else
-      if bound ne 1073741823 then
-        print "SAT solution(s) missing:",bound - i + 1;
+      if Bound ne 1073741823 then
+        print "SAT solution(s) missing:",Bound - i + 1;
       end if;
-      print "SAT time:",Cputime(t0);
       break;
     end if;
   end for;
-  R := Generic(I);
-  J := ideal<R|1>;
-  if GB then
-    for v in V do
-      J *:= Ideal([R.i - v[i] : i in [1..Rank(R)]]);
-    end for;
-  end if;
+  print "SAT time:",Cputime(t0);
 
-  return J;
+  return V;
 end function;
 
 // Substituting solution to easy part and computing GB
@@ -123,10 +126,17 @@ CoreGB := function(L,... : Sat := false)
 
   if Sat then
     assert BaseRing(S) eq GF(2);
-    b := SATGB(a : bound := 1) where a is Ideal(G);
-    b := SATGB(a : bound := 1) where a is Ideal(H[D - 1]);
-    b := SATGB(a : bound := NumMissingMonomials(a)) where a is Ideal(G);
-    b := SATGB(a : bound := NumMissingMonomials(a)) where a is Ideal(H[D - 1]);
+    _ := SATVariety(J               : Bound := 1);
+    _ := SATVariety(Ideal(H[D - 1]) : Bound := 1);
+    _ := SATVariety(Ideal(H[D])     : Bound := 1);
+    _ := SATVariety(J               : Bound := #MissingMonomials(J));
+    _ := SATVariety(Ideal(H[D - 1]) : Bound := #MissingMonomials(Ideal(H[D - 1])));
+    W := SATVariety(Ideal(G)        : Bound := #MissingMonomials(Ideal(G)));
+    /*
+     * P := IdealOfVariety(W);
+     * Q := Ideal({phi(f) : f in Basis(P)}) where phi is hom<Generic(P)->S|[S.i : i in [1..Rank(S)]]>; Groebner(Q);
+     * assert Seqset(G) eq Seqset(Basis(Q));
+     */
   end if;
 
   return Ideal({phiSR(g) : g in G});
