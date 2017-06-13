@@ -136,7 +136,7 @@ end function;
 
 // Point decomposition
 
-ECDLPDecompose := function(Q)
+ECDLPDecompose := function(Q : Al := "All")
   print "Decomposing",Q;
   if not IsPrime(Order(Q)) then return []; end if;
 
@@ -178,7 +178,7 @@ ECDLPDecompose := function(Q)
 
   Jp := WeilRestriction(Irewritten) + E["Jcondition"];
   t0 := Cputime();
-  Zp := CoreVariety(J,Jp);
+  Zp := CoreVariety(J,Jp : Al := Al);
   print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then
@@ -228,11 +228,13 @@ for point := 1 to 1 do
   ntrials := 10;
   for trial := 1 to ntrials do
     print ""; print "Point B",point,trial;
-    Qs := ECDLPDecompose(Random(Order(P))*P);
+    Qs := ECDLPDecompose(Random(Order(P))*P : Al := "Groebner");
     if not IsEmpty(Qs) then
       Qs; success +:= 1;
     end if;
   end for;
-  print "Success probability:",success/ntrials;
+  if ntrials gt 0 then
+    print ""; print "Success probability:",success/ntrials;
+  end if;
 end for;
 
