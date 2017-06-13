@@ -2,157 +2,25 @@
  * Solving ECDLP using Semaev's summation polynomials
  */
 
+// System settings
+
 SetColumns(0);
+SetNthreads(1);
+print "Nthreads =",GetNthreads();
 
-// Utility functions
+// Core solving logic
 
-Degrees := function(F)
-  D := [];
-  for f in F do
-    d := TotalDegree(f);
-    if d eq 0 then continue; end if;
-    D[d] := IsDefined(D,d) select D[d] + 1 else 1;
-  end for;
-  for d := 1 to #D do
-    D[d] := IsDefined(D,d) select D[d]     else 0;
-  end for;
-
-  return D;
-end function;
-
-InSupport := function(v,f)
-  return Degree(f,v) gt 0;
-end function;
-
-RewriteESP := function(V,i)
-  return hom<S->R|V>(ElementarySymmetricPolynomial(S,i)) where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
-end function;
-
-// Missing monomials of zero-dimensional ideal
-// WARNING: Will get into infinite loop if I is not zero-dimensional
-
-MissingMonomials := function(I)
-  R := Generic(I);
-  S := PolynomialRing(BaseRing(R),Rank(R),"grevlex");
-  L := LeadingMonomialIdeal(J + Ideal({S.i^Characteristic(BaseRing(S)) - S.i : i in [1..Rank(S)]}))
-       where J is Ideal({phi(f) : f in Basis(I)}) where phi is hom<R->S|[S.i : i in [1..Rank(S)]]>;
-  M := [];
-  D := 0;
-  repeat
-    MD := [m : m in MonomialsOfDegree(S,D) | not m in L];
-    M cat:= MD;
-    D +:= 1;
-  until IsEmpty(MD);
-
-  return M;
-end function;
-
-// Ideal of zero-dimensional variety
-
-IdealOfVariety := function(V)
-  assert not IsEmpty(V);
-  R := PolynomialRing(Universe(V[1]),#V[1],"grevlex");
-  I := ideal<R|1>;
-  for v in V do
-    I *:= Ideal([R.i - v[i] : i in [1..Rank(R)]]);
-  end for;
-
-  return I;
-end function;
-
-// Variety of zero-dimensional ideal using SAT solver
-
-SATVariety := function(I : Bound := 1073741823)
-  t0 := Cputime();
-  V := [];
-  for i in [1..Bound] do
-    sat,sol := SAT(Basis(I) : Exclude := V);
-    if sat then
-      assert not sol in V;
-      Append(~V,sol);
-    else
-      if Bound ne 1073741823 then
-        print "SAT solution(s) missing:",Bound - i + 1;
-      end if;
-      break;
-    end if;
-  end for;
-  print "SAT time:",Cputime(t0);
-
-  return V;
-end function;
-
-// Substituting solution to easy part and computing GB
-
-CoreGB := function(L,... : Sat := false)
-  I := L[1];
-  R := Generic(I);
-  F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
-  U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
-  S := #K eq 2 select BooleanPolynomialRing(#U,"grevlex") else PolynomialRing(K,#U,"grevlex") where K is BaseRing(R);
-  V := [S|];
-  for i := 1 to Rank(R) do
-    if R.i in U then
-      Append(~V,S.Index(U,R.i));
-    else
-      G := {UnivariatePolynomial(f) : f in F | InSupport(R.i,f)};
-      x := IsEmpty(G) select Random(BaseRing(R)) else Random(Roots(Random(G)))[1];
-      Append(~V,x);
-    end if;
-  end for;
-  phiRS := hom<R->S|V>;
-  phiSR := hom<S->R|U>;
-  J := Ideal({g : f in Basis(I) | g ne 0 where g is phiRS(f)});
-
-  SetVerbose("Faugere",2);
-  G := GroebnerBasis(Basis(J),IsDefined(L,2) select L[2] else 1073741823);
-  SetVerbose("Faugere",0);
-
-  if not IsDefined(L,2) then
-    H := [];
-    D := Maximum({TotalDegree(f) : f in Basis(J)});
-    t0 := Cputime();
-    H[D] := GroebnerBasis(Basis(J),D);
-    print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
-    repeat
-      D +:= 1;
-      t0 := Cputime();
-      H[D] := GroebnerBasis(Basis(J),D);
-      print "Groebner basis time:",Cputime(t0),D,#H[D],"=",Degrees(H[D]);
-      HH := {f : f in H[D] | TotalDegree(f) lt D and NormalForm(f,H[D - 1]) ne 0};
-      if not IsEmpty(HH) then print "  Gap degree and sizes:",D,#HH,"=",Degrees(HH); end if;
-    until #G eq #H[D] and Seqset(G) eq Seqset(H[D]);
-  end if;
-
-  if Sat then
-    assert BaseRing(S) eq GF(2);
-    _ := SATVariety(J               : Bound := 1);
-    _ := SATVariety(Ideal(H[D - 1]) : Bound := 1);
-    _ := SATVariety(Ideal(H[D])     : Bound := 1);
-    _ := SATVariety(J               : Bound := #MissingMonomials(J));
-    _ := SATVariety(Ideal(H[D - 1]) : Bound := #MissingMonomials(Ideal(H[D - 1])));
-    W := SATVariety(Ideal(G)        : Bound := #MissingMonomials(Ideal(G)));
-    /*
-     * P := IdealOfVariety(W);
-     * Q := Ideal({phi(f) : f in Basis(P)}) where phi is hom<Generic(P)->S|[S.i : i in [1..Rank(S)]]>; Groebner(Q);
-     * assert Seqset(G) eq Seqset(Basis(Q));
-     */
-  end if;
-
-  return Ideal({phiSR(g) : g in G});
-end function;
+load "CoreSolve.m";
 
 // Parameters
 
-h  := -1;         print "h =",h;
-l  := 4;          print "l =",l;
+h  := 1;          print "h =",h;
+l  := 2;          print "l =",l;
 m  := 3;          print "m =",m;
-n  := 17;         print "n =",n;
+n  := 5;          print "n =",n;
 q  := 2;          print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
-
-SetNthreads(1); print "Nthreads =",GetNthreads();
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -209,13 +77,17 @@ end function;
 
 // Curve-specific definitions
 
-load "bEdwards.m";
+RewriteESP := function(V,i)
+  return hom<S->R|V>(ElementarySymmetricPolynomial(S,i)) where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
+end function;
+
+// load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
 // load "Hessian.m";
 // load "Montgomery.m";
 // load "tEdwards.m";
-// load "Weierstrass.m";
+load "Weierstrass.m";
 
 E["f4"] := function(x0,x1,x2,x3)
   R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
@@ -258,17 +130,28 @@ WeilRestriction := function(I)
   return J;
 end function;
 
-// Batched core GB computation
+// Point decomposition
 
-BatchBasis := function(Icondition,Jcondition)
-  return CoreGB(CoreGB(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition,5)+ E["Jcondition"]) + WeilRestriction(Icondition);
-end function;
+ECDLPDecompose := function(Q)
+  print "Decomposing",Q;
+  if not IsPrime(Order(Q)) then return []; end if;
 
-// Point-wise core GB computation
+  z := E["FBtoV"](-Q);
+  Icondition := Ideal({r - z});
+  J := WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + E["Jcondition"];
 
-PointBasis := function(Icondition)
+  if h ge 0 then
+    Z := C cat [K!0 : i in [(#C + 1)..n]] where C is Coefficients(phi(z));
+    Jcondition := ideal<S1|{R[i] - Z[i] : i in [1..h]}>;
+    P,iota := CoreIdeal(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition);
+
+    t0 := Cputime();
+    Jb := Ideal({iota(f) : f in GroebnerBasis(Basis(P),4)});
+    Zb := Variety(J + Jb);
+    print "Batch decomposition time:",Cputime(t0);
+  end if;
+
   print "Rewriting variables";
-  SetVerbose("Faugere",2);
   if not elim then
     print "  ... skipped";
     Irewritten := Isummation + Icondition;
@@ -283,33 +166,12 @@ PointBasis := function(Icondition)
   else
     Irewritten := EliminationIdeal(Isummation                                   + Icondition + E["Iauxiliary"],Seqset(s));
   end if;
-  SetVerbose("Faugere",0);
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
-  return CoreGB(WeilRestriction(Irewritten) + E["Jcondition"] : Sat := E["form"] eq "bEdwards");
-end function;
-
-// Point decomposition
-
-ECDLPDecompose := function(Q)
-  print "Decomposing",Q;
-  if not IsPrime(Order(Q)) then return []; end if;
-  z := E["FBtoV"](-Q);
-  Z := Coefficients(phi(z));
-  Icondition := Ideal({r - z});
-  Jcondition := ideal<S1|{R[i] - Z[i] : i in [1..h]}>;
-
-  // Needs    Isummation   because u's information may be eliminated in EliminationIdeal
-  // Needs E["Jcondition"] because its information may be eliminated in CoreGB
-  if h ge 0 then
-    t0 := Cputime();
-    Zb := Variety(WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + BatchBasis(Icondition,Jcondition) + E["Jcondition"]);
-    print "Batch decomposition time:",Cputime(t0);
-  end if;
-
-    t0 := Cputime();
-    Zp := Variety(WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + PointBasis(Icondition)            + E["Jcondition"]);
-    print "Point decomposition time:",Cputime(t0);
+  Jp := WeilRestriction(Irewritten) + E["Jcondition"];
+  t0 := Cputime();
+  Zp := CoreVariety(J,Jp);
+  print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then
     assert Seqset(Zb) eq Seqset(Zp);
@@ -344,16 +206,25 @@ end function;
 
 for point := 1 to 1 do
   print ""; print "Point A",point;
+  SetVerbose("Faugere",2);
+  SetVerbose("FGLM",2);
   repeat
     Ps := [RandomFB() : i in [1..m]]; Ps;
     Qs := ECDLPDecompose(&+Ps);
   until not IsEmpty(Qs);
   Qs;
 
-  for trial := 1 to 0 do
+  SetVerbose("Faugere",0);
+  SetVerbose("FGLM",0);
+  success := 0;
+  ntrials := 10;
+  for trial := 1 to ntrials do
     print ""; print "Point B",point,trial;
     Qs := ECDLPDecompose(Random(Order(P))*P);
-    Qs;
+    if not IsEmpty(Qs) then
+      Qs; success +:= 1;
+    end if;
   end for;
+  print "Success probability:",success/ntrials;
 end for;
 

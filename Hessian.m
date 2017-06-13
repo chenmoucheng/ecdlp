@@ -78,8 +78,8 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * c0 := T3 * T4 - Z^2*C0;
  * c1 := T3 + T4 + Z  *C1;
  * 
- * I0 := Ideal([d1,d2,s1,s2,c0]); J0 := EliminationIdeal(I0,{T1,T2,D,C0}); G0 := Coefficients(Basis(J0)[1],C0);
- * I1 := Ideal([d1,d2,s1,s2,c1]); J1 := EliminationIdeal(I1,{T1,T2,D,C1}); G1 := Coefficients(Basis(J1)[1],C1);
+ * I0 := Ideal({d1,d2,s1,s2,c0}); J0 := EliminationIdeal(I0,{T1,T2,D,C0}); G0 := Coefficients(Basis(J0)[1],C0);
+ * I1 := Ideal({d1,d2,s1,s2,c1}); J1 := EliminationIdeal(I1,{T1,T2,D,C1}); G1 := Coefficients(Basis(J1)[1],C1);
  * 
  * g3 := G0[1]*G1[2] + G0[2]*G1[1]*T - G0[2]*G1[2]*T^2;
  * 
