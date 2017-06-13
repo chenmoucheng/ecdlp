@@ -110,8 +110,10 @@ end function;
 CoreIdeal := function(I)
   R := Generic(I);
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
-  U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F] and &or[InSupport(R.i,f) : f in F_]];
-  S := #k eq 2 select BooleanPolynomialRing(#U,"grevlex") else PolynomialRing(k,#U,"grevlex") where k is BaseRing(R);
+  U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F]
+                                  and &or[InSupport(R.i,f) : f in F_]];
+  S := #k eq 2 select BooleanPolynomialRing(#U,"grevlex")
+       else PolynomialRing(k,#U,"grevlex") where k is BaseRing(R);
   V := [S|];
   for i := 1 to Rank(R) do
     if R.i in U then

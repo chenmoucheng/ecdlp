@@ -47,7 +47,8 @@ s := [R1.i : i in [(2*m - 1)..(3*m - 2)]];
 r :=  R1.M;
 
 R2 := PolynomialRing(kK,M*n);
-phi12 := hom<R1->R2|isokK,[Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]]>;
+phi12 := hom<R1->R2|isokK,F>
+         where F is [Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]];
 
 if q lt 65536 then
   R3,phi23 := R2/Ideal({R2.i^q - R2.i : i in [1..Rank(R2)]});
@@ -78,7 +79,8 @@ end function;
 // Curve-specific definitions
 
 RewriteESP := function(V,i)
-  return hom<S->R|V>(ElementarySymmetricPolynomial(S,i)) where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
+  return hom<S->R|V>(ElementarySymmetricPolynomial(S,i))
+         where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
 end function;
 
 // load "bEdwards.m";
@@ -118,7 +120,9 @@ end function;
 if m eq 2 then
   Isummation := Ideal({E["f3"](t[1],t[2],r)});
 else
-  Isummation := Ideal({E["f3"](t[1],t[2],u[1])} join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]} join {E["f3"](u[m - 2],t[m],r)});
+  Isummation := Ideal({E["f3"](t[1],    t[2],    u[1])}
+                 join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
+                 join {E["f3"](u[m - 2],t[m],    r)});
 end if;
 
 // Weil restriction
@@ -155,16 +159,20 @@ ECDLPDecompose := function(Q)
   if not elim then
     print "  ... skipped";
     Irewritten := Isummation + Icondition;
-  elif m eq 2 then
-    Irewritten := EliminationIdeal(Ideal({E["f3"](t[1],t[2],               r)}) + Icondition + E["Iauxiliary"],Seqset(s));
-  elif m eq 3 then
-    Irewritten := EliminationIdeal(Ideal({E["f4"](t[1],t[2],t[3],          r)}) + Icondition + E["Iauxiliary"],Seqset(s));
-  elif m eq 4 then
-    Irewritten := EliminationIdeal(Ideal({E["f5"](t[1],t[2],t[3],t[4],     r)}) + Icondition + E["Iauxiliary"],Seqset(s));
-  elif m eq 5 then
-    Irewritten := EliminationIdeal(Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],r)}) + Icondition + E["Iauxiliary"],Seqset(s));
   else
-    Irewritten := EliminationIdeal(Isummation                                   + Icondition + E["Iauxiliary"],Seqset(s));
+    case m:
+      when 2:
+        I := Ideal({E["f3"](t[1],t[2],r)});
+      when 3:
+        I := Ideal({E["f4"](t[1],t[2],t[3],r)});
+      when 4:
+        I := Ideal({E["f5"](t[1],t[2],t[3],t[4],r)});
+      when 5:
+        I := Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],r)});
+      else
+        I := Isummation;
+    end case;
+    Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
   end if;
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
