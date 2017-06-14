@@ -84,7 +84,7 @@ end function;
 
 SATVariety := function(I : Bound := 0)
   V := [];
-  if I ne Generic(I) then
+  if Seqset(Basis(I)) ne {1} then
     if Bound eq 0 then Bound := VarietySizeOverCoefficientField(I); end if;
     t0 := Cputime();
     for i := 1 to Bound do
@@ -133,13 +133,16 @@ end function;
 
 // Variety of zero-dimensional ideal I with core ideal Ic
 
-CoreVariety := function(I,Ic : Al := "All")
+CoreVariety := function(I,Ic : Al := "All",Verbose := false)
   Jc,phi := CoreIdeal(Ic);
   Rc := Generic(Jc);
+  b := GetVerbose("Faugere");
   case Al:
     when "All":
       Ic := Jc;
+      SetVerbose("Faugere",Verbose select 2 else 0);
       Groebner(Ic);
+      SetVerbose("Faugere",0);
       Vc := Variety(Ic);
       Hc := GapDegrees(Basis(Jc),Basis(Ic));
       _ := SATVariety(Ic : Bound := 1);
@@ -164,6 +167,7 @@ CoreVariety := function(I,Ic : Al := "All")
       print "Extraneous root found";
     end if;
   end for;
+  SetVerbose("Faugere",b);
 
   return V;
 end function;

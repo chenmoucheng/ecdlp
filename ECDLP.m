@@ -6,6 +6,7 @@
 
 SetColumns(0);
 SetNthreads(1);
+SetVerbose("FGLM",2);
 print "Nthreads =",GetNthreads();
 
 // Core solving logic
@@ -21,6 +22,7 @@ n  := 5;          print "n =",n;
 q  := 2;          print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
+Al := "All";      print "Al =",Al;
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -136,7 +138,7 @@ end function;
 
 // Point decomposition
 
-ECDLPDecompose := function(Q : Al := "All")
+ECDLPDecompose := function(Q : Al := "All",Verbose := false)
   print "Decomposing",Q;
   if not IsPrime(Order(Q)) then return []; end if;
 
@@ -172,13 +174,15 @@ ECDLPDecompose := function(Q : Al := "All")
       else
         I := Isummation;
     end case;
+    b := GetVerbose("Faugere"); SetVerbose("Faugere",Verbose select 2 else 0);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
+    SetVerbose("Faugere",0);
   end if;
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
   Jp := WeilRestriction(Irewritten) + E["Jcondition"];
   t0 := Cputime();
-  Zp := CoreVariety(J,Jp : Al := Al);
+  Zp := CoreVariety(J,Jp : Al := Al,Verbose := Verbose);
   print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then
@@ -214,21 +218,17 @@ end function;
 
 for point := 1 to 1 do
   print ""; print "Point A",point;
-  SetVerbose("Faugere",2);
-  SetVerbose("FGLM",2);
   repeat
     Ps := [RandomFB() : i in [1..m]]; Ps;
-    Qs := ECDLPDecompose(&+Ps);
+    Qs := ECDLPDecompose(&+Ps : Verbose := true);
   until not IsEmpty(Qs);
   Qs;
 
-  SetVerbose("Faugere",0);
-  SetVerbose("FGLM",0);
   success := 0;
   ntrials := 10;
   for trial := 1 to ntrials do
     print ""; print "Point B",point,trial;
-    Qs := ECDLPDecompose(Random(Order(P))*P : Al := "Groebner");
+    Qs := ECDLPDecompose(Random(Order(P))*P : Al := Al);
     if not IsEmpty(Qs) then
       Qs; success +:= 1;
     end if;
