@@ -139,7 +139,7 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
   b := GetVerbose("Faugere");
   case Al:
     when "All":
-      Ic := Jc;
+      Ic := Ideal(Basis(Jc));
       SetVerbose("Faugere",Verbose select 2 else 0);
       Groebner(Ic);
       SetVerbose("Faugere",0);
@@ -154,7 +154,7 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
     when "SAT":
-      Vc := SATVariety(Jc : Bound := 1);
+      Vc := SATVariety(Jc);
     else
       Vc := Variety(Jc);
   end case;
