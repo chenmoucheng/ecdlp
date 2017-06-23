@@ -1,0 +1,154 @@
+--- package/Commut/Solve/sat.m-orig	2016-05-31 10:23:45.000000000 +0900
++++ package/Commut/Solve/sat.m	2017-06-23 09:35:13.000000000 +0900
+@@ -14,6 +14,7 @@
+ 
+     P := Universe(B);
+     n := Rank(P);
++    symtab := [<P.i, 2> : i in [1..n]];
+ 
+     if Type(P) ne RngMPolBool then
+ 	FP := [P.i^2 + P.i: i in [1 .. n]];
+@@ -29,6 +30,7 @@
+     out cat:= Sprintf("c one monomial is %o\n", one);
+     out cat:= Sprintf("%o 0\n", one);
+     nc +:= 1;
++    symtab[one] := <1, 1>;
+ 
+     M := {@ @};
+     mon_base := n + 2;
+@@ -129,6 +131,7 @@
+ 
+ 		out cat:= Sprintf("c mon %o = %o\n", m, ind);
+ 		mi := [i: i in [1 .. n] | Degree(m, i) ge 1];
++                symtab[ind] := <m, 2>;
+ 
+ 		if neg gt 0 then
+ 		    i := Index(mi, neg);
+@@ -201,10 +204,12 @@
+ 	    elif Cut eq 5 then // and f long enough?
+ 		yb := next; next +:= 1;
+ 		Append(~T, [f[1], f[2], f[3], f[4], yb]);
++                symtab[yb] := <g, #Terms(g) + 1> where g is symtab[f[1]][1] + symtab[f[2]][1] + symtab[f[3]][1] + symtab[f[4]][1];
+ 		i := 5;
+ 		while i + 3 lt #f do
+ 		    ye := next; next +:= 1;
+ 		    Append(~T, [yb, f[i], f[i + 1], f[i + 2], ye]);
++                    symtab[ye] := <g, #Terms(g) + 1> where g is symtab[yb][1] + symtab[f[i]][1] + symtab[f[i + 1]][1] + symtab[f[i + 2]][1];
+ 		    yb := ye;
+ 		    i +:= 3;
+ 		end while;
+@@ -212,10 +217,12 @@
+ 	    else
+ 		yb := next; next +:= 1;
+ 		Append(~T, [f[1], f[2], f[3], yb]);
++                symtab[yb] := <g, #Terms(g) + 1> where g is symtab[f[1]][1] + symtab[f[2]][1] + symtab[f[3]][1];
+ 		i := 4;
+ 		while i + 2 lt #f do
+ 		    ye := next; next +:= 1;
+ 		    Append(~T, [yb, f[i], f[i + 1], ye]);
++                    symtab[ye] := <g, #Terms(g) + 1> where g is symtab[yb][1] + symtab[f[i]][1] + symtab[f[i + 1]][1];
+ 		    yb := ye;
+ 		    i +:= 2;
+ 		end while;
+@@ -319,68 +326,86 @@
+ 
+     out := Sprintf("p cnf %o %o\n", next - 1, nc) cat out;
+ 
+-    return out;
++    return out, symtab;
+ end function;
+ 
+-function do_sat(B, Exclude, Verbose)
++function do_sat(B, Cpulim, Exclude, Litlim, Termlim, Verbose)
+ 
+     root := Sprintf("%o/msat.%o.", GetTempDir(), Getpid());
+     in_file := root cat "in";
+     out_file := root cat "out";
++    err_file := root cat "err";
+ 
+     cols := GetColumns();
+     SetColumns(0);
+-    S := make_input(B, Exclude);
++    S, T := make_input(B, Exclude);
+     PrintFile(in_file, S: Overwrite);
+     delete S;
+     SetColumns(cols);
+ 
+-    cmd := Sprintf("minisat %o %o", in_file, out_file);
++    cmd := Sprintf("touch %o", out_file);
++    System(cmd);
++
++    cmd := Sprintf("minisat -cpu-lim=%o -rnd-init -rnd-seed=%o %o %o 2>%o", Cpulim, Random(2^32 - 1), in_file, out_file, err_file);
+     if not Verbose then
+-	cmd cat:= " >/dev/null 2>&1";
++	cmd cat:= " >/dev/null";
+     end if;
+     System(cmd);
+-    cmd := Sprintf("#rm -f %o", in_file);
++    cmd := Sprintf("rm -f %o", in_file);
++    System(cmd);
++
++    S := Read(err_file);
++    cmd := Sprintf("rm -f %o", err_file);
+     System(cmd);
+ 
++    L := [];
++    for F in Split(S) do
++        M := [eval m : m in Split(F, " ")];
++        if M[#M] eq 0 and #M le Litlim and &*[T[Abs(i)][2] : i in M | i ne 0] lt Termlim then
++            f := &*[i gt 0 select T[i][1] + 1 else T[-i][1] : i in M | i ne 0];
++            if f ne 0 then Append(~L, f); end if;
++        end if;
++    end for;
++    delete S;
++
+     S := Read(out_file);
+     cmd := Sprintf("rm -f %o", out_file);
+     System(cmd);
+ 
+     if Regexp("UNSAT", S) then
+-	return false, _;
++	return false, _, L;
+     end if;
+ 
+     n := Rank(Universe(B));
+     t, U, M := Regexp("SAT(.*)", S);
+     if not (t and #M eq 1) then
+-	error "Interrupted or failed";
++	return false, _, L;
+     end if;
+ 
+     S := M[1];
+     Q := [eval x: x in Split(S, " ")];
+     assert forall{i: i in [1 .. #Q - 1] | Abs(Q[i]) eq i};
+ 
+-    return true, [GF(2) | Q[i] lt 0 select 0 else 1: i in [1 .. n]];
++    return true, [GF(2) | Q[i] lt 0 select 0 else 1: i in [1 .. n]], L;
+ 
+ end function;
+ 
+-intrinsic SAT(B::[RngMPolElt]: Exclude := [], Verbose := false)
+-    -> BoolElt, SeqEnum
++intrinsic SAT(B::[RngMPolElt]: Cpulim := 0, Exclude := [], Litlim := 10, Termlim := 200, Verbose := false)
++    -> BoolElt, SeqEnum, SeqEnum
+ {Apply the SAT solver to the binary poly system B: return true and a
+ solution if the system is solvable, false otherwise}
+ 
+     require BaseRing(Universe(B)) cmpeq GF(2): "Base ring must be GF(2)";
+ 
+-    return do_sat(B, Exclude, Verbose);
++    return do_sat(B, Cpulim, Exclude, Litlim, Termlim, Verbose);
+ 
+ end intrinsic;
+ 
+-intrinsic SAT(B::[RngMPolBoolElt]: Exclude := [], Verbose := false)
+-    -> BoolElt, SeqEnum
++intrinsic SAT(B::[RngMPolBoolElt]: Cpulim := 0, Exclude := [], Litlim := 10, Termlim := 200, Verbose := false)
++    -> BoolElt, SeqEnum, SeqEnum
+ {Apply the SAT solver to the binary poly system B: return true and a solution
+ if the system is solvable, false otherwise}
+ 
+-    return do_sat(B, Exclude, Verbose);
++    return do_sat(B, Cpulim, Exclude, Litlim, Termlim, Verbose);
+ 
+ end intrinsic;

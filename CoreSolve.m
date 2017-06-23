@@ -83,12 +83,12 @@ end function;
 // Variety of zero-dimensional ideal I using SAT solver
 
 SATVariety := function(I : Bound := 0)
-  V := [];
+  V := []; L := [];
   if Seqset(Basis(I)) ne {1} then
     if Bound eq 0 then Bound := VarietySizeOverCoefficientField(I); end if;
     t0 := Cputime();
     for i := 1 to Bound do
-      sat,sol := SAT(Basis(I) : Exclude := V);
+      sat,sol,L := SAT(Basis(I) : Cpulim := 200,Exclude := V);
       if sat then
         assert not sol in V;
         Append(~V,sol);
@@ -102,7 +102,7 @@ SATVariety := function(I : Bound := 0)
     end for;
   end if;
 
-  return V;
+  return V,L;
 end function;
 
 // Core ideal after substituting constant and ignoring unassigned variables
@@ -153,6 +153,9 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       if #Hc ge 2 then V := SATVariety(Ideal(Hc[#Hc - 1])); end if;
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
+    when "SAGB":
+      _,L := SATVariety(Jc);
+      Vc := Variety(Jc + ideal<Rc|L>);
     when "SAT":
       Vc := SATVariety(Jc);
     else

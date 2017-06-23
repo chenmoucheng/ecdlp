@@ -22,7 +22,7 @@ n  := 5;          print "n =",n;
 q  := 2;          print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
-Al := "All";      print "Al =",Al;
+Al := "SAGB";     print "Al =",Al;
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -186,7 +186,7 @@ ECDLPDecompose := function(Q : Al := "All",Verbose := false)
   print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then
-    assert Seqset(Zb) eq Seqset(Zp);
+    assert Al eq "SAGB" or Seqset(Zb) eq Seqset(Zp);
   end if;
 
   Qs := [];

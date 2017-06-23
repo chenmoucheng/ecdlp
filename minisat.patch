@@ -1,0 +1,25 @@
+diff --git a/minisat/core/Solver.cc b/minisat/core/Solver.cc
+index 0b4f77a..dad2591 100644
+--- a/minisat/core/Solver.cc
++++ b/minisat/core/Solver.cc
+@@ -18,6 +18,7 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ **************************************************************************************************/
+ 
++#include <iostream>
+ #include <math.h>
+ 
+ #include "minisat/mtl/Alg.h"
+@@ -381,6 +382,12 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
+     }
+ 
+     for (int j = 0; j < analyze_toclear.size(); j++) seen[var(analyze_toclear[j])] = 0;    // ('seen[]' is now cleared)
++
++    for (int i = 0 ; i < out_learnt.size() ; ++i) {
++        j = var(out_learnt[i]) + 1;
++        std::cerr << (sign(out_learnt[i]) ? -j : j) << " ";
++    }
++    std::cerr << "0" << std::endl;
+ }
+ 
+ 
