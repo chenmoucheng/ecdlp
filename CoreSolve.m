@@ -110,8 +110,8 @@ end function;
 CoreIdeal := function(I)
   R := Generic(I);
   F := {f : f in Basis(I) | IsUnivariate(f)}; F_ := Seqset(Basis(I)) diff F;
-  U := [R.i : i in [1..Rank(R)] | &and[not InSupport(R.i,f) : f in F]
-                                  and &or[InSupport(R.i,f) : f in F_]];
+  U := [R.i : i in [1..Rank(R)] | forall(t){f : f in F  | not InSupport(R.i,f)}
+                              and exists(t){f : f in F_ |     InSupport(R.i,f)}];
   S := #k eq 2 select BooleanPolynomialRing(#U,"grevlex")
        else PolynomialRing(k,#U,"grevlex") where k is BaseRing(R);
   V := [S|];
@@ -119,8 +119,8 @@ CoreIdeal := function(I)
     if R.i in U then
       Append(~V,S.Index(U,R.i));
     else
-      x := IsEmpty(G) select Random(BaseRing(R)) else Random(Roots(Random(G)))[1]
-           where G is {UnivariatePolynomial(f) : f in F | InSupport(R.i,f)};
+      x := exists(g){UnivariatePolynomial(f) : f in F | InSupport(R.i,f)}
+           select Random(Roots(g))[1] else Random(BaseRing(R));
       Append(~V,x);
     end if;
   end for;
