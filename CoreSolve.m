@@ -154,7 +154,7 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
     when "SAGB":
-      _,L := SATVariety(Jc);
+      _,L := SATVariety(Jc : Bound := 1);
       Vc := Variety(Jc + ideal<Rc|L>);
     when "SAT":
       Vc := SATVariety(Jc);

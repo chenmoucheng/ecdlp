@@ -186,7 +186,7 @@ ECDLPDecompose := function(Q : Al := "All",Verbose := false)
   print "Point decomposition time:",Cputime(t0);
 
   if h ge 0 then
-    assert Al eq "SAGB" or Seqset(Zb) eq Seqset(Zp);
+    assert Seqset(Zb) eq Seqset(Zp);
   end if;
 
   Qs := [];
