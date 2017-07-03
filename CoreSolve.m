@@ -82,21 +82,20 @@ end function;
 
 // Variety of zero-dimensional ideal I using SAT solver
 
-SATVariety := function(I : Bound := 0)
+SATVariety := function(I : Bound := 0,Verbose := false)
   V := []; L := [];
   if Seqset(Basis(I)) ne {1} then
     if Bound eq 0 then Bound := VarietySizeOverCoefficientField(I); end if;
     t0 := Cputime();
     for i := 1 to Bound do
-      sat,sol,L := SAT(Basis(I) : Cpulim := 200,Exclude := V);
+      sat,sol,L := SAT(Basis(I) : Cpulim := 200,Exclude := V,Litlim := 5,Termlim := 100,Verbose := Verbose);
       if sat then
-        assert not sol in V;
         Append(~V,sol);
         if i eq Bound then
-          print "SAT time:",Cputime(t0),i;
+          print "SAT time:",Cputime(t0),i,#L;
         end if;
       else
-        print "SAT time:",Cputime(t0),i - 1,Bound;
+        print "SAT time:",Cputime(t0),i - 1,Bound,#L;
         break;
       end if;
     end for;
@@ -154,12 +153,18 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
     when "SAGB":
-      _,L := SATVariety(Jc : Bound := 1);
+      _,L := SATVariety(Ideal(RandomSubset(F,#F - 0)) : Bound := 1,Verbose := true) where F is Seqset(Basis(Jc));
+      SetVerbose("Faugere",Verbose select 2 else 0);
       Vc := Variety(Jc + ideal<Rc|L>);
+      SetVerbose("Faugere",0);
     when "SAT":
+      SetVerbose("Faugere",Verbose select 2 else 0);
       Vc := SATVariety(Jc);
+      SetVerbose("Faugere",0);
     else
+      SetVerbose("Faugere",Verbose select 2 else 0);
       Vc := Variety(Jc);
+      SetVerbose("Faugere",0);
   end case;
   V := [];
   for J in IdealsOfSingletons(Rc,Vc) do

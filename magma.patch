@@ -1,5 +1,5 @@
 --- package/Commut/Solve/sat.m-orig	2016-05-31 10:23:45.000000000 +0900
-+++ package/Commut/Solve/sat.m	2017-06-23 09:35:13.000000000 +0900
++++ package/Commut/Solve/sat.m	2017-07-03 12:57:59.617861988 +0900
 @@ -14,6 +14,7 @@
  
      P := Universe(B);
@@ -50,7 +50,7 @@
  		    yb := ye;
  		    i +:= 2;
  		end while;
-@@ -319,68 +326,86 @@
+@@ -319,68 +326,89 @@
  
      out := Sprintf("p cnf %o %o\n", next - 1, nc) cat out;
  
@@ -65,6 +65,7 @@
      in_file := root cat "in";
      out_file := root cat "out";
 +    err_file := root cat "err";
++    log_file := Verbose select root cat "log" else "/dev/null";
  
      cols := GetColumns();
      SetColumns(0);
@@ -75,18 +76,21 @@
      SetColumns(cols);
  
 -    cmd := Sprintf("minisat %o %o", in_file, out_file);
+-    if not Verbose then
+-	cmd cat:= " >/dev/null 2>&1";
 +    cmd := Sprintf("touch %o", out_file);
 +    System(cmd);
 +
-+    cmd := Sprintf("minisat -cpu-lim=%o -rnd-init -rnd-seed=%o %o %o 2>%o", Cpulim, Random(2^32 - 1), in_file, out_file, err_file);
-     if not Verbose then
--	cmd cat:= " >/dev/null 2>&1";
-+	cmd cat:= " >/dev/null";
++    cmd := Sprintf("minisat -cpu-lim=%o -rnd-init -rnd-seed=%o %o %o 2>%o >%o", Cpulim, Random(2^32 - 1), in_file, out_file, err_file, log_file);
++    System(cmd);
++    if Verbose then
++        Read(log_file);
++        cmd := Sprintf("rm -f %o", log_file);
++        System(cmd);
      end if;
++    cmd := Sprintf("rm -f %o", in_file);
      System(cmd);
 -    cmd := Sprintf("#rm -f %o", in_file);
-+    cmd := Sprintf("rm -f %o", in_file);
-+    System(cmd);
 +
 +    S := Read(err_file);
 +    cmd := Sprintf("rm -f %o", err_file);
