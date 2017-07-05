@@ -17,12 +17,12 @@ load "CoreSolve.m";
 
 h  := 1;          print "h =",h;
 l  := 2;          print "l =",l;
-m  := 3;          print "m =",m;
+m  := 2;          print "m =",m;
 n  := 5;          print "n =",n;
-q  := 2;          print "q =",q;
+q  := 251;        print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
-Al := "SAGB";     print "Al =",Al;
+Al := "Groebner"; print "Al =",Al;
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -83,7 +83,7 @@ end function;
 Check := function(E)
   order := Order(E(k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  return cofactor le 256,cofactor;
+  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
 end function;
 
 RewriteESP := function(V,i)
@@ -96,9 +96,9 @@ Curves := [];
 // load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
-// load "Hessian.m";
-// load "Montgomery.m";
-// load "tEdwards.m";
+load "Hessian.m";
+load "Montgomery.m";
+load "tEdwards.m";
 load "Weierstrass.m";
 
 for i in [1..#Curves] do

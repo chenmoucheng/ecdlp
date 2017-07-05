@@ -144,12 +144,14 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       SetVerbose("Faugere",0);
       Vc := Variety(Ic);
       Hc := GapDegrees(Basis(Jc),Basis(Ic));
+      /*
       _ := SATVariety(Ic : Bound := 1);
       _ := SATVariety(Jc : Bound := 1);
       if #Hc ge 2 then _ := SATVariety(Ideal(Hc[#Hc - 1]) : Bound := 1); end if;
       _ := SATVariety(Ic);
       _ := SATVariety(Jc);
       if #Hc ge 2 then V := SATVariety(Ideal(Hc[#Hc - 1])); end if;
+      */
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
     when "SAGB":

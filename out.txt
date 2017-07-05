@@ -1,0 +1,2068 @@
+Magma V2.22-9     Wed Jul  5 2017 19:43:15 on church   [Seed = 1128716447]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "ECDLP.m"
+Nthreads = 1
+Loading "CoreSolve.m"
+h = 1
+l = 2
+m = 2
+n = 5
+q = 251
+T2 = false
+IX = true
+Al = Groebner
+Loading "Hessian.m"
+Hessian
+Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+[
+0,
+0,
+0,
+8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108,
+247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134
+]
+cofactor: 48
+jInvariant: 19*w^4 + 241*w^3 + 112*w^2 + 87*w + 217
+Base point: (202*w^4 + 142*w^3 + 181*w^2 + 161*w + 139 : 147*w^4 + 89*w^3 + 115*w^2 + 124*w + 96 : 1)
+Order: 20755211671
+Loading "Montgomery.m"
+Montgomery
+*****************
+FGLM ORDER CHANGE
+*****************
+
+Coefficient ring: GF(251^5)
+Rank: 2
+Initial order: Graded Reverse Lexicographical
+Final order: Lexicographical
+Basis length: 3
+Try rep mat lex method; E: $.2
+Get rep mat (dim: 6)
+Rep mat time: 0.000
+Do spin
+Use standard spin
+Spin time: 0.000
+Spin time: 0.000
+Get kernel for min poly
+Rep mat time: 0.000
+Nullity: 1
+Get relations for all variables
+Relations time: 0.000
+Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+[
+0,
+0,
+0,
+8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108,
+247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134
+]
+cofactor: 48
+jInvariant: 19*w^4 + 241*w^3 + 112*w^2 + 87*w + 217
+Base point: (197*w^4 + 190*w^3 + 2*w^2 + 145*w + 216 : 153*w^4 + 10*w^3 + 148*w^2 + 18*w + 75 : 1)
+Order: 20755211671
+Loading "tEdwards.m"
+tEdwards
+*****************
+FGLM ORDER CHANGE
+*****************
+
+Coefficient ring: GF(251^5)
+Rank: 2
+Initial order: Graded Reverse Lexicographical
+Final order: Lexicographical
+Basis length: 3
+Try rep mat lex method; E: $.2
+Get rep mat (dim: 6)
+Rep mat time: 0.000
+Do spin
+Use standard spin
+Spin time: 0.000
+Spin time: 0.000
+Get kernel for min poly
+Rep mat time: 0.000
+Nullity: 1
+Get relations for all variables
+Relations time: 0.000
+Elliptic Curve defined by y^2 = x^3 + (225*w^4 + 184*w^3 + 244*w^2 + 171*w + 123)*x^2 + (99*w^4 + 190*w^3 + 211*w^2 + 231*w + 164)*x over GF(251^5)
+[
+0,
+225*w^4 + 184*w^3 + 244*w^2 + 171*w + 123,
+0,
+99*w^4 + 190*w^3 + 211*w^2 + 231*w + 164,
+0
+]
+cofactor: 48
+jInvariant: 19*w^4 + 241*w^3 + 112*w^2 + 87*w + 217
+Base point: (33*w^4 + 46*w^3 + 135*w^2 + 122*w + 79 : 194*w^4 + 182*w^3 + 238*w^2 + 227*w + 28 : 1)
+Order: 20755211671
+Loading "Weierstrass.m"
+Weierstrass
+Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+[
+0,
+0,
+0,
+8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108,
+247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134
+]
+jInvariant: 19*w^4 + 241*w^3 + 112*w^2 + 87*w + 217
+Base point: (237*w^4 + 113*w^3 + 50*w^2 + 247*w + 26 : 247*w^4 + 178*w^3 + 131*w^2 + 71*w + 82 : 1)
+Order: 20755211671
+
+Working on Hessian Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+
+Point A 1
+[ (249*w^4 + 135*w^3 + 82*w^2 + 190*w + 148 : 44*w^4 + 214*w^3 + 177*w^2 + 19*w + 213 : 1), (234*w^4 + 22*w^3 + 238*w^2 + 99*w + 241 : 7*w^4 + 174*w^3 + 76*w^2 + 205*w + 174 : 1) ]
+Decomposing (136*w^4 + 104*w^3 + 9*w^2 + 116*w + 247 : 215*w^4 + 98*w^3 + 231*w^2 + 125*w + 209 : 1)
+[ (218*w^3 + 139*w^2 + 26*w + 55 : 123*w^4 + 129*w^3 + 129*w^2 + 183*w + 125 : 1), (122*w^4 + 49*w^3 + 16*w^2 + 129*w + 155 : 66*w^3 + 5*w^2 + 53*w + 126 : 1) ]
+Decomposing (188*w^4 + 195*w^3 + 123*w^2 + 93*w + 180 : 140*w^4 + 226*w^3 + 157*w^2 + 163*w + 106 : 1)
+[ (163*w^4 + 16*w^3 + 184*w^2 + 246*w + 99 : 196*w^4 + 11*w^3 + 96*w^2 + 152*w + 33 : 1), (67*w^4 + 234*w^3 + 5*w^2 + 62*w + 5 : 222*w^4 + 82*w^3 + 245*w^2 + 220*w + 148 : 1) ]
+Decomposing (97*w^4 + 66*w^3 + 16*w^2 + 35*w + 24 : 237*w^4 + 9*w^3 + 39*w^2 + 168*w + 224 : 1)
+[ (16*w^4 + 182*w^3 + w^2 + 37*w + 61 : 161*w^4 + 250*w^3 + 27*w^2 + 71*w + 96 : 1), (121*w^4 + 224*w^3 + 122*w^2 + 167*w + 170 : 175*w^4 + 219*w^3 + 207*w^2 + 77*w + 242 : 1) ]
+Decomposing (117*w^4 + 95*w^3 + 236*w^2 + 139*w + 79 : 144*w^4 + 58*w^3 + 119*w^2 + 149*w + 95 : 1)
+[ (189*w^4 + 218*w^3 + 233*w^2 + 100*w + 12 : 199*w^4 + 229*w^3 + w^2 + 102*w + 135 : 1), (80*w^4 + 197*w^3 + 222*w^2 + 205*w + 123 : 96*w^4 + 184*w^3 + 3*w^2 + 235*w + 78 : 1) ]
+Decomposing (38*w^4 + 133*w^3 + 7*w^2 + 39*w + 21 : 115*w^4 + 164*w^3 + 211*w^2 + 231*w + 139 : 1)
+[ (32*w^4 + 70*w^3 + 205*w^2 + 54*w + 211 : 81*w^4 + 201*w^3 + 81*w^2 + 241*w + 226 : 1), (15*w^4 + 145*w^3 + 209*w^2 + 176*w + 170 : 188*w^4 + 91*w^3 + 29*w^2 + 106*w + 250 : 1) ]
+Decomposing (30*w^4 + 198*w^3 + 27*w^2 + 122*w + 192 : 167*w^4 + 113*w^3 + 90*w^2 + 106*w + 223 : 1)
+[ (229*w^4 + 186*w^3 + 91*w^2 + 151*w + 31 : 242*w^4 + 17*w^3 + 7*w^2 + 133*w + 97 : 1), (50*w^4 + 188*w^3 + 126*w^2 + 115*w + 46 : 25*w^4 + 6*w^3 + 30*w^2 + 71*w + 232 : 1) ]
+Decomposing (34*w^4 + 10*w^3 + 219*w^2 + 245*w + 123 : 106*w^4 + 42*w^3 + 19*w^2 + 87*w + 150 : 1)
+[ (104*w^4 + 117*w^3 + 191*w^2 + 133*w + 182 : 43*w^4 + 218*w^3 + 222*w^2 + 58*w + 156 : 1), (107*w^4 + 120*w^3 + 82*w^2 + 63*w + 72 : 174*w^4 + 5*w^3 + 49*w^2 + 244*w + 184 : 1) ]
+Decomposing (137*w^4 + 178*w^3 + 235*w^2 + 146*w + 239 : 193*w^4 + 126*w^3 + 79*w^2 + 225*w + 141 : 1)
+[ (200*w^4 + 241*w^3 + 51*w^2 + 148*w + 163 : 148*w^4 + 212*w^3 + 72*w^2 + 107*w + 78 : 1), (34*w^4 + 21*w^3 + 153*w^2 + 115*w + 2 : 94*w^4 + 172*w^3 + 110*w^2 + 12*w + 112 : 1) ]
+Decomposing (201*w^4 + 57*w^3 + 122*w^2 + 31*w + 161 : 204*w^4 + 28*w^3 + 121*w^2 + 117*w + 36 : 1)
+[ (59*w^4 + 70*w^3 + 40*w^2 + 238*w + 185 : 242*w^4 + 28*w^3 + 21*w^2 + 8*w + 168 : 1), (195*w^4 + 40*w^3 + 14*w^2 + 15*w + 161 : 179*w^4 + 91*w^3 + 192*w^2 + 8*w + 26 : 1) ]
+Decomposing (83*w^4 + 119*w^3 + 182*w^2 + 214*w + 112 : 128*w^4 + 164*w^3 + 84*w^2 + 233*w + 84 : 1)
+[ (24*w^4 + 157*w^3 + 236*w^2 + 7*w + 74 : 200*w^4 + 37*w^3 + 225*w^2 + 158*w + 58 : 1), (210*w^4 + 50*w^3 + 222*w^2 + 104*w + 101 : 175*w^4 + 168*w^3 + 139*w^2 + 63*w + 80 : 1) ]
+Decomposing (25*w^4 + 47*w^3 + 57*w^2 + 82*w + 182 : 89*w^4 + 241*w^3 + 47*w^2 + 88*w + 192 : 1)
+[ (76*w^4 + 210*w^3 + 158*w^2 + 164*w + 27 : 54*w^4 + 79*w^3 + 165*w^2 + 5*w + 125 : 1), (192*w^4 + 118*w^3 + 153*w^2 + 204*w + 84 : 83*w^4 + 36*w^3 + 98*w^2 + 145*w + 7 : 1) ]
+Decomposing (158*w^4 + 69*w^3 + 158*w^2 + 61*w + 116 : 142*w^4 + 50*w^3 + 3*w^2 + 73*w + 118 : 1)
+[ (165*w^4 + 64*w^3 + 41*w^2 + 32*w + 89 : 212*w^4 + 219*w^3 + 23*w^2 + 88*w + 132 : 1), (37*w^4 + 18*w^3 + 90*w^2 + 182*w + 175 : 20*w^4 + 95*w^3 + 28*w^2 + 23*w + 92 : 1) ]
+Decomposing (58*w^4 + 70*w^3 + 189*w^2 + 120*w + 68 : 149*w^4 + 54*w^3 + 153*w^2 + 240*w + 105 : 1)
+[ (241*w^4 + 156*w^3 + 16*w^2 + 164*w + 55 : 25*w^4 + 144*w^3 + 13*w^2 + 174*w + 33 : 1), (4*w^4 + 234*w^3 + 67*w^2 + 196*w + 91 : 131*w^4 + 58*w^3 + 137*w^2 + 145*w + 1 : 1) ]
+Decomposing (243*w^4 + 227*w^3 + 146*w^2 + 74*w + 160 : 204*w^4 + 99*w^3 + 208*w^2 + 106*w + 221 : 1)
+[ (135*w^4 + 97*w^3 + 64*w^2 + 87*w + 72 : 60*w^4 + 9*w^3 + 181*w^2 + 191*w + 140 : 1), (114*w^4 + 237*w^3 + 238*w^2 + 156*w + 244 : 149*w^4 + 13*w^3 + 232*w^2 + 191*w + 196 : 1) ]
+Decomposing (114*w^4 + 42*w^3 + 33*w^2 + 34*w + 99 : 177*w^4 + 232*w^3 + 123*w^2 + 128*w + 50 : 1)
+[ (214*w^4 + 139*w^3 + 43*w^2 + 84*w + 33 : 111*w^4 + 76*w^3 + 199*w^2 + 216*w + 201 : 1), (55*w^4 + 227*w^3 + 125*w^2 + 144*w + 38 : 13*w^4 + 46*w^3 + 246*w^2 + 47*w + 44 : 1) ]
+Decomposing (76*w^4 + 66*w^3 + 4*w^2 + 88*w + 38 : 85*w^4 + 247*w^3 + 180*w^2 + 13*w + 247 : 1)
+[ (32*w^4 + 9*w^3 + 124*w^2 + 239*w + 103 : 141*w^4 + 247*w^3 + 147*w^2 + 128*w + 203 : 1), (117*w^4 + 87*w^3 + 19*w^2 + 21*w + 98 : 166*w^4 + 217*w^3 + 154*w^2 + 20*w : 1) ]
+Decomposing (227*w^4 + 191*w^3 + 117*w^2 + 138*w + 161 : 245*w^4 + 115*w^3 + 131*w^2 + 35*w + 209 : 1)
+[ (249*w^4 + 47*w^3 + 180*w^2 + 133*w + 231 : 179*w^4 + 245*w^3 + 170*w^2 + 128*w + 37 : 1), (113*w^4 + 154*w^3 + 42*w^2 + 56*w + 1 : 109*w^4 + 73*w^3 + 72*w^2 + 214*w + 136 : 1) ]
+Decomposing (50*w^4 + 105*w^3 + 182*w^2 + 138*w + 179 : 186*w^4 + 197*w^3 + 62*w^2 + 131*w + 209 : 1)
+[ (131*w^4 + 48*w^3 + 5*w^2 + 84*w + 45 : 97*w^4 + 173*w^3 + 188*w^2 + 152*w + 191 : 1), (186*w^4 + 146*w^3 + 236*w^2 + 110*w + 40 : 194*w^4 + 94*w^3 + 68*w^2 + 215*w + 131 : 1) ]
+Decomposing (68*w^4 + 79*w^3 + 96*w^2 + 144*w + 4 : 250*w^4 + 27*w^3 + 11*w^2 + 79*w + 171 : 1)
+[ (191*w^4 + 26*w^3 + 12*w^2 + 206*w + 205 : 215*w^4 + 60*w^3 + 10*w + 176 : 1), (2*w^4 + 127*w^3 + 22*w^2 + 74*w + 230 : 21*w^4 + 83*w^3 + 55*w^2 + 17*w + 243 : 1) ]
+Decomposing (133*w^4 + 126*w^3 + 67*w^2 + 169*w + 204 : 56*w^4 + 146*w^3 + 110*w^2 + 87*w + 77 : 1)
+[ (155*w^4 + 75*w^3 + 191*w^2 + 23*w + 138 : 93*w^4 + 82*w^3 + 212*w^2 + 36*w + 127 : 1), (51*w^4 + 20*w^3 + 2*w^2 + 27*w + 162 : 151*w^4 + 39*w^3 + 234*w^2 + 153*w + 211 : 1) ]
+Decomposing (94*w^4 + 103*w^3 + 171*w^2 + 158*w + 194 : 196*w^4 + 68*w^3 + 220*w^2 + 248*w + 244 : 1)
+[ (26*w^4 + 159*w^3 + 216*w^2 + 197*w + 226 : 136*w^4 + 242*w^3 + 101*w^2 + 2*w + 190 : 1), (196*w^4 + 32*w^3 + 25*w^2 + 227*w + 158 : 145*w^4 + 236*w^3 + 176*w^2 + 175*w + 11 : 1) ]
+Decomposing (153*w^4 + 249*w^3 + 198*w^2 + 80*w + 97 : 244*w^4 + 34*w^3 + 116*w^2 + 81*w + 149 : 1)
+[ (33*w^4 + 199*w^3 + 201*w^2 + 235*w + 118 : 163*w^4 + 238*w^3 + 187*w^2 + 52*w + 13 : 1), (207*w^4 + 72*w^3 + 11*w^2 + 161*w + 31 : 187*w^4 + 144*w^3 + w^2 + 188*w + 219 : 1) ]
+Decomposing (70*w^4 + 84*w^3 + 167*w^2 + 93*w + 158 : 156*w^4 + 246*w^3 + 164*w^2 + 203*w + 229 : 1)
+[ (225*w^4 + 162*w^3 + 57*w^2 + 173*w + 198 : 87*w^4 + 22*w^3 + 9*w^2 + 51*w + 144 : 1), (71*w^4 + 202*w^3 + 205*w^2 + 214*w + 145 : 29*w^4 + 198*w^3 + 231*w^2 + 77*w + 180 : 1) ]
+Decomposing (233*w^4 + 179*w^3 + 155*w^2 + 145*w + 11 : 175*w^4 + 231*w^3 + 113*w^2 + 94 : 1)
+[ (245*w^4 + 101*w^3 + 32*w^2 + 78*w + 32 : 88*w^4 + 104*w^3 + 231*w^2 + 7*w + 231 : 1), (176*w^4 + 177*w^3 + 53*w^2 + 175*w + 80 : 200*w^4 + 186*w^3 + 172*w^2 + 212*w + 25 : 1) ]
+Decomposing (235*w^4 + 198*w^3 + 225*w^2 + 54*w + 106 : 151*w^4 + 115*w^3 + 59*w^2 + 226*w + 176 : 1)
+[ (216*w^4 + 3*w^3 + 96*w^2 + 238*w + 52 : 203*w^4 + 16*w^3 + 187*w^2 + 233*w + 41 : 1), (209*w^4 + 234*w^3 + 136*w^2 + 52*w + 81 : 153*w^4 + 148*w^3 + 10*w^2 + 250 : 1) ]
+Decomposing (2*w^4 + 132*w^3 + 139*w^2 + 54*w + 216 : 124*w^4 + 11*w^3 + 7*w^2 + 108*w + 77 : 1)
+[ (73*w^4 + 88*w^3 + 121*w^2 + 131*w + 225 : 189*w^4 + 21*w^3 + 124*w^2 + 113*w + 74 : 1), (249*w^4 + 19*w^3 + 28*w^2 + 205*w + 196 : 8*w^4 + 13*w^3 + 233*w^2 + 163*w + 162 : 1) ]
+Decomposing (204*w^4 + 175*w^3 + 64*w^2 + 206*w + 28 : 60*w^4 + 226*w^3 + 169*w^2 + 204*w + 154 : 1)
+[ (216*w^4 + 157*w^3 + 85*w^2 + 152*w + 171 : 198*w^4 + 149*w^3 + 195*w^2 + 164*w + 47 : 1), (13*w^4 + 52*w^3 + 246*w^2 + 173*w + 186 : 16*w^4 + 183*w^3 + 180*w^2 + 39*w + 131 : 1) ]
+Decomposing (124*w^4 + 233*w^3 + 52*w^2 + 92*w + 94 : 65*w^4 + 140*w^3 + 193*w^2 + 198*w + 223 : 1)
+[ (137*w^4 + w^3 + 62*w^2 + 124*w + 223 : 29*w^4 + 74*w^3 + 224*w^2 + 220*w + 30 : 1), (135*w^4 + 84*w^3 + 115*w^2 + 122*w + 129 : 181*w^4 + 206*w^3 + 177*w^2 + 4*w + 174 : 1) ]
+Decomposing (105*w^4 + 92*w^3 + 81*w^2 + 47*w + 127 : 163*w^4 + 219*w^3 + 155*w^2 + 245*w + 23 : 1)
+[ (70*w^4 + 67*w^3 + 55*w^2 + 93*w + 86 : 166*w^4 + 17*w^3 + 84*w^2 + 13*w + 21 : 1), (33*w^4 + 125*w^3 + 17*w^2 + 210*w + 198 : 246*w^4 + 106*w^3 + 79*w^2 + 30*w + 218 : 1) ]
+Decomposing (197*w^4 + 157*w^3 + 234*w^2 + 203*w + 59 : 149*w^4 + 167*w^3 + 218*w^2 + 13*w + 61 : 1)
+[ (232*w^4 + 30*w^3 + 12*w^2 + 55*w + 81 : 228*w^4 + 250*w^3 + 163*w^2 + 239*w + 60 : 1), (13*w^4 + 180*w^3 + 79*w^2 + 105*w + 116 : 51*w^4 + 24*w^3 + 56*w^2 + 93*w + 25 : 1) ]
+Decomposing (192*w^4 + 75*w^3 + 118*w^2 + 219*w + 224 : 82*w^4 + 195*w^3 + 101*w^2 + 44*w + 246 : 1)
+[ (189*w^4 + 19*w^3 + 86*w^2 + 133*w + 33 : 136*w^4 + 129*w^3 + 75*w^2 + 199*w + 230 : 1), (134*w^4 + 169*w^3 + 24*w^2 + 178*w + 183 : 61*w^4 + 125*w^3 + 116*w^2 + 16*w + 29 : 1) ]
+Decomposing (58*w^4 + w^3 + 46*w^2 + 136*w + 131 : 87*w^4 + 73*w^3 + 248*w^2 + 47*w + 117 : 1)
+[ (218*w^4 + 236*w^3 + 11*w^2 + 109*w + 65 : 95*w^4 + 133*w^3 + 19*w^2 + 124*w + 138 : 1), (243*w^4 + 171*w^3 + 108*w^2 + 49*w + 173 : 113*w^4 + 188*w^3 + 146*w^2 + 124*w + 179 : 1) ]
+Decomposing (37*w^4 + 248*w^3 + 123*w^2 + 150*w + 143 : 246*w^4 + 140*w^3 + 36*w^2 + 124*w + 181 : 1)
+[ (89*w^4 + 189*w^3 + 52*w^2 + 243*w + 103 : 151*w^4 + 32*w^3 + 84*w^2 + 178*w + 94 : 1), (101*w^4 + 49*w^3 + 195*w^2 + 209*w + 104 : 176*w^4 + 121*w^3 + 88*w^2 + 237*w + 201 : 1) ]
+Decomposing (75*w^4 + 200*w^3 + 37*w^2 + 176*w + 120 : 87*w^4 + 205*w^3 + 154*w^2 + 58*w + 28 : 1)
+[ (171*w^4 + 177*w^3 + 41*w^2 + 203*w + 121 : 111*w^4 + 214*w^3 + 215*w^2 + 136*w + 26 : 1), (247*w^4 + 249*w^3 + 181*w^2 + 119*w + 228 : 233*w^4 + 54*w^3 + 4*w^2 + 43*w + 130 : 1) ]
+Decomposing (215*w^4 + 187*w^3 + 175*w^2 + 221*w + 230 : 128*w^4 + 245*w^3 + 80*w^2 + 47*w + 32 : 1)
+[ (66*w^4 + 134*w^3 + 188*w^2 + 28*w + 49 : 37*w^4 + 247*w^3 + 72*w^2 + 22*w + 140 : 1), (144*w^4 + 148*w^3 + 207*w^2 + 134*w + 58 : 88*w^4 + 116*w^3 + 47*w^2 + 250*w + 13 : 1) ]
+Decomposing (45*w^4 + 86*w^3 + 94*w^2 + 30*w + 164 : 184*w^4 + 121*w^3 + 111*w^2 + 202*w + 59 : 1)
+[ (45*w^4 + 83*w^3 + 95*w^2 + 168*w + 196 : 14*w^4 + 68*w^3 + 185*w^2 + 211*w + 79 : 1), (208*w^4 + 59*w^3 + 35*w^2 + 189*w + 199 : 83*w^4 + 210*w^3 + 198*w^2 + 48*w + 170 : 1) ]
+Decomposing (13*w^4 + 4*w^3 + 227*w^2 + 121*w + 51 : 139*w^4 + 210*w^3 + 154*w^2 + 152*w + 80 : 1)
+[ (193*w^4 + 66*w^3 + 37*w^2 + 224*w + 215 : 71*w^4 + 104*w^3 + 10*w^2 + 60*w + 162 : 1), (230*w^4 + 130*w^3 + 188*w^2 + 68*w + 48 : 236*w^4 + 5*w^3 + 154*w^2 + 4*w + 114 : 1) ]
+Decomposing (206*w^4 + 92*w^3 + 105*w^2 + 228*w + 73 : 247*w^4 + 43*w^3 + 127*w^2 + 58*w + 224 : 1)
+[ (122*w^4 + 240*w^3 + 247*w^2 + 92*w + 233 : 138*w^4 + 12*w^3 + 9*w^2 + 60*w + 50 : 1), (246*w^4 + 77*w^3 + 151*w^2 + 86*w + 38 : 109*w^4 + 169*w^3 + 179*w^2 + 115*w + 106 : 1) ]
+Decomposing (86*w^4 + 121*w^3 + 143*w^2 + 18*w + 44 : 104*w^4 + 238*w^3 + 189*w^2 + 185*w + 209 : 1)
+[ (161*w^4 + 20*w^3 + 5*w^2 + 240*w + 64 : 148*w^4 + 195*w^3 + 112*w^2 + 199*w + 212 : 1), (36*w^4 + 63*w^3 + 108*w^2 + 64*w + 155 : 158*w^4 + 2*w^3 + 234*w^2 + 218*w + 21 : 1) ]
+Decomposing (138*w^4 + 226*w^3 + 144*w^2 + 189*w + 87 : 9*w^4 + 137*w^3 + 21*w^2 + 125*w + 136 : 1)
+[ (148*w^4 + 199*w^3 + 10*w^2 + 236*w + 166 : 221*w^4 + 201*w^3 + 221*w^2 + 133*w + 242 : 1), (168*w^4 + 202*w^3 + 229*w^2 + 213*w + 134 : 39*w^4 + 36*w^3 + 223*w^2 + 69*w + 9 : 1) ]
+Decomposing (47*w^4 + 49*w^3 + 228*w^2 + 12*w + 18 : 242*w^4 + 144*w^3 + 59*w^2 + 147*w + 173 : 1)
+[ (69*w^4 + 12*w^3 + 123*w^2 + 52*w + 9 : 167*w^4 + 11*w^3 + 133*w^2 + 173*w + 11 : 1), (143*w^4 + 81*w^3 + 35*w^2 + 72*w + 74 : 68*w^4 + 102*w^3 + 45*w^2 + 215*w + 2 : 1) ]
+Decomposing (41*w^4 + 5*w^3 + 55*w^2 + 167 : 121*w^4 + 164*w^3 + 204*w^2 + 186*w + 68 : 1)
+[ (123*w^4 + 105*w^3 + 85*w^2 + 37*w + 197 : 238*w^4 + 220*w^3 + 93*w^2 + 99*w + 198 : 1), (14*w^4 + 125*w^3 + 111*w^2 + 209*w + 35 : 45*w^4 + 89*w^3 + 125*w^2 + 219*w + 189 : 1) ]
+Decomposing (117*w^4 + 53*w^3 + 176*w^2 + 11*w + 247 : 113*w^4 + 125*w^3 + 139*w^2 + 104*w + 158 : 1)
+[ (150*w^4 + 36*w^3 + 2*w^2 + 150*w + 248 : 10*w^4 + 67*w^3 + 212*w^2 + 202*w + 58 : 1), (103*w^4 + 248*w^3 + 243*w^2 + 95*w + 166 : 88*w^4 + 34*w^3 + 157*w^2 + 130*w + 3 : 1) ]
+Decomposing (190*w^4 + 109*w^2 + 121*w + 197 : 129*w^4 + 117*w^3 + 55*w^2 + 231*w + 34 : 1)
+[ (65*w^4 + 139*w^3 + 25*w^2 + 27*w + 77 : 162*w^4 + 131*w^3 + 74*w^2 + 20*w + 181 : 1), (228*w^4 + 17*w^3 + 151*w^2 + 10*w + 136 : 184*w^4 + 63*w^3 + 218*w^2 + 224*w + 244 : 1) ]
+Decomposing (169*w^4 + 230*w^3 + 117*w^2 + 92*w + 20 : 130*w^4 + 59*w^3 + 25*w^2 + 240*w + 250 : 1)
+[ (183*w^4 + 20*w^3 + 239*w^2 + 40*w + 144 : 213*w^4 + 49*w^3 + 98*w^2 + 152*w + 130 : 1), (141*w^4 + 195*w^3 + 192*w^2 + 101*w + 137 : 3*w^4 + 227*w^3 + 6*w^2 + 179*w + 182 : 1) ]
+Decomposing (204*w^4 + 144*w^3 + 111*w^2 + 198*w + 217 : 86*w^4 + 187*w^3 + 188*w^2 + 78*w + 176 : 1)
+[ (233*w^4 + 189*w^3 + 91*w^2 + 4*w + 113 : 150*w^4 + 85*w^3 + 30*w^2 + 83*w + 167 : 1), (32*w^4 + 7*w^3 + 60*w^2 + 181*w + 166 : 6*w^4 + 93*w^3 + 60*w^2 + 204*w + 45 : 1) ]
+Decomposing (144*w^4 + 111*w^3 + 41*w^2 + 75*w + 141 : 73*w^4 + 59*w^3 + 18*w^2 + 8*w + 28 : 1)
+[ (232*w^4 + 60*w^3 + 213*w^2 + 40*w + 95 : 98*w^4 + 191*w^3 + 229*w^2 + 119*w + 97 : 1), (84*w^4 + 163*w^3 + 134*w^2 + 243*w + 179 : 35*w^4 + 180*w^3 + 116*w^2 + 138*w + 22 : 1) ]
+Decomposing (14*w^4 + 101*w^3 + 153*w^2 + 150*w + 18 : 27*w^4 + 151*w^3 + 232*w^2 + 35*w + 168 : 1)
+[ (37*w^4 + 32*w^3 + 155*w^2 + 47*w + 111 : 112*w^4 + 151*w^3 + 76*w^2 + 62*w + 69 : 1), (37*w^4 + 207*w^3 + 75*w^2 + 234*w + 133 : 83*w^4 + 225*w^3 + 18*w^2 + 5*w + 99 : 1) ]
+Decomposing (45*w^4 + 40*w^3 + 154*w^2 + 70*w + 13 : 237*w^4 + 60*w^3 + 137*w^2 + 206*w + 43 : 1)
+[ (79*w^4 + 92*w^3 + 235*w^2 + 11*w + 241 : 26*w^4 + 25*w^3 + 38*w^2 + 141*w + 133 : 1), (129*w^4 + 163*w^3 + 152*w^2 + 119*w + 237 : 34*w^4 + 62*w^3 + 47*w^2 + 202*w + 34 : 1) ]
+Decomposing (65*w^4 + 120*w^3 + 110*w^2 + 250*w + 128 : 167*w^4 + 247*w^3 + 153*w^2 + 200*w + 34 : 1)
+[ (201*w^4 + 35*w^3 + 224*w^2 + 95*w + 174 : 159*w^4 + 33*w^3 + 186*w^2 + 85*w + 97 : 1), (124*w^4 + 28*w^3 + w^2 + 8*w + 206 : 120*w^4 + 223*w^3 + 61*w^2 + 103*w + 220 : 1) ]
+Decomposing (2*w^4 + 9*w^3 + 156*w^2 + 137*w + 240 : 206*w^4 + 134*w^3 + 213*w^2 + 244*w + 148 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.120
+Batch decomposition time: 0.040
+Rewriting variables
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251^5)
+Rank: 5
+Order: Grevlex with weights [1, 1, 1, 2, 1]
+Matrix kind: Generic finite field
+Generic field
+Datum size: 4
+No queue sort
+Weights: 1 1 1 2 1
+Initial length: 4
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 1
+
+*******
+STEP 1
+Basis length: 4, queue length: 1, step degree: 5, num pairs: 1
+Basis total mons: 28, average length: 7.000
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 20 column(s), 0.000
+Average length for reductees: 2.00 [1], reductors: 3.09 [32]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 32 = 33 rows / 45 columns out of 252 (17.857%)
+Density: 6.8013% / 17.618% (3.0606/r), total: 101 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 33 by 45
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+Number of unused reductors: 3
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 4 [1], av deg: 4.0
+Degree counts: 4:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+Reduce 5 final polynomial(s) by 5
+0 redundant polynomial(s) removed; time: 0.000
+Interreduce 4 (out of range [0 .. 4] = 5) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+4 + 0 = 4 rows / 11 columns
+Density: 31.818% / 61.97% (3.5/r), total: 14 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [4]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 5
+
+Final basis length: 4
+Number of pairs: 1
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 33 by 45
+Max num rows matrix: 33 by 45
+Approx mat cost: 253.694, sym red cost: 115
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.001
+Weil restriction time: 0.010
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251)
+Rank: 9
+Order: Graded Reverse Lexicographical
+NEW hash table
+Matrix kind: Modular FP (short datum)
+Datum size: 2
+No queue sort
+Initial length: 10
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 7
+
+*******
+STEP 1
+Basis length: 10, queue length: 7, step degree: 2, num pairs: 1
+Basis total mons: 109, average length: 10.900
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 18 column(s), 0.000
+Average length for reductees: 18.00 [1], reductors: 18.00 [1]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 1 = 2 rows / 18 columns out of 55 (32.727%)
+Density: 100% / 100% (18/r), total: 36 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 2 by 18
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 2 [1], av deg: 2.0
+Degree counts: 2:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 2
+Basis length: 11, queue length: 8, step degree: 3, num pairs: 8
+Basis total mons: 126, average length: 11.455
+Number of S-polynomials: 8, different lcms: 7
+Number of pair polynomials: 8, at 54 column(s), 0.000
+Average length for reductees: 14.50 [8], reductors: 15.89 [36]
+Symbolic reduction time: 0.000, column sort time: 0.000
+8 + 36 = 44 rows / 100 columns out of 220 (45.455%)
+Density: 15.636% / 25.731% (15.636/r), total: 688 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 44 by 100
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 8 (100.0%), min deg: 3 [8], av deg: 3.0
+Degree counts: 3:8
+Queue insertion time: 0.000
+Step 2 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 3
+Basis length: 19, queue length: 29, step degree: 4, num pairs: 29
+Basis total mons: 375, average length: 19.737
+Number of S-polynomials: 29, different lcms: 25
+Number of pair polynomials: 29, at 229 column(s), 0.000
+Average length for reductees: 34.03 [29], reductors: 16.21 [150]
+Symbolic reduction time: 0.000, column sort time: 0.000
+29 + 150 = 179 rows / 234 columns out of 715 (32.727%)
+Density: 8.1602% / 14.875% (19.095/r), total: 3418 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 179 by 234
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [14]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 14 (48.3%), min deg: 3 [2], av deg: 3.9
+Degree counts: 3:2 4:12
+Queue insertion time: 0.000
+Step 3 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 4
+Basis length: 33, queue length: 72, step degree: 4, num pairs: 14
+Basis total mons: 1046, average length: 31.697
+Number of S-polynomials: 14, different lcms: 14
+Number of pair polynomials: 14, at 207 column(s), 0.000
+Average length for reductees: 36.07 [14], reductors: 18.76 [137]
+Symbolic reduction time: 0.000, column sort time: 0.000
+14 + 137 = 151 rows / 207 columns out of 715 (28.951%)
+Density: 9.8378% / 18.488% (20.364/r), total: 3075 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 151 by 207
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [10]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 10 (71.4%), min deg: 4 [10], av deg: 4.0
+Degree counts: 4:10
+Queue insertion time: 0.000
+Step 4 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 5
+Basis length: 43, queue length: 120, step degree: 5, num pairs: 114
+Basis total mons: 1479, average length: 34.395
+Number of S-polynomials: 114, different lcms: 82
+Number of pair polynomials: 114, at 309 column(s), 0.000
+Average length for reductees: 51.01 [114], reductors: 19.77 [251]
+Symbolic reduction time: 0.000, column sort time: 0.000
+114 + 251 = 365 rows / 311 columns out of 2002 (15.534%)
+Density: 9.4948% / 15.77% (29.529/r), total: 10778 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 365 by 311
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [24]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 24 (21.1%), min deg: 3 [18], av deg: 3.2
+Degree counts: 3:18 4:6
+Queue insertion time: 0.000
+Step 5 time: 0.000, [0.002], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 6
+Basis length: 67, queue length: 132, step degree: 4, num pairs: 126
+Basis total mons: 2181, average length: 32.552
+Number of S-polynomials: 126, different lcms: 82
+Number of pair polynomials: 126, at 210 column(s), 0.000
+Average length for reductees: 27.71 [126], reductors: 20.64 [174]
+Symbolic reduction time: 0.000, column sort time: 0.000
+126 + 174 = 300 rows / 210 columns out of 715 (29.371%)
+Density: 11.244% / 19.789% (23.613/r), total: 7084 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 300 by 210
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [27]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 27 (21.4%), min deg: 2 [19], av deg: 2.3
+Degree counts: 2:19 3:8
+Queue insertion time: 0.000
+Step 6 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 7
+Basis length: 94, queue length: 139, step degree: 3, num pairs: 133
+Basis total mons: 2420, average length: 25.745
+Number of S-polynomials: 133, different lcms: 72
+Number of pair polynomials: 133, at 109 column(s), 0.000
+Average length for reductees: 8.55 [133], reductors: 15.69 [100]
+Symbolic reduction time: 0.000, column sort time: 0.000
+133 + 100 = 233 rows / 109 columns out of 220 (49.545%)
+Density: 10.655% / 21.201% (11.614/r), total: 2706 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 233 by 109
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [7]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 7 (5.3%), min deg: 1 [6], av deg: 1.1
+Degree counts: 1:6 2:1
+Queue insertion time: 0.000
+Number of linears: 6
+Step 7 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 8
+Basis length: 101, queue length: 33, step degree: 2, num pairs: 27
+Basis total mons: 2435, average length: 24.109
+Number of S-polynomials: 27, different lcms: 27
+Number of pair polynomials: 27, at 36 column(s), 0.000
+Average length for reductees: 2.07 [27], reductors: 8.12 [34]
+Symbolic reduction time: 0.000, column sort time: 0.000
+27 + 34 = 61 rows / 36 columns out of 55 (65.455%)
+Density: 15.118% / 31.066% (5.4426/r), total: 332 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 61 by 36
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+No new polynomials
+Queue insertion time: 0.000
+Number of linears: 6
+Step 8 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 9
+Basis length: 101, queue length: 6, step degree: 6, num pairs: 6
+Basis total mons: 2435, average length: 24.109
+6 pairs eliminated
+No pairs to reduce
+Pair elimination time: 0.000
+
+Reduce 101 final polynomial(s) by 101
+1 redundant polynomial(s) removed; time: 0.000
+Interreduce 9 (out of range [0 .. 100] = 101) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+9 + 2 = 11 rows / 13 columns
+Density: 23.776% / 46.857% (3.0909/r), total: 34 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [9]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 100
+
+Final basis length: 9
+Number of pairs: 452
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 365 by 311
+Max num rows matrix: 365 by 311
+Approx mat cost: 2.86443e+06, sym red cost: 28151
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.008
+Groebner basis time: 0.000 2 10 = [ 2, 8 ]
+Groebner basis time: 0.000 3 18 = [ 2, 8, 8 ]
+Groebner basis time: 0.000 4 40 = [ 2, 8, 10, 20 ]
+  Gap degree and sizes: 4 8 = [ 0, 0, 8 ]
+Groebner basis time: 0.000 5 9 = [ 8, 1 ]
+  Gap degree and sizes: 5 9 = [ 8, 1 ]
+Point decomposition time: 0.070
+[
+[ (124*w^4 + 28*w^3 + w^2 + 8*w + 206 : 120*w^4 + 223*w^3 + 61*w^2 + 103*w + 220 : 1), (201*w^4 + 35*w^3 + 224*w^2 + 95*w + 174 : 159*w^4 + 33*w^3 + 186*w^2 + 85*w + 97 : 1) ],
+[ (201*w^4 + 35*w^3 + 224*w^2 + 95*w + 174 : 159*w^4 + 33*w^3 + 186*w^2 + 85*w + 97 : 1), (124*w^4 + 28*w^3 + w^2 + 8*w + 206 : 120*w^4 + 223*w^3 + 61*w^2 + 103*w + 220 : 1) ]
+]
+
+Point B 1 1
+Decomposing (65*w^4 + 29*w^3 + 168*w^2 + 92*w + 96 : 48*w^4 + 27*w^3 + 90*w^2 + 63*w + 108 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.120
+Batch decomposition time: 0.040
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 2
+Decomposing (165*w^4 + 112*w^3 + 115*w^2 + 148*w + 57 : 177*w^4 + 170*w^3 + 93*w^2 + 3*w + 158 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.130
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 3
+Decomposing (176*w^4 + 59*w^3 + 240*w^2 + 163*w + 4 : 32*w^4 + 167*w^3 + 77*w^2 + 92*w + 5 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.140
+Batch decomposition time: 0.040
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 4
+Decomposing (162*w^4 + 50*w^3 + 81*w^2 + 199*w + 241 : 188*w^4 + 134*w^3 + 118*w^2 + 4*w + 57 : 1)
+Weil restriction time: 0.120
+Weil restriction time: 0.130
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 5
+Decomposing (247*w^4 + 38*w^3 + 35*w^2 + 107*w + 106 : 21*w^4 + 18*w^3 + 15*w^2 + 223*w + 81 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.130
+Batch decomposition time: 0.040
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 6
+Decomposing (7*w^4 + 215*w^3 + 233*w^2 + 72*w + 90 : 137*w^4 + 39*w^3 + 245*w^2 + 226*w + 231 : 1)
+Weil restriction time: 0.120
+Weil restriction time: 0.130
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 7
+Decomposing (219*w^4 + 141*w^3 + 250*w^2 + 95*w + 223 : 28*w^4 + 202*w^3 + 44*w^2 + 19*w + 73 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.130
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 8
+Decomposing (110*w^4 + 209*w^3 + 42*w^2 + 112*w + 235 : 50*w^4 + 40*w^3 + 248*w^2 + 132*w + 104 : 1)
+Weil restriction time: 0.140
+Weil restriction time: 0.120
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 9
+Decomposing (191*w^4 + 80*w^3 + 178*w^2 + 48*w + 175 : 189*w^4 + 5*w^3 + 14*w^2 + 220*w + 216 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.130
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 10
+Decomposing (216*w^4 + 176*w^3 + 82*w^2 + 86*w + 244 : 106*w^4 + 78*w^3 + 112*w^2 + 190*w + 206 : 1)
+Weil restriction time: 0.130
+Weil restriction time: 0.130
+Batch decomposition time: 0.040
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Success probability: 0
+
+Working on Montgomery Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+
+Point A 1
+[ (144*w^4 + 21*w^3 + 138*w^2 + 215*w + 112 : 25*w^4 + 208*w^3 + 192*w^2 + 64*w + 114 : 1), (204*w^4 + 161*w^3 + 175*w^2 + 19*w + 27 : 146*w^4 + 204*w^3 + 168*w^2 + 191*w + 220 : 1) ]
+Decomposing (87*w^4 + 100*w^3 + 132*w^2 + 107*w + 16 : 205*w^4 + 136*w^3 + 153*w^2 + 200*w + 229 : 1)
+[ (109*w^4 + 79*w^3 + 191*w^2 + 59*w + 211 : 54*w^4 + 104*w^3 + 60*w^2 + 7*w + 175 : 1), (90*w^4 + 152*w^3 + 123*w^2 + 20*w + 205 : 114*w^4 + 199*w^3 + 135*w^2 + 40*w + 178 : 1) ]
+Decomposing (147*w^4 + 60*w^3 + 128*w^2 + 234*w + 52 : 107*w^4 + 210*w^2 + 129*w + 209 : 1)
+[ (102*w^4 + 19*w^3 + 179*w^2 + 233*w + 59 : 170*w^4 + 42*w^3 + 242*w^2 + 140*w + 33 : 1), (7*w^4 + 62*w^3 + 137*w^2 + 191*w + 22 : 134*w^4 + 241*w^3 + 31*w^2 + 124*w + 157 : 1) ]
+Decomposing (163*w^4 + 25*w^3 + 225*w^2 + 133*w + 242 : 137*w^4 + 101*w^3 + 58*w^2 + 122*w + 186 : 1)
+[ (2*w^4 + 195*w^3 + 161*w^2 + 4*w + 155 : 56*w^4 + 70*w^3 + 98*w^2 + 129*w + 238 : 1), (83*w^4 + 73*w^3 + 166*w^2 + 90*w + 189 : 167*w^4 + 241*w^3 + 240*w^2 + 23*w + 32 : 1) ]
+Decomposing (168*w^4 + 41*w^3 + 210*w^2 + 104*w + 188 : 58*w^4 + 85*w^3 + 246*w^2 + 228*w + 219 : 1)
+[ (213*w^4 + 28*w^3 + 125*w^2 + 185*w + 30 : 165*w^4 + 106*w^3 + 190*w^2 + 184*w + 205 : 1), (170*w^4 + 139*w^3 + 103*w^2 + 229*w + 191 : 27*w^4 + 111*w^3 + 81*w^2 + 173*w : 1) ]
+Decomposing (167*w^4 + 32*w^3 + 207*w^2 + 131*w + 30 : 224*w^4 + 221*w^3 + 47*w^2 + 97*w + 210 : 1)
+[ (76*w^4 + 200*w^3 + 9*w^2 + 59*w + 112 : 156*w^4 + 167*w^3 + 242*w^2 + 212*w + 195 : 1), (96*w^4 + 190*w^3 + 225*w^2 + 71*w + 137 : 119*w^4 + 110*w^3 + 117*w^2 + 195*w + 190 : 1) ]
+Decomposing (160*w^4 + 220*w^3 + 107*w^2 + 119*w + 173 : 26*w^4 + 90*w^3 + 114*w^2 + 230*w + 39 : 1)
+[ (204*w^4 + 152*w^3 + 135*w^2 + 49*w + 65 : 44*w^4 + 246*w^3 + 21*w^2 + 172*w + 71 : 1), (213*w^4 + 90*w^3 + 38*w^2 + 62*w + 75 : 223*w^4 + 169*w^3 + 136*w^2 + 188*w + 55 : 1) ]
+Decomposing (23*w^4 + 121*w^3 + 154*w^2 + 164*w + 69 : 198*w^4 + 237*w^3 + 195*w^2 + 164*w + 34 : 1)
+[ (231*w^4 + 43*w^3 + 242*w^2 + 166*w + 244 : 211*w^4 + 83*w^3 + 190*w^2 + 47*w + 159 : 1), (192*w^4 + 185*w^3 + 25*w^2 + 2*w + 187 : 248*w^4 + 146*w^3 + 7*w^2 + 214*w + 3 : 1) ]
+Decomposing (203*w^4 + 146*w^3 + 223*w^2 + 31*w + 242 : 20*w^4 + 104*w^3 + 61*w^2 + 105*w + 2 : 1)
+[ (180*w^4 + 181*w^3 + 141*w^2 + 162*w + 19 : 82*w^4 + 151*w^3 + 45*w^2 + 48*w + 160 : 1), (8*w^4 + 210*w^3 + 105*w^2 + 48*w + 212 : 41*w^4 + 61*w^3 + 250*w^2 + 97*w + 160 : 1) ]
+Decomposing (137*w^4 + 146*w^3 + 141*w^2 + 85*w + 13 : 243*w^4 + 168*w^3 + 217*w^2 + 81*w + 189 : 1)
+[ (224*w^4 + 229*w^3 + 152*w^2 + 22*w + 141 : 150*w^4 + 45*w^3 + 193*w^2 + 156*w + 81 : 1), (183*w^4 + 92*w^3 + 214*w^2 + 171*w + 190 : 34*w^4 + 80*w^2 + 238*w + 93 : 1) ]
+Decomposing (197*w^4 + 85*w^3 + 35*w^2 + 175*w + 52 : 180*w^4 + 62*w^3 + 136*w^2 + 232*w + 95 : 1)
+[ (54*w^4 + 124*w^3 + 121*w^2 + 135*w + 159 : 97*w^4 + 121*w^3 + 178*w^2 + 182*w + 17 : 1), (195*w^4 + 63*w^3 + 35*w^2 + 121*w + 79 : 61*w^4 + 162*w^3 + 183*w^2 + 198*w + 38 : 1) ]
+Decomposing (181*w^4 + 193*w^3 + 125*w^2 + 14*w + 212 : 211*w^4 + 27*w^3 + 196*w^2 + 32*w + 149 : 1)
+[ (46*w^4 + 184*w^3 + 105*w^2 + 228*w + 52 : 23*w^4 + 117*w^3 + 167*w^2 + 172*w + 26 : 1), (99*w^4 + 147*w^3 + 112*w^2 + 94*w + 58 : 233*w^4 + 130*w^3 + 99*w^2 + 157*w + 54 : 1) ]
+Decomposing (114*w^4 + 158*w^3 + 15*w^2 + 54*w + 167 : 223*w^4 + 190*w^3 + 219*w^2 + 175*w + 188 : 1)
+[ (49*w^4 + 75*w^3 + 117*w^2 + 220*w + 168 : 147*w^4 + 114*w^3 + 153*w^2 + 18*w + 187 : 1), (8*w^4 + 104*w^3 + 108*w^2 + 234*w + 46 : 68*w^4 + 209*w^3 + 114*w^2 + 143*w + 31 : 1) ]
+Decomposing (186*w^4 + 237*w^3 + 116*w^2 + 158*w + 209 : 191*w^4 + 110*w^3 + 67*w^2 + 78*w + 99 : 1)
+[ (98*w^4 + 58*w^3 + 211*w^2 + 124*w + 93 : 149*w^4 + 144*w^3 + 116*w^2 + 101*w + 160 : 1), (189*w^4 + 124*w^3 + 122*w^2 + 242*w + 231 : 198*w^4 + 68*w^3 + 109*w^2 + 213*w + 160 : 1) ]
+Decomposing (92*w^4 + 24*w^3 + 36*w^2 + 174*w + 1 : 108*w^4 + 241*w^3 + 9*w^2 + 126*w + 162 : 1)
+[ (55*w^4 + 229*w^3 + 121*w^2 + 219*w + 168 : 220*w^4 + 158*w^3 + 106*w^2 + 202*w + 244 : 1), (69*w^4 + 158*w^3 + 77*w^2 + 173*w + 135 : 233*w^4 + 165*w^3 + 215*w^2 + 194*w + 199 : 1) ]
+Decomposing (89*w^4 + 138*w^3 + 102*w^2 + 145*w + 125 : 129*w^4 + 113*w^3 + 53*w^2 + 46*w + 222 : 1)
+[ (87*w^4 + 80*w^3 + 199*w^2 + 213*w + 156 : 175*w^4 + 52*w^3 + 24*w^2 + 3*w + 198 : 1), (93*w^4 + 64*w^3 + 61*w^2 + 193*w + 65 : 202*w^4 + 242*w^3 + 110*w^2 + 101*w + 191 : 1) ]
+Decomposing (80*w^4 + 54*w^3 + 87*w^2 + 134*w + 78 : 228*w^4 + 95*w^3 + 54*w^2 + 25*w + 164 : 1)
+[ (237*w^4 + 238*w^3 + 233*w^2 + 112*w + 43 : 81*w^4 + 81*w^3 + 143*w^2 + 76*w + 244 : 1), (218*w^4 + 239*w^3 + 96*w^2 + 62*w + 90 : 53*w^4 + 239*w^3 + 38*w^2 + 183*w + 220 : 1) ]
+Decomposing (209*w^4 + 15*w^3 + 220*w^2 + 181*w + 195 : 35*w^4 + 117*w^3 + 108*w^2 + 154*w + 3 : 1)
+[ (17*w^4 + 135*w^3 + 6*w^2 + 188*w + 249 : 50*w^4 + 218*w^3 + 199*w^2 + 182*w + 228 : 1), (147*w^4 + 199*w^3 + 59*w^2 + 87*w + 76 : 42*w^4 + 119*w^3 + 130*w^2 + 76*w + 5 : 1) ]
+Decomposing (82*w^4 + 180*w^3 + 71*w^2 + 196*w + 93 : 28*w^4 + 91*w^3 + 116*w^2 + 109*w + 172 : 1)
+[ (161*w^4 + 54*w^3 + 216*w^2 + 204*w + 216 : 5*w^4 + 100*w^3 + 22*w^2 + 86*w + 87 : 1), (191*w^4 + 117*w^3 + 50*w^2 + 213*w + 217 : 232*w^4 + 152*w^3 + 100*w^2 + 187*w + 88 : 1) ]
+Decomposing (82*w^4 + 19*w^3 + 215*w^2 + 4*w + 50 : 4*w^4 + 80*w^3 + 184*w^2 + 213*w + 121 : 1)
+[ (17*w^4 + 84*w^3 + 114*w^2 + 107*w + 46 : 219*w^4 + 194*w^3 + 248*w^2 + 97*w + 84 : 1), (74*w^4 + 30*w^3 + 131*w^2 + 176*w + 204 : 176*w^4 + 45*w^3 + 53*w^2 + 143*w + 17 : 1) ]
+Decomposing (50*w^4 + 64*w^3 + 112*w^2 + 142*w + 14 : 103*w^4 + 169*w^3 + 223*w^2 + 152*w + 197 : 1)
+[ (6*w^4 + 151*w^3 + 51*w^2 + 46*w + 170 : 5*w^4 + 155*w^3 + 136*w^2 + 145*w + 185 : 1), (51*w^4 + 93*w^3 + 184*w^2 + 24*w + 160 : 238*w^4 + 242*w^3 + 9*w^2 + 60*w + 215 : 1) ]
+Decomposing (236*w^4 + 124*w^3 + 205*w^2 + 172*w + 75 : 172*w^4 + 73*w^3 + 117*w^2 + 219*w + 114 : 1)
+[ (60*w^4 + 103*w^3 + 156*w^2 + 48*w + 117 : 142*w^4 + 73*w^3 + 12*w^2 + 87*w + 213 : 1), (103*w^4 + 236*w^3 + 119*w^2 + 111*w + 125 : 158*w^4 + 148*w^3 + 102*w^2 + 20*w + 202 : 1) ]
+Decomposing (58*w^4 + 249*w^3 + 62*w^2 + 13*w + 144 : 249*w^4 + 76*w^3 + 242*w^2 + 45*w + 117 : 1)
+[ (118*w^4 + 27*w^3 + 250*w^2 + 206*w + 123 : 121*w^4 + 129*w^3 + 47*w^2 + 207*w + 159 : 1), (183*w^4 + 250*w^3 + 219*w^2 + 230*w + 248 : 54*w^4 + 201*w^3 + 59*w^2 + 58*w + 120 : 1) ]
+Decomposing (26*w^4 + 161*w^3 + 91*w^2 + 136*w + 208 : 162*w^4 + 209*w^3 + 189*w^2 + 130*w + 52 : 1)
+[ (24*w^4 + 191*w^3 + 56*w^2 + 111*w + 139 : 213*w^4 + 139*w^3 + 160*w^2 + 140*w + 143 : 1), (188*w^4 + 180*w^3 + 224*w^2 + 207*w + 100 : 147*w^4 + 28*w^3 + 165*w^2 + 105*w + 127 : 1) ]
+Decomposing (79*w^4 + 103*w^3 + 137*w^2 + 17*w + 85 : 91*w^4 + 207*w^3 + 80*w^2 + 25*w + 19 : 1)
+[ (119*w^4 + 195*w^3 + 28*w^2 + 80*w + 117 : 236*w^4 + 189*w^3 + 92*w^2 + 194*w + 30 : 1), (192*w^4 + 166*w^3 + 80*w^2 + 149*w + 72 : 188*w^4 + 59*w^3 + 2*w^2 + 184*w + 209 : 1) ]
+Decomposing (70*w^4 + 165*w^3 + 199*w^2 + 178*w + 146 : 88*w^4 + 168*w^3 + 247*w^2 + 4*w + 203 : 1)
+[ (247*w^4 + 41*w^3 + 157*w^2 + 5*w + 155 : 36*w^4 + 230*w^3 + 232*w^2 + 3*w + 23 : 1), (237*w^4 + 135*w^3 + 82*w^2 + 37*w + 199 : 18*w^4 + 152*w^3 + 213*w^2 + 226*w + 55 : 1) ]
+Decomposing (243*w^4 + 216*w^3 + 249*w^2 + 197*w + 51 : 219*w^4 + 237*w^3 + 69*w^2 + 193*w + 5 : 1)
+[ (40*w^4 + 33*w^3 + 198*w^2 + 219*w + 123 : 28*w^4 + 197*w^3 + 9*w^2 + 86*w + 196 : 1), (169*w^4 + 12*w^3 + 61*w^2 + 51*w + 247 : 214*w^4 + 37*w^3 + 73*w^2 + 173*w + 182 : 1) ]
+Decomposing (45*w^4 + 221*w^3 + 246*w^2 + 99*w + 48 : 85*w^4 + 36*w^3 + 161*w^2 + 56*w + 98 : 1)
+Weil restriction time: 0.040
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251^5)
+Rank: 5
+Order: Grevlex with weights [1, 1, 1, 2, 1]
+Matrix kind: Generic finite field
+Generic field
+Datum size: 4
+No queue sort
+Weights: 1 1 1 2 1
+Initial length: 4
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 1
+
+*******
+STEP 1
+Basis length: 4, queue length: 1, step degree: 4, num pairs: 1
+Basis total mons: 19, average length: 4.750
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 13 column(s), 0.000
+Average length for reductees: 3.00 [1], reductors: 2.93 [27]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 27 = 28 rows / 40 columns out of 126 (31.746%)
+Density: 7.3214% / 17.289% (2.9286/r), total: 82 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 28 by 40
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+Number of unused reductors: 3
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 4 [1], av deg: 4.0
+Degree counts: 4:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+Reduce 5 final polynomial(s) by 5
+0 redundant polynomial(s) removed; time: 0.000
+Interreduce 4 (out of range [0 .. 4] = 5) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+4 + 0 = 4 rows / 11 columns
+Density: 31.818% / 61.97% (3.5/r), total: 14 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [4]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 5
+
+Final basis length: 4
+Number of pairs: 1
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 28 by 40
+Max num rows matrix: 28 by 40
+Approx mat cost: 186.723, sym red cost: 96
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.001
+Weil restriction time: 0.010
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251)
+Rank: 9
+Order: Graded Reverse Lexicographical
+NEW hash table
+Matrix kind: Modular FP (short datum)
+Datum size: 2
+No queue sort
+Initial length: 10
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 7
+
+*******
+STEP 1
+Basis length: 10, queue length: 7, step degree: 2, num pairs: 1
+Basis total mons: 109, average length: 10.900
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 18 column(s), 0.000
+Average length for reductees: 18.00 [1], reductors: 18.00 [1]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 1 = 2 rows / 18 columns out of 55 (32.727%)
+Density: 100% / 100% (18/r), total: 36 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 2 by 18
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 2 [1], av deg: 2.0
+Degree counts: 2:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 2
+Basis length: 11, queue length: 8, step degree: 3, num pairs: 8
+Basis total mons: 125, average length: 11.364
+Number of S-polynomials: 8, different lcms: 7
+Number of pair polynomials: 8, at 54 column(s), 0.000
+Average length for reductees: 14.25 [8], reductors: 15.72 [36]
+Symbolic reduction time: 0.000, column sort time: 0.000
+8 + 36 = 44 rows / 100 columns out of 220 (45.455%)
+Density: 15.455% / 25.412% (15.455/r), total: 680 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 44 by 100
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 8 (100.0%), min deg: 3 [8], av deg: 3.0
+Degree counts: 3:8
+Queue insertion time: 0.000
+Step 2 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 3
+Basis length: 19, queue length: 29, step degree: 4, num pairs: 29
+Basis total mons: 363, average length: 19.105
+Number of S-polynomials: 29, different lcms: 25
+Number of pair polynomials: 29, at 217 column(s), 0.000
+Average length for reductees: 31.86 [29], reductors: 16.33 [138]
+Symbolic reduction time: 0.000, column sort time: 0.000
+29 + 138 = 167 rows / 222 columns out of 715 (31.049%)
+Density: 8.572% / 15.32% (19.03/r), total: 3178 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 167 by 222
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [14]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 14 (48.3%), min deg: 3 [2], av deg: 3.9
+Degree counts: 3:2 4:12
+Queue insertion time: 0.000
+Step 3 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 4
+Basis length: 33, queue length: 72, step degree: 4, num pairs: 14
+Basis total mons: 1031, average length: 31.242
+Number of S-polynomials: 14, different lcms: 14
+Number of pair polynomials: 14, at 201 column(s), 0.000
+Average length for reductees: 34.79 [14], reductors: 18.90 [132]
+Symbolic reduction time: 0.000, column sort time: 0.000
+14 + 132 = 146 rows / 202 columns out of 715 (28.252%)
+Density: 10.111% / 19.041% (20.425/r), total: 2982 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 146 by 202
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [10]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 10 (71.4%), min deg: 4 [10], av deg: 4.0
+Degree counts: 4:10
+Queue insertion time: 0.000
+Step 4 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 5
+Basis length: 43, queue length: 120, step degree: 5, num pairs: 114
+Basis total mons: 1465, average length: 34.070
+Number of S-polynomials: 114, different lcms: 82
+Number of pair polynomials: 114, at 309 column(s), 0.000
+Average length for reductees: 51.09 [114], reductors: 19.51 [251]
+Symbolic reduction time: 0.000, column sort time: 0.000
+114 + 251 = 365 rows / 311 columns out of 2002 (15.534%)
+Density: 9.4454% / 15.642% (29.375/r), total: 10722 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 365 by 311
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [24]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 24 (21.1%), min deg: 3 [18], av deg: 3.2
+Degree counts: 3:18 4:6
+Queue insertion time: 0.000
+Step 5 time: 0.000, [0.002], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 6
+Basis length: 67, queue length: 132, step degree: 4, num pairs: 126
+Basis total mons: 2171, average length: 32.403
+Number of S-polynomials: 126, different lcms: 82
+Number of pair polynomials: 126, at 210 column(s), 0.000
+Average length for reductees: 27.84 [126], reductors: 20.42 [174]
+Symbolic reduction time: 0.000, column sort time: 0.000
+126 + 174 = 300 rows / 210 columns out of 715 (29.371%)
+Density: 11.208% / 19.706% (23.537/r), total: 7061 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 300 by 210
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [27]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 27 (21.4%), min deg: 2 [19], av deg: 2.3
+Degree counts: 2:19 3:8
+Queue insertion time: 0.000
+Step 6 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 7
+Basis length: 94, queue length: 139, step degree: 3, num pairs: 133
+Basis total mons: 2411, average length: 25.649
+Number of S-polynomials: 133, different lcms: 72
+Number of pair polynomials: 133, at 109 column(s), 0.009
+Average length for reductees: 8.60 [133], reductors: 15.52 [100]
+Symbolic reduction time: 0.000, column sort time: 0.000
+133 + 100 = 233 rows / 109 columns out of 220 (49.545%)
+Density: 10.615% / 21.147% (11.571/r), total: 2696 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 233 by 109
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [7]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 7 (5.3%), min deg: 1 [6], av deg: 1.1
+Degree counts: 1:6 2:1
+Queue insertion time: 0.000
+Number of linears: 6
+New max step: 7, time: 0.010
+Step 7 time: 0.009, [0.001], mat/total: 0.000/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 8
+Basis length: 101, queue length: 33, step degree: 2, num pairs: 27
+Basis total mons: 2426, average length: 24.020
+Number of S-polynomials: 27, different lcms: 27
+Number of pair polynomials: 27, at 36 column(s), 0.000
+Average length for reductees: 2.07 [27], reductors: 8.12 [34]
+Symbolic reduction time: 0.000, column sort time: 0.000
+27 + 34 = 61 rows / 36 columns out of 55 (65.455%)
+Density: 15.118% / 31.045% (5.4426/r), total: 332 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 61 by 36
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+No new polynomials
+Queue insertion time: 0.000
+Number of linears: 6
+Step 8 time: 0.000, [0.000], mat/total: 0.000/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 9
+Basis length: 101, queue length: 6, step degree: 6, num pairs: 6
+Basis total mons: 2426, average length: 24.020
+6 pairs eliminated
+No pairs to reduce
+Pair elimination time: 0.000
+
+Reduce 101 final polynomial(s) by 101
+1 redundant polynomial(s) removed; time: 0.000
+Interreduce 9 (out of range [0 .. 100] = 101) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+9 + 2 = 11 rows / 13 columns
+Density: 23.776% / 46.857% (3.0909/r), total: 34 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [9]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 100
+
+Final basis length: 9
+Number of pairs: 452
+Total pair setup time: 0.010
+Max step: 7, time: 0.010
+Max num entries matrix: 365 by 311
+Max num rows matrix: 365 by 311
+Approx mat cost: 2.83066e+06, sym red cost: 27721
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.009, real time: 0.007
+Groebner basis time: 0.000 2 10 = [ 2, 8 ]
+Groebner basis time: 0.000 3 18 = [ 2, 8, 8 ]
+Groebner basis time: 0.000 4 40 = [ 2, 8, 10, 20 ]
+  Gap degree and sizes: 4 7 = [ 0, 0, 7 ]
+Groebner basis time: 0.000 5 9 = [ 8, 1 ]
+  Gap degree and sizes: 5 9 = [ 8, 1 ]
+Point decomposition time: 0.040
+[
+[ (40*w^4 + 33*w^3 + 198*w^2 + 219*w + 123 : 28*w^4 + 197*w^3 + 9*w^2 + 86*w + 196 : 1), (169*w^4 + 12*w^3 + 61*w^2 + 51*w + 247 : 214*w^4 + 37*w^3 + 73*w^2 + 173*w + 182 : 1) ],
+[ (169*w^4 + 12*w^3 + 61*w^2 + 51*w + 247 : 214*w^4 + 37*w^3 + 73*w^2 + 173*w + 182 : 1), (40*w^4 + 33*w^3 + 198*w^2 + 219*w + 123 : 28*w^4 + 197*w^3 + 9*w^2 + 86*w + 196 : 1) ]
+]
+
+Point B 1 1
+Decomposing (159*w^4 + 30*w^3 + 162*w^2 + 204*w + 117 : 132*w^4 + 88*w^3 + 234*w^2 + 204*w + 162 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 2
+Decomposing (142*w^4 + 90*w^3 + 62*w^2 + 220*w + 208 : 249*w^4 + 56*w^3 + 202*w^2 + 208*w + 61 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.050
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 3
+Decomposing (209*w^4 + 193*w^3 + 198*w^2 + 9*w + 43 : 224*w^4 + 132*w^3 + 214*w^2 + 229*w + 178 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 4
+Decomposing (86*w^4 + 121*w^3 + 208*w^2 + 240*w + 77 : 168*w^4 + 205*w^3 + 205*w^2 + 232*w + 90 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 5
+Decomposing (233*w^4 + 72*w^3 + 135*w^2 + 142*w + 58 : 120*w^4 + 214*w^3 + 179*w^2 + 239*w + 224 : 1)
+Weil restriction time: 0.040
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 6
+Decomposing (239*w^4 + 52*w^3 + 171*w^2 + 240*w + 25 : 207*w^4 + 172*w^3 + 25*w^2 + 91*w + 95 : 1)
+Weil restriction time: 0.060
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 7
+Decomposing (149*w^4 + 211*w^3 + 44*w^2 + 236*w + 142 : 189*w^4 + 43*w^3 + 20*w^2 + 133*w + 246 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 8
+Decomposing (67*w^4 + 68*w^3 + 245*w^2 + 75*w + 179 : 26*w^4 + 64*w^3 + 61*w^2 + 208*w + 19 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 9
+Decomposing (16*w^4 + 243*w^3 + 21*w^2 + 13*w + 150 : 222*w^4 + 8*w^3 + 200*w^2 + 224*w + 10 : 1)
+Weil restriction time: 0.060
+Weil restriction time: 0.050
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 10
+Decomposing (70*w^4 + 196*w^3 + 179*w^2 + 85*w + 227 : 5*w^4 + 224*w^3 + 47*w^2 + 20*w + 111 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Success probability: 0
+
+Working on tEdwards Elliptic Curve defined by y^2 = x^3 + (225*w^4 + 184*w^3 + 244*w^2 + 171*w + 123)*x^2 + (99*w^4 + 190*w^3 + 211*w^2 + 231*w + 164)*x over GF(251^5)
+
+Point A 1
+[ (151*w^4 + 13*w^3 + 74*w^2 + 102*w + 247 : 177*w^4 + 231*w^3 + 9*w^2 + 211*w + 64 : 1), (123*w^4 + 32*w^3 + 122*w^2 + 231*w + 188 : 156*w^4 + 155*w^3 + 51*w^2 + 89*w + 208 : 1) ]
+Decomposing (171*w^4 + 48*w^3 + 217*w^2 + 119*w + 67 : 216*w^4 + 110*w^3 + 218*w^2 + 109*w + 235 : 1)
+[ (153*w^4 + 203*w^3 + 152*w^2 + 52*w + 87 : 214*w^4 + 228*w^3 + 186*w^2 + 102*w + 27 : 1), (227*w^4 + 126*w^3 + 58*w^2 + 182*w + 240 : 53*w^4 + 69*w^3 + 117*w^2 + 120*w + 134 : 1) ]
+Decomposing (21*w^4 + 168*w^3 + 65*w^2 + 172*w + 240 : 155*w^4 + 167*w^3 + w^2 + 247*w + 112 : 1)
+[ (136*w^4 + 231*w^3 + 91*w^2 + 217*w + 70 : 234*w^4 + 39*w^3 + 90*w^2 + 5*w + 247 : 1), (215*w^4 + 81*w^3 + 161*w^2 + 144*w + 206 : 250*w^4 + 187*w^3 + 169*w^2 + 121*w + 113 : 1) ]
+Decomposing (224*w^4 + 199*w^3 + 195*w^2 + 118*w + 124 : 115*w^4 + 137*w^3 + 211*w^2 + 241*w + 193 : 1)
+[ (38*w^4 + w^3 + 154*w^2 + 186*w + 244 : 195*w^4 + 28*w^3 + 106*w^2 + 171*w + 29 : 1), (33*w^4 + 198*w^3 + 149*w^2 + 187*w + 221 : 146*w^4 + 145*w^3 + 180*w^2 + 109*w + 195 : 1) ]
+Decomposing (146*w^4 + 208*w^3 + 183*w^2 + 72*w + 47 : 151*w^4 + 153*w^3 + 213*w^2 + 239*w + 149 : 1)
+[ (46*w^4 + 109*w^3 + 124*w^2 + 176*w + 39 : 54*w^4 + 152*w^3 + 122*w^2 + 47*w + 4 : 1), (124*w^4 + 79*w^3 + 111*w^2 + 198*w + 231 : 193*w^4 + 199*w^3 + 124*w^2 + 221*w + 209 : 1) ]
+Decomposing (164*w^4 + 196*w^3 + 187*w^2 + 132*w + 170 : 186*w^4 + 234*w^3 + 184*w^2 + 114*w + 160 : 1)
+[ (218*w^4 + 63*w^3 + 169*w^2 + 30*w + 29 : 172*w^4 + 130*w^3 + 98*w^2 + 12*w + 22 : 1), (129*w^4 + 100*w^3 + w^2 + 135*w + 77 : 225*w^4 + 115*w^3 + 222*w^2 + 71*w + 175 : 1) ]
+Decomposing (85*w^4 + 234*w^3 + 234*w^2 + 209*w + 209 : 62*w^4 + 78*w^3 + 46*w^2 + 100*w + 22 : 1)
+[ (91*w^4 + 127*w^3 + 14*w^2 + 189*w + 58 : 13*w^4 + 29*w^3 + 194*w^2 + 79*w + 115 : 1), (64*w^4 + 96*w^3 + 8*w^2 + 56*w + 144 : 182*w^3 + 17*w^2 + 153*w + 10 : 1) ]
+Decomposing (29*w^4 + 139*w^3 + 78*w^2 + 25*w + 206 : 37*w^4 + 234*w^3 + 205*w^2 + 67*w + 19 : 1)
+[ (9*w^4 + 214*w^3 + 228*w^2 + 214*w + 154 : 199*w^4 + 60*w^3 + 67*w^2 + 165*w + 202 : 1), (210*w^4 + 148*w^3 + 29*w^2 + 248*w + 201 : 73*w^4 + 224*w^3 + 144*w^2 + 66*w + 246 : 1) ]
+Decomposing (30*w^4 + 107*w^3 + 43*w^2 + 201*w + 184 : 25*w^4 + 34*w^3 + 245*w^2 + 124*w + 61 : 1)
+[ (184*w^4 + 39*w^3 + 185*w^2 + 248*w + 98 : 76*w^4 + 195*w^3 + 103*w^2 + 151*w + 132 : 1), (77*w^4 + 58*w^3 + 140*w^2 + 84*w + 169 : 70*w^4 + 78*w^3 + 239*w^2 + 181*w + 19 : 1) ]
+Decomposing (2*w^4 + 124*w^3 + 148*w^2 + 69*w + 56 : 192*w^4 + 60*w^3 + 146*w^2 + 27*w + 28 : 1)
+[ (139*w^4 + 186*w^3 + 105*w^2 + 64*w + 17 : 130*w^4 + 107*w^3 + 62*w^2 + 3*w + 65 : 1), (66*w^4 + 80*w^3 + 126*w^2 + 30*w + 120 : 60*w^4 + 209*w^3 + 233*w^2 + 86*w + 104 : 1) ]
+Decomposing (188*w^4 + 122*w^3 + 180*w^2 + 217*w + 137 : 70*w^4 + 127*w^3 + 206*w^2 + 232*w + 218 : 1)
+[ (54*w^4 + 83*w^3 + 226*w^2 + 146*w + 108 : 223*w^4 + 202*w^3 + 47*w^2 + 48*w + 49 : 1), (w^3 + 189*w^2 + 217*w + 160 : 13*w^4 + 135*w^3 + 224*w^2 + 108*w + 189 : 1) ]
+Decomposing (229*w^4 + 64*w^3 + 18*w^2 + 98*w + 227 : 98*w^4 + 34*w^3 + 15*w^2 + 19*w + 129 : 1)
+[ (209*w^4 + 238*w^3 + 94*w^2 + 61*w + 185 : 190*w^4 + 67*w^3 + 99*w^2 + 145*w + 174 : 1), (115*w^4 + 123*w^3 + 14*w^2 + 66*w + 149 : 207*w^4 + 143*w^3 + 73*w^2 + 142*w + 85 : 1) ]
+Decomposing (21*w^4 + 128*w^3 + 29*w^2 + 151*w + 92 : 223*w^4 + 71*w^3 + 158*w^2 + 19*w + 166 : 1)
+[ (204*w^4 + 212*w^3 + 163*w^2 + 120*w + 94 : 205*w^4 + 46*w^3 + 103*w^2 + 194*w + 14 : 1), (60*w^4 + 136*w^3 + w^2 + 142*w + 190 : 245*w^4 + 222*w^3 + 69*w^2 + 170*w + 76 : 1) ]
+Decomposing (54*w^4 + 63*w^3 + 173*w^2 + 10*w + 98 : 244*w^4 + 9*w^3 + 141*w^2 + 94*w + 233 : 1)
+[ (101*w^4 + 129*w^3 + 31*w^2 + 55*w + 64 : 231*w^4 + 135*w^3 + 152*w^2 + 84*w + 224 : 1), (22*w^4 + 106*w^3 + 181*w^2 + 25*w + 177 : 143*w^4 + 201*w^3 + 128*w^2 + 155*w + 7 : 1) ]
+Decomposing (105*w^4 + 35*w^3 + 19*w^2 + 103*w + 20 : 236*w^4 + 215*w^3 + 194*w^2 + 30*w + 186 : 1)
+[ (142*w^4 + 142*w^3 + 62*w^2 + 247*w + 247 : 200*w^4 + 46*w^3 + 180*w^2 + 20*w + 238 : 1), (17*w^4 + 113*w^3 + 182*w^2 + 112*w + 143 : 106*w^4 + 49*w^3 + 141*w^2 + 25*w + 10 : 1) ]
+Decomposing (122*w^4 + 80*w^3 + 99*w^2 + 194*w + 221 : 51*w^4 + 73*w^3 + 241*w^2 + 106*w + 249 : 1)
+[ (205*w^4 + 203*w^3 + 177*w^2 + 55*w + 108 : 178*w^4 + 152*w^3 + 237*w^2 + 10*w + 135 : 1), (213*w^4 + 228*w^3 + 18*w^2 + 242*w + 159 : 250*w^4 + 224*w^3 + 157*w^2 + 90*w + 180 : 1) ]
+Decomposing (236*w^4 + 35*w^3 + 105*w^2 + 35*w + 17 : 70*w^4 + 63*w^3 + 233*w^2 + 211*w + 35 : 1)
+[ (247*w^4 + 7*w^3 + 52*w^2 + 222*w + 64 : 217*w^4 + 193*w^3 + 144*w^2 + 46*w + 87 : 1), (48*w^4 + 118*w^3 + 155*w^2 + 16*w + 207 : 47*w^4 + 99*w^3 + 50*w^2 + 42*w + 86 : 1) ]
+Decomposing (199*w^4 + 249*w^3 + 184*w^2 + 26*w + 63 : 125*w^4 + 234*w^3 + 242*w^2 + 10*w + 17 : 1)
+[ (111*w^4 + 90*w^3 + 103*w^2 + 48*w + 162 : 88*w^4 + 130*w^3 + 124*w^2 + 33*w + 7 : 1), (147*w^4 + 181*w^3 + 195*w^2 + 27*w + 117 : 174*w^4 + 188*w^3 + 82*w^2 + 199*w + 171 : 1) ]
+Decomposing (9*w^4 + 222*w^3 + 29*w^2 + 181*w + 139 : 117*w^4 + 198*w^3 + 23*w^2 + 183*w + 80 : 1)
+[ (248*w^4 + 89*w^3 + 155*w^2 + 228*w + 187 : 83*w^4 + 177*w^3 + 132*w^2 + 9*w + 66 : 1), (136*w^4 + 106*w^3 + 56*w^2 + 21*w + 243 : 134*w^4 + 52*w^3 + 62*w^2 + 31*w + 220 : 1) ]
+Decomposing (197*w^4 + 90*w^3 + 191*w^2 + 185*w + 201 : 168*w^4 + 226*w^3 + 46*w^2 + 235*w + 35 : 1)
+[ (89*w^4 + 8*w^3 + 206*w^2 + 127*w + 177 : 7*w^4 + 192*w^3 + 28*w^2 + 35*w + 14 : 1), (225*w^4 + 66*w^3 + 178*w^2 + 134*w + 122 : 16*w^4 + 157*w^3 + 68*w^2 + 33*w + 98 : 1) ]
+Decomposing (157*w^4 + 189*w^3 + 165*w^2 + 249*w + 150 : 198*w^4 + 81*w^3 + 15*w^2 + 210*w + 123 : 1)
+[ (83*w^4 + 117*w^3 + 84*w^2 + 145*w + 143 : 230*w^4 + 87*w^3 + 150*w^2 + 177*w + 102 : 1), (94*w^4 + 4*w^3 + 195*w^2 + 116*w + 64 : 55*w^4 + 151*w^3 + 226*w^2 + 202*w + 32 : 1) ]
+Decomposing (196*w^4 + 104*w^3 + 87*w^2 + 234*w + 44 : 117*w^4 + 129*w^3 + 79*w^2 + 104*w + 237 : 1)
+[ (41*w^4 + 73*w^3 + 33*w^2 + w + 237 : 184*w^4 + 228*w^3 + 212*w^2 + 38*w + 121 : 1), (57*w^4 + 49*w^3 + 243*w^2 + 208*w + 33 : 102*w^4 + 95*w^3 + 75*w^2 + 52*w + 52 : 1) ]
+Decomposing (112*w^4 + 115*w^3 + 172*w^2 + 3*w + 168 : 91*w^4 + 152*w^3 + 42*w^2 + 227*w + 91 : 1)
+[ (137*w^4 + 236*w^3 + 151*w^2 + 147*w + 124 : 180*w^4 + 100*w^3 + 95*w^2 + 184*w + 213 : 1), (234*w^4 + 174*w^3 + 231*w^2 + 103*w + 40 : 83*w^4 + 15*w^3 + 126*w^2 + 152*w + 112 : 1) ]
+Decomposing (228*w^4 + 201*w^3 + 14*w^2 + 44*w + 70 : 127*w^4 + 149*w^3 + 65*w^2 + 201*w + 212 : 1)
+[ (9*w^4 + 104*w^3 + 235*w^2 + 156*w + 145 : 219*w^4 + 185*w^3 + 107*w^2 + 158*w + 216 : 1), (233*w^4 + 110*w^3 + 9*w^2 + 88*w + 115 : 51*w^4 + 191*w^3 + 37*w^2 + 235*w + 57 : 1) ]
+Decomposing (211*w^4 + 147*w^3 + 123*w^2 + 120*w + 195 : 57*w^4 + 74*w^3 + 136*w^2 + 21*w + 120 : 1)
+[ (207*w^4 + 42*w^3 + 187*w^2 + 67*w + 16 : 194*w^4 + 196*w^3 + 244*w^2 + 226*w + 196 : 1), (204*w^4 + 72*w^3 + 106*w^2 + 33*w + 75 : 110*w^4 + 229*w^3 + 156*w^2 + 231*w + 113 : 1) ]
+Decomposing (224*w^4 + 99*w^3 + 182*w^2 + 200*w + 59 : 193*w^4 + 227*w^3 + 206*w^2 + 238*w + 73 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.040
+Rewriting variables
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251^5)
+Rank: 5
+Order: Grevlex with weights [1, 1, 1, 2, 1]
+Matrix kind: Generic finite field
+Generic field
+Datum size: 4
+No queue sort
+Weights: 1 1 1 2 1
+Initial length: 4
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 1
+
+*******
+STEP 1
+Basis length: 4, queue length: 1, step degree: 6, num pairs: 1
+Basis total mons: 17, average length: 4.250
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 10 column(s), 0.000
+Average length for reductees: 2.00 [1], reductors: 2.90 [20]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 20 = 21 rows / 28 columns out of 462 (6.061%)
+Density: 10.204% / 25.128% (2.8571/r), total: 60 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 21 by 28
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+Number of unused reductors: 1
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 4 [1], av deg: 4.0
+Degree counts: 4:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+Reduce 5 final polynomial(s) by 5
+0 redundant polynomial(s) removed; time: 0.000
+Interreduce 4 (out of range [0 .. 4] = 5) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+4 + 0 = 4 rows / 10 columns
+Density: 30% / 58.333% (3/r), total: 12 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [4]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 5
+
+Final basis length: 4
+Number of pairs: 1
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 21 by 28
+Max num rows matrix: 21 by 28
+Approx mat cost: 140.719, sym red cost: 72
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.001
+Weil restriction time: 0.010
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251)
+Rank: 9
+Order: Graded Reverse Lexicographical
+NEW hash table
+Matrix kind: Modular FP (short datum)
+Datum size: 2
+No queue sort
+Initial length: 10
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 5
+
+*******
+STEP 1
+Basis length: 10, queue length: 5, step degree: 2, num pairs: 1
+Basis total mons: 69, average length: 6.900
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 10 column(s), 0.000
+Average length for reductees: 10.00 [1], reductors: 10.00 [1]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 1 = 2 rows / 10 columns out of 55 (18.182%)
+Density: 100% / 100% (10/r), total: 20 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 2 by 10
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 2 [1], av deg: 2.0
+Degree counts: 2:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 2
+Basis length: 11, queue length: 5, step degree: 3, num pairs: 5
+Basis total mons: 78, average length: 7.091
+Number of S-polynomials: 5, different lcms: 5
+Number of pair polynomials: 5, at 47 column(s), 0.000
+Average length for reductees: 7.80 [5], reductors: 8.42 [26]
+Symbolic reduction time: 0.000, column sort time: 0.000
+5 + 26 = 31 rows / 71 columns out of 220 (32.273%)
+Density: 11.722% / 16.931% (8.3226/r), total: 258 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 31 by 71
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [5]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 5 (100.0%), min deg: 3 [5], av deg: 3.0
+Degree counts: 3:5
+Queue insertion time: 0.000
+Step 2 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 3
+Basis length: 16, queue length: 21, step degree: 4, num pairs: 21
+Basis total mons: 155, average length: 9.688
+Number of S-polynomials: 21, different lcms: 19
+Number of pair polynomials: 21, at 172 column(s), 0.000
+Average length for reductees: 16.24 [21], reductors: 9.32 [101]
+Symbolic reduction time: 0.000, column sort time: 0.000
+21 + 101 = 122 rows / 185 columns out of 715 (25.874%)
+Density: 5.6801% / 10.362% (10.508/r), total: 1282 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 122 by 185
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [14]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 14 (66.7%), min deg: 3 [2], av deg: 3.9
+Degree counts: 3:2 4:12
+Queue insertion time: 0.000
+Step 3 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 4
+Basis length: 30, queue length: 80, step degree: 4, num pairs: 12
+Basis total mons: 455, average length: 15.167
+Number of S-polynomials: 12, different lcms: 12
+Number of pair polynomials: 12, at 114 column(s), 0.000
+Average length for reductees: 9.00 [12], reductors: 12.28 [76]
+Symbolic reduction time: 0.000, column sort time: 0.000
+12 + 76 = 88 rows / 144 columns out of 715 (20.140%)
+Density: 8.215% / 14.114% (11.83/r), total: 1041 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 88 by 144
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Echelonization time: 0.000
+Number of unused reductors: 2
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 8 (66.7%), min deg: 4 [8], av deg: 4.0
+Degree counts: 4:8
+Queue insertion time: 0.000
+Step 4 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 5
+Basis length: 38, queue length: 121, step degree: 5, num pairs: 114
+Basis total mons: 629, average length: 16.553
+Number of S-polynomials: 114, different lcms: 83
+Number of pair polynomials: 114, at 331 column(s), 0.000
+Average length for reductees: 24.26 [114], reductors: 10.40 [286]
+Symbolic reduction time: 0.000, column sort time: 0.000
+114 + 286 = 400 rows / 346 columns out of 2002 (17.283%)
+Density: 4.1474% / 7.6458% (14.35/r), total: 5740 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 400 by 346
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [24]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 24 (21.1%), min deg: 3 [18], av deg: 3.2
+Degree counts: 3:18 4:6
+Queue insertion time: 0.000
+Step 5 time: 0.000, [0.002], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 6
+Basis length: 62, queue length: 133, step degree: 4, num pairs: 126
+Basis total mons: 1001, average length: 16.145
+Number of S-polynomials: 126, different lcms: 76
+Number of pair polynomials: 126, at 225 column(s), 0.000
+Average length for reductees: 14.24 [126], reductors: 10.62 [193]
+Symbolic reduction time: 0.000, column sort time: 0.000
+126 + 193 = 319 rows / 229 columns out of 715 (32.028%)
+Density: 5.2621% / 10.34% (12.05/r), total: 3844 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 319 by 229
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [27]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 27 (21.4%), min deg: 2 [19], av deg: 2.3
+Degree counts: 2:19 3:8
+Queue insertion time: 0.000
+Step 6 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 7
+Basis length: 89, queue length: 140, step degree: 3, num pairs: 133
+Basis total mons: 1135, average length: 12.753
+Number of S-polynomials: 133, different lcms: 72
+Number of pair polynomials: 133, at 112 column(s), 0.000
+Average length for reductees: 4.71 [133], reductors: 8.27 [103]
+Symbolic reduction time: 0.000, column sort time: 0.000
+133 + 103 = 236 rows / 112 columns out of 220 (50.909%)
+Density: 5.5917% / 11.852% (6.2627/r), total: 1478 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 236 by 112
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [5]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 5 (3.8%), min deg: 1 [5], av deg: 1.0
+Degree counts: 1:5
+Queue insertion time: 0.000
+Number of linears: 5
+Step 7 time: 0.000, [0.001], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 8
+Basis length: 94, queue length: 32, step degree: 2, num pairs: 25
+Basis total mons: 1146, average length: 12.191
+Number of S-polynomials: 25, different lcms: 25
+Number of pair polynomials: 25, at 36 column(s), 0.000
+Average length for reductees: 2.12 [25], reductors: 4.97 [32]
+Symbolic reduction time: 0.000, column sort time: 0.000
+25 + 32 = 57 rows / 36 columns out of 55 (65.455%)
+Density: 10.331% / 23.026% (3.7193/r), total: 212 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 57 by 36
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+No new polynomials
+Queue insertion time: 0.000
+Number of linears: 5
+Step 8 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 9
+Basis length: 94, queue length: 7, step degree: 6, num pairs: 7
+Basis total mons: 1146, average length: 12.191
+7 pairs eliminated
+No pairs to reduce
+Pair elimination time: 0.000
+
+Reduce 94 final polynomial(s) by 94
+0 redundant polynomial(s) removed; time: 0.000
+Interreduce 9 (out of range [0 .. 93] = 94) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+9 + 6 = 15 rows / 19 columns
+Density: 24.561% / 47.675% (4.6667/r), total: 70 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [9]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 94
+
+Final basis length: 9
+Number of pairs: 437
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 400 by 346
+Max num rows matrix: 400 by 346
+Approx mat cost: 1.68807e+06, sym red cost: 13945
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.007
+Groebner basis time: 0.000 2 10 = [ 2, 8 ]
+Groebner basis time: 0.000 3 15 = [ 2, 8, 5 ]
+Groebner basis time: 0.010 4 37 = [ 2, 8, 7, 20 ]
+  Gap degree and sizes: 4 3 = [ 0, 0, 3 ]
+Groebner basis time: 0.000 5 9 = [ 7, 2 ]
+  Gap degree and sizes: 5 8 = [ 6, 2 ]
+Point decomposition time: 0.090
+[
+[ (111*w^4 + 115*w^3 + 149*w^2 + 38*w + 214 : 226*w^4 + 164*w^3 + 171*w^2 + 218*w + 84 : 1), (115*w^4 + 40*w^3 + 199*w^2 + 12*w + 196 : 32*w^4 + 76*w^3 + 11*w^2 + 13*w : 1) ],
+[ (115*w^4 + 40*w^3 + 199*w^2 + 12*w + 196 : 32*w^4 + 76*w^3 + 11*w^2 + 13*w : 1), (111*w^4 + 115*w^3 + 149*w^2 + 38*w + 214 : 226*w^4 + 164*w^3 + 171*w^2 + 218*w + 84 : 1) ],
+[ (207*w^4 + 42*w^3 + 187*w^2 + 67*w + 16 : 194*w^4 + 196*w^3 + 244*w^2 + 226*w + 196 : 1), (204*w^4 + 72*w^3 + 106*w^2 + 33*w + 75 : 110*w^4 + 229*w^3 + 156*w^2 + 231*w + 113 : 1) ],
+[ (204*w^4 + 72*w^3 + 106*w^2 + 33*w + 75 : 110*w^4 + 229*w^3 + 156*w^2 + 231*w + 113 : 1), (207*w^4 + 42*w^3 + 187*w^2 + 67*w + 16 : 194*w^4 + 196*w^3 + 244*w^2 + 226*w + 196 : 1) ]
+]
+
+Point B 1 1
+Decomposing (3*w^4 + 224*w^3 + 118*w^2 + 38*w + 124 : 67*w^4 + 31*w^3 + 83*w^2 + 168*w + 188 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Point B 1 2
+Decomposing (192*w^4 + 137*w^3 + 210*w^2 + 126*w + 152 : 117*w^4 + 2*w^3 + 141*w^2 + 149*w + 139 : 1)
+Weil restriction time: 0.110
+Weil restriction time: 0.100
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Point B 1 3
+Decomposing (92*w^4 + 176*w^3 + 53*w^2 + 124*w + 217 : 248*w^4 + 71*w^3 + 122*w^2 + 220*w + 167 : 1)
+Weil restriction time: 0.120
+Weil restriction time: 0.100
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 4
+Decomposing (237*w^4 + 95*w^3 + 82*w^2 + 77*w + 32 : 156*w^4 + 186*w^3 + 87*w^2 + 102*w + 116 : 1)
+Weil restriction time: 0.110
+Weil restriction time: 0.100
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Point B 1 5
+Decomposing (240*w^4 + 2*w^3 + 13*w^2 + 246*w + 65 : 234*w^4 + 223*w^3 + 185*w^2 + 185*w + 22 : 1)
+Weil restriction time: 0.110
+Weil restriction time: 0.090
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 6
+Decomposing (130*w^4 + 81*w^3 + 178*w^2 + 166*w + 196 : 68*w^4 + 228*w^3 + 182*w^2 + 150*w + 181 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 7
+Decomposing (4*w^4 + 128*w^3 + 96*w^2 + 18*w + 191 : 16*w^4 + 217*w^3 + 181*w^2 + 169*w + 22 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.040
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 8
+Decomposing (114*w^4 + 183*w^3 + 172*w^2 + 87*w + 23 : 108*w^4 + 151*w^3 + 49*w^2 + 183*w + 209 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Point B 1 9
+Decomposing (149*w^4 + 102*w^3 + 173*w^2 + 173*w + 180 : 13*w^4 + 158*w^3 + 144*w^2 + 134*w + 171 : 1)
+Weil restriction time: 0.100
+Weil restriction time: 0.100
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 10
+Decomposing (132*w^4 + 123*w^3 + 114*w^2 + 144*w + 163 : 77*w^4 + 198*w^3 + 187*w^2 + 50*w + 161 : 1)
+Weil restriction time: 0.110
+Weil restriction time: 0.100
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Success probability: 0
+
+Working on Weierstrass Elliptic Curve defined by y^2 = x^3 + (8*w^4 + 127*w^3 + 114*w^2 + 185*w + 108)*x + (247*w^4 + 147*w^3 + 51*w^2 + 17*w + 134) over GF(251^5)
+
+Point A 1
+[ (247*w + 115 : 39*w^4 + 145*w^3 + 178*w^2 + 55*w + 235 : 1), (181*w + 4 : 217*w^4 + 103*w^3 + 44*w^2 + 13*w + 221 : 1) ]
+Decomposing (186*w^4 + 65*w^3 + 207*w^2 + 250*w + 43 : 219*w^4 + 231*w^3 + 105*w^2 + 212*w + 233 : 1)
+[ (19*w + 125 : 72*w^4 + 200*w^3 + 216*w^2 + 99*w + 141 : 1), (193*w + 134 : 10*w^4 + 40*w^3 + 90*w^2 + 155*w + 156 : 1) ]
+Decomposing (195*w^4 + 198*w^3 + 61*w^2 + 46*w + 54 : 235*w^4 + 87*w^3 + 45*w^2 + 243*w + 165 : 1)
+[ (73*w + 46 : 174*w^4 + 182*w^3 + 153*w^2 + 125*w + 95 : 1), (29*w + 69 : 30*w^4 + 8*w^3 + 164*w^2 + 55*w + 50 : 1) ]
+Decomposing (76*w^4 + 157*w^3 + 111*w^2 + 246*w + 236 : 51*w^4 + 217*w^3 + 58*w^2 + 72*w + 132 : 1)
+[ (157*w + 121 : 125*w^4 + 33*w^3 + 210*w^2 + 79*w + 110 : 1), (237*w + 213 : 197*w^4 + 200*w^3 + 225*w^2 + 73*w + 201 : 1) ]
+Decomposing (12*w^4 + 156*w^3 + 90*w^2 + 215*w + 73 : 156*w^4 + 69*w^3 + 117*w^2 + 148*w + 72 : 1)
+[ (219*w + 73 : 52*w^4 + 144*w^3 + 238*w^2 + 112*w + 213 : 1), (10*w + 244 : 124*w^4 + 36*w^3 + 100*w^2 + 198*w + 87 : 1) ]
+Decomposing (237*w^4 + 16*w^3 + 106*w^2 + 152*w + 73 : 132*w^4 + 164*w^3 + 234*w^2 + 11*w + 70 : 1)
+[ (247*w + 123 : 148*w^4 + 220*w^3 + 8*w^2 + 70*w + 4 : 1), (180*w + 34 : 39*w^4 + 24*w^3 + 35*w^2 + 162*w + 201 : 1) ]
+Decomposing (91*w^4 + 25*w^3 + 160*w^2 + 90*w + 101 : 33*w^4 + 242*w^3 + 177*w^2 + 238*w + 147 : 1)
+[ (215*w + 2 : 232*w^4 + 91*w^3 + 7*w^2 + 191*w + 30 : 1), (236*w + 167 : 249*w^4 + 65*w^3 + 121*w^2 + 240*w + 180 : 1) ]
+Decomposing (98*w^4 + 225*w^3 + 166*w^2 + 64*w + 158 : 235*w^4 + 146*w^3 + 35*w^2 + 187*w + 84 : 1)
+[ (164*w + 219 : 12*w^4 + 140*w^3 + 90*w^2 + 97*w + 117 : 1), (98*w + 170 : 86*w^4 + 223*w^3 + 75*w^2 + 110*w + 243 : 1) ]
+Decomposing (2*w^4 + 17*w^3 + 226*w^2 + 199*w + 156 : 123*w^4 + 150*w^3 + 120*w^2 + 187*w + 171 : 1)
+[ (64*w + 28 : 111*w^4 + 81*w^3 + 238*w^2 + 35*w + 67 : 1), (158*w + 167 : 228*w^4 + 188*w^3 + 134*w^2 + 38*w + 174 : 1) ]
+Decomposing (93*w^4 + 146*w^3 + 102*w^2 + 161*w + 92 : 30*w^4 + 105*w^3 + 121*w^2 + 239*w + 184 : 1)
+[ (127*w + 80 : 244*w^4 + 54*w^3 + 231*w^2 + 70*w + 6 : 1), (221*w + 45 : 51*w^4 + 250*w^3 + 135*w^2 + 185*w + 30 : 1) ]
+Decomposing (25*w^4 + 208*w^3 + 44*w^2 + 63*w + 90 : 134*w^4 + 7*w^3 + 237*w^2 + 143*w + 160 : 1)
+Weil restriction time: 0.040
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251^5)
+Rank: 5
+Order: Grevlex with weights [1, 1, 1, 2, 1]
+Matrix kind: Generic finite field
+Generic field
+Datum size: 4
+No queue sort
+Weights: 1 1 1 2 1
+Initial length: 4
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 1
+
+*******
+STEP 1
+Basis length: 4, queue length: 1, step degree: 4, num pairs: 1
+Basis total mons: 21, average length: 5.250
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 15 column(s), 0.000
+Average length for reductees: 3.00 [1], reductors: 2.96 [28]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 28 = 29 rows / 41 columns out of 126 (32.540%)
+Density: 7.233% / 18.791% (2.9655/r), total: 86 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 29 by 41
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+Number of unused reductors: 3
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 4 [1], av deg: 4.0
+Degree counts: 4:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+Reduce 5 final polynomial(s) by 5
+0 redundant polynomial(s) removed; time: 0.000
+Interreduce 4 (out of range [0 .. 4] = 5) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+4 + 0 = 4 rows / 11 columns
+Density: 31.818% / 61.97% (3.5/r), total: 14 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [4]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 5
+
+Final basis length: 4
+Number of pairs: 1
+Total pair setup time: 0.000
+Max step: 1, time: 0.000
+Max num entries matrix: 29 by 41
+Max num rows matrix: 29 by 41
+Approx mat cost: 215.717, sym red cost: 100
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.000
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.000, real time: 0.000
+Weil restriction time: 0.000
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(251)
+Rank: 9
+Order: Graded Reverse Lexicographical
+NEW hash table
+Matrix kind: Modular FP (short datum)
+Datum size: 2
+No queue sort
+Initial length: 10
+Inhomogeneous
+
+Initial queue setup time: 0.000
+Initial queue length: 7
+
+*******
+STEP 1
+Basis length: 10, queue length: 7, step degree: 2, num pairs: 1
+Basis total mons: 109, average length: 10.900
+Number of S-polynomials: 1, different lcms: 1
+Number of pair polynomials: 1, at 18 column(s), 0.000
+Average length for reductees: 18.00 [1], reductors: 18.00 [1]
+Symbolic reduction time: 0.000, column sort time: 0.000
+1 + 1 = 2 rows / 18 columns out of 55 (32.727%)
+Density: 100% / 100% (18/r), total: 36 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 2 by 18
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [1]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 1 (100.0%), min deg: 2 [1], av deg: 2.0
+Degree counts: 2:1
+Queue insertion time: 0.000
+New max step: 1, time: 0.000
+Step 1 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 2
+Basis length: 11, queue length: 8, step degree: 3, num pairs: 8
+Basis total mons: 126, average length: 11.455
+Number of S-polynomials: 8, different lcms: 7
+Number of pair polynomials: 8, at 54 column(s), 0.000
+Average length for reductees: 14.75 [8], reductors: 15.83 [36]
+Symbolic reduction time: 0.000, column sort time: 0.000
+8 + 36 = 44 rows / 100 columns out of 220 (45.455%)
+Density: 15.636% / 25.731% (15.636/r), total: 688 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 44 by 100
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 8 (100.0%), min deg: 3 [8], av deg: 3.0
+Degree counts: 3:8
+Queue insertion time: 0.000
+Step 2 time: 0.000, [0.000], mat/total: 0.000/0.000, mem: 32.1MB (=max)
+
+*******
+STEP 3
+Basis length: 19, queue length: 29, step degree: 4, num pairs: 29
+Basis total mons: 374, average length: 19.684
+Number of S-polynomials: 29, different lcms: 25
+Number of pair polynomials: 29, at 229 column(s), 0.000
+Average length for reductees: 33.90 [29], reductors: 16.18 [150]
+Symbolic reduction time: 0.000, column sort time: 0.000
+29 + 150 = 179 rows / 234 columns out of 715 (32.727%)
+Density: 8.1411% / 14.846% (19.05/r), total: 3410 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 179 by 234
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.009 + 0.000 = 0.009 [14]
+Echelonization time: 0.009
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 14 (48.3%), min deg: 3 [2], av deg: 3.9
+Degree counts: 3:2 4:12
+Queue insertion time: 0.000
+New max step: 3, time: 0.010
+Step 3 time: 0.009, [0.001], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 4
+Basis length: 33, queue length: 66, step degree: 4, num pairs: 14
+Basis total mons: 1050, average length: 31.818
+Number of S-polynomials: 14, different lcms: 13
+Number of pair polynomials: 14, at 209 column(s), 0.000
+Average length for reductees: 41.29 [14], reductors: 17.97 [139]
+Symbolic reduction time: 0.000, column sort time: 0.000
+14 + 139 = 153 rows / 209 columns out of 715 (29.231%)
+Density: 9.6194% / 18.147% (20.105/r), total: 3076 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 153 by 209
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [10]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 10 (71.4%), min deg: 4 [10], av deg: 4.0
+Degree counts: 4:10
+Queue insertion time: 0.000
+Step 4 time: 0.000, [0.000], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 5
+Basis length: 43, queue length: 114, step degree: 5, num pairs: 108
+Basis total mons: 1483, average length: 34.488
+Number of S-polynomials: 108, different lcms: 83
+Number of pair polynomials: 108, at 309 column(s), 0.000
+Average length for reductees: 50.03 [108], reductors: 19.61 [251]
+Symbolic reduction time: 0.000, column sort time: 0.000
+108 + 251 = 359 rows / 311 columns out of 2002 (15.534%)
+Density: 9.2468% / 15.5% (28.758/r), total: 10324 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 359 by 311
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [24]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 24 (22.2%), min deg: 3 [18], av deg: 3.2
+Degree counts: 3:18 4:6
+Queue insertion time: 0.000
+Step 5 time: 0.000, [0.002], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 6
+Basis length: 67, queue length: 132, step degree: 4, num pairs: 126
+Basis total mons: 2189, average length: 32.672
+Number of S-polynomials: 126, different lcms: 86
+Number of pair polynomials: 126, at 212 column(s), 0.000
+Average length for reductees: 27.84 [126], reductors: 20.34 [176]
+Symbolic reduction time: 0.000, column sort time: 0.000
+126 + 176 = 302 rows / 212 columns out of 715 (29.650%)
+Density: 11.069% / 19.608% (23.467/r), total: 7087 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 302 by 212
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [27]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 27 (21.4%), min deg: 2 [19], av deg: 2.3
+Degree counts: 2:19 3:8
+Queue insertion time: 0.000
+Step 6 time: 0.000, [0.002], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 7
+Basis length: 94, queue length: 139, step degree: 3, num pairs: 133
+Basis total mons: 2429, average length: 25.840
+Number of S-polynomials: 133, different lcms: 72
+Number of pair polynomials: 133, at 109 column(s), 0.000
+Average length for reductees: 8.60 [133], reductors: 15.73 [100]
+Symbolic reduction time: 0.000, column sort time: 0.000
+133 + 100 = 233 rows / 109 columns out of 220 (49.545%)
+Density: 10.698% / 21.267% (11.661/r), total: 2717 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 233 by 109
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [7]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+Num new polynomials: 7 (5.3%), min deg: 1 [6], av deg: 1.1
+Degree counts: 1:6 2:1
+Queue insertion time: 0.000
+Number of linears: 6
+Step 7 time: 0.000, [0.001], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 8
+Basis length: 101, queue length: 33, step degree: 2, num pairs: 27
+Basis total mons: 2444, average length: 24.198
+Number of S-polynomials: 27, different lcms: 27
+Number of pair polynomials: 27, at 36 column(s), 0.000
+Average length for reductees: 2.07 [27], reductors: 8.15 [34]
+Symbolic reduction time: 0.000, column sort time: 0.000
+27 + 34 = 61 rows / 36 columns out of 55 (65.455%)
+Density: 15.164% / 31.116% (5.459/r), total: 333 (0.0MB)
+Matrix construction time: 0.000
+Matrix size: 61 by 36
+Current max memory usage: 32.1MB (=max)
+Before ech memory: 32.1MB (=max)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Echelonization time: 0.000
+After ech memory: 32.1MB (=max)
+New rules time: 0.000
+No new polynomials
+Queue insertion time: 0.000
+Number of linears: 6
+Step 8 time: 0.000, [0.001], mat/total: 0.010/0.009, mem: 32.1MB (=max)
+
+*******
+STEP 9
+Basis length: 101, queue length: 6, step degree: 6, num pairs: 6
+Basis total mons: 2444, average length: 24.198
+6 pairs eliminated
+No pairs to reduce
+Pair elimination time: 0.000
+
+Reduce 101 final polynomial(s) by 101
+1 redundant polynomial(s) removed; time: 0.000
+Interreduce 9 (out of range [0 .. 100] = 101) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+9 + 2 = 11 rows / 13 columns
+Density: 23.776% / 46.857% (3.0909/r), total: 34 (0.0MB)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [9]
+Echelonization time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 100
+
+Final basis length: 9
+Number of pairs: 446
+Total pair setup time: 0.000
+Max step: 3, time: 0.010
+Max num entries matrix: 359 by 311
+Max num rows matrix: 359 by 311
+Approx mat cost: 2.7796e+06, sym red cost: 27705
+Approx mat time: 0.000, sym red time: 0.000, total 0.000
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.010
+Total new polys time: 0.000
+Total queue update time: 0.000
+Total Faugere F4 time: 0.009, real time: 0.008
+Groebner basis time: 0.000 2 10 = [ 2, 8 ]
+Groebner basis time: 0.000 3 18 = [ 2, 8, 8 ]
+Groebner basis time: 0.000 4 39 = [ 2, 8, 10, 19 ]
+  Gap degree and sizes: 4 8 = [ 0, 0, 8 ]
+Groebner basis time: 0.010 5 9 = [ 8, 1 ]
+  Gap degree and sizes: 5 9 = [ 8, 1 ]
+Point decomposition time: 0.040
+[
+[ (221*w + 45 : 51*w^4 + 250*w^3 + 135*w^2 + 185*w + 30 : 1), (127*w + 80 : 244*w^4 + 54*w^3 + 231*w^2 + 70*w + 6 : 1) ],
+[ (127*w + 80 : 244*w^4 + 54*w^3 + 231*w^2 + 70*w + 6 : 1), (221*w + 45 : 51*w^4 + 250*w^3 + 135*w^2 + 185*w + 30 : 1) ]
+]
+
+Point B 1 1
+Decomposing (20*w^4 + 63*w^3 + 17*w^2 + 225*w + 243 : 4*w^4 + 233*w^3 + 235*w^2 + 200*w + 171 : 1)
+Weil restriction time: 0.040
+Weil restriction time: 0.050
+Batch decomposition time: 0.030
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 2
+Decomposing (58*w^4 + 53*w^3 + 233*w^2 + 180*w + 148 : 147*w^4 + 210*w^3 + 144*w^2 + 137*w + 222 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 3
+Decomposing (113*w^4 + 87*w^3 + 171*w^2 + 79*w + 9 : 73*w^4 + 79*w^3 + 59*w^2 + 224*w + 27 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 4
+Decomposing (142*w^4 + 246*w^3 + 207*w^2 + 9*w + 59 : 210*w^4 + 138*w^3 + 20*w^2 + 136*w + 179 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 5
+Decomposing (135*w^4 + 29*w^3 + 176*w^2 + 168*w + 165 : 137*w^4 + 185*w^3 + 144*w^2 + 240*w + 224 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.050
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 6
+Decomposing (127*w^4 + 158*w^3 + 173*w^2 + 53*w + 49 : 214*w^4 + 170*w^3 + 96*w^2 + 177*w + 218 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.010
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 7
+Decomposing (66*w^4 + 173*w^3 + 124*w^2 + 103*w + 62 : 195*w^4 + 236*w^3 + 110*w^2 + 17*w + 43 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 8
+Decomposing (22*w^4 + 47*w^3 + 153*w^2 + 219*w + 68 : 100*w^4 + 119*w^3 + 67*w^2 + 142*w + 246 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.010
+
+Point B 1 9
+Decomposing (97*w^4 + 211*w^3 + 85*w^2 + 217*w + 100 : 57*w^4 + 166*w^3 + 88*w^2 + 169*w + 110 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.010
+Point decomposition time: 0.000
+
+Point B 1 10
+Decomposing (73*w^4 + 114*w^3 + 47*w^2 + 127*w + 139 : 127*w^4 + 65*w^3 + 16*w^2 + 64*w + 235 : 1)
+Weil restriction time: 0.050
+Weil restriction time: 0.040
+Batch decomposition time: 0.020
+Rewriting variables
+Weil restriction time: 0.000
+Point decomposition time: 0.000
+
+Success probability: 0
+
+Total time: 12.109 seconds, Total memory usage: 32.09MB
