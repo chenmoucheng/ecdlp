@@ -16,14 +16,14 @@ repeat
   order := Order(E["curve"](k));
   assert IsDivisibleBy(order,cofactor);
 until IsPrime(Integers()!(order/cofactor));
-P := cofactor*Random(E["curve"](k));
+E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
+print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
-zeta := AllRoots(k!1,3)[2];
+_,zeta := Explode(AllRoots(k!1,3));
 E["FBtoV"] := function(Q)
   assert Q ne E["curve"]!0;
   u := Q[1]/Q[3];
@@ -38,8 +38,7 @@ E["VtoFB"] := function(t)
   I := Ideal({X + Y - t,X^3 + Y^3 + c - d*X*Y});
   Qs := [];
   for s in Variety(I) do
-    x := s[1];
-    y := s[2];
+    x,y := Explode(s);
     u :=             3*(2*zeta + 1)*a3/((zeta + 2)*x + (zeta - 1)*y - (2*zeta + 1)*a1);
     v := -(x + y + a1)*(2*zeta + 1)*a3/((zeta + 2)*x + (zeta - 1)*y - (2*zeta + 1)*a1);
     Append(~Qs,E["curve"]![u,v]);
@@ -90,10 +89,12 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * 
  * S<t1,t2,t3,c,d> := PolynomialRing(Rationals(),5);
  * phi := hom<R->S|[0,0,0,0,t1,0,0,t2,c,d,t3]>;
- * f3 := Factorization(phi(g3))[3][1];
+ * _,_,f3 := Explode(Factorization(phi(g3)))[1];
  */
 
 E["f3"] := function(t1,t2,t3)
   return t1^2*t2^2*t3 + 1/3*t1^2*t2^2*d + t1^2*t2*t3^2 + 1/3*t1^2*t2*t3*d + 1/3*t1^2*t3^2*d - t1^2*c + t1*t2^2*t3^2 + 1/3*t1*t2^2*t3*d + 1/3*t1*t2*t3^2*d + 1/3*t1*t2*t3*d^2 + 2*t1*t2*c + 2*t1*t3*c + 2/3*t1*c*d + 1/3*t2^2*t3^2*d - t2^2*c + 2*t2*t3*c + 2/3*t2*c*d - t3^2*c + 2/3*t3*c*d + 1/3*c*d^2;
 end function;
+
+Append(~curves,E); delete E;
 

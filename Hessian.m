@@ -4,6 +4,18 @@
 
 E := AssociativeArray();
 E["form"] := "Hessian"; E["form"];
+if not IsEmpty(curves) then
+  E0 := curves[1];
+  assert IsSimplifiedModel(E0["curve"]);
+  V := Variety(Ideal({-27*R.1*(R.1^3 + 8) - a4,54*(R.1^6 - 20*R.1^3 - 8) - a6}))
+       where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,1);
+  assert not IsEmpty(V);
+  d := Explode(Random(V));
+  assert (3*d)^3 ne 1;
+  E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
+  order := Order(E["curve"](k));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+else
 repeat
   repeat
     d := Random(k);
@@ -13,11 +25,12 @@ repeat
   assert IsDivisibleBy(order,3);
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 until cofactor le 256;
-P := cofactor*Random(E["curve"](k));
+end if;
+E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
+print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
@@ -35,8 +48,7 @@ E["VtoFB"] := function(t)
   I := Ideal({X + Y - t,X^3 + Y^3 + 1 - 3*d*X*Y});
   Qs := [];
   for s in Variety(I) do
-    x := s[1];
-    y := s[2];
+    x,y := Explode(s);
     u := 12*(d^3 - 1)/(d + x + y) - 9*d^2;
     v := 36*(y - x)*(d^3 - 1)/(d + x + y);
     Append(~Qs,E["curve"]![u,v]);
@@ -85,10 +97,12 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * 
  * S<t1,t2,t3,d> := PolynomialRing(Rationals(),4);
  * phi := hom<R->S|[0,0,0,0,t1,0,0,t2,d,t3]>;
- * f3 := Factorization(phi(g3))[3][1];
+ * _,_,f3 := Explode(Factorization(phi(g3)))[1];
  */
 
 E["f3"] := function(t1,t2,t3)
   return t1^2*t2^2*t3 + t1^2*t2^2*d + t1^2*t2*t3^2 + t1^2*t2*t3*d + t1^2*t3^2*d - t1^2 + t1*t2^2*t3^2 + t1*t2^2*t3*d + t1*t2*t3^2*d + 3*t1*t2*t3*d^2 + 2*t1*t2 + 2*t1*t3 + 2*t1*d + t2^2*t3^2*d - t2^2 + 2*t2*t3 + 2*t2*d - t3^2 + 2*t3*d + 3*d^2;
 end function;
+
+Append(~curves,E); delete E;
 

@@ -5,6 +5,21 @@
 E := AssociativeArray();
 E["form"] := "tEdwards"; E["form"];
 assert q ne 2;
+if not IsEmpty(curves) then
+  E0 := curves[1];
+  assert IsWeierstrassModel(E0["curve"]);
+  V := Variety(Ideal({(3 - R.1^2) - a4*(3*R.2^2),(2*R.1^3 - 9*R.1) - a6*(27*R.2^3)}))
+       where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,2);
+  assert not IsEmpty(V);
+  A,B := Explode(Random(V));
+  a := (A + 2)/B;
+  d := (A - 2)/B;
+  assert a ne 0 and d ne 0 and a ne d;
+  a0 := 1/(a - d);
+  E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
+  order := Order(E["curve"](k));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+else
 repeat
   repeat
     a := Random(k);
@@ -16,19 +31,19 @@ repeat
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 until cofactor le 256;
+end if;
 E["O"] := <k!0,k!1>;
-P := cofactor*Random(E["curve"](k));
+E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
+print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
   if Q eq E["curve"]!0 then
-    // x := E["O"][1];
-    y := E["O"][2];
+    _,y := Explode(E["O"]);
   else
     u := Q[1]/Q[3]/a0;
     // v := Q[2]/Q[3]/a0^2;
@@ -46,8 +61,7 @@ E["VtoFB"] := function(t)
     if s eq E["O"] then
       Append(~Qs,E["curve"]!0);
     else
-      x := s[1];
-      y := s[2];
+      x,y := Explode(s);
       u := a0  *  (1 + y)/   (1 - y);
       v := a0^2*2*(1 + y)/(x*(1 - y));
       Append(~Qs,E["curve"]![u,v]);
@@ -68,4 +82,6 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
 E["f3"] := function(y1,y2,y3)
   return (y1^2*y2^2 - y1^2 - y2^2 + a/d)*y3^2 + 2*(d - a)/d*y1*y2*y3 + (a/d)*(y1^2 + y2^2 - 1) - y1^2*y2^2;
 end function;
+
+Append(~curves,E); delete E;
 

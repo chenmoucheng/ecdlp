@@ -85,6 +85,8 @@ RewriteESP := function(V,i)
          where S is PolynomialRing(BaseRing(R),#V) where R is Universe(V);
 end function;
 
+curves := [];
+
 // load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
@@ -93,7 +95,10 @@ end function;
 // load "tEdwards.m";
 load "Weierstrass.m";
 
-E["f4"] := function(x0,x1,x2,x3)
+for i in [1..#curves] do
+  E := curves[i];
+
+curves[i]["f4"] := function(x0,x1,x2,x3)
   R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
   f31 := E["f3"](T,X0,X1);
   f32 := E["f3"](T,X2,X3);
@@ -101,7 +106,7 @@ E["f4"] := function(x0,x1,x2,x3)
   return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
 end function;
 
-E["f5"] := function(x0,x1,x2,x3,x4)
+curves[i]["f5"] := function(x0,x1,x2,x3,x4)
   R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
   f3 := E["f3"](T,X0,X1);
   f4 := E["f4"](T,X2,X3,X4);
@@ -109,7 +114,7 @@ E["f5"] := function(x0,x1,x2,x3,x4)
   return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
 end function;
 
-E["f6"] := function(x0,x1,x2,x3,x4,x5)
+curves[i]["f6"] := function(x0,x1,x2,x3,x4,x5)
   R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
   f41 := E["f4"](T,X0,X1,X2);
   f42 := E["f4"](T,X3,X4,X5);
@@ -120,12 +125,13 @@ end function;
 // Semaev's summation ideal
 
 if m eq 2 then
-  Isummation := Ideal({E["f3"](t[1],t[2],r)});
+  curves[i]["Isummation"] := Ideal({E["f3"](t[1],t[2],r)});
 else
-  Isummation := Ideal({E["f3"](t[1],    t[2],    u[1])}
+  curves[i]["Isummation"] := Ideal({E["f3"](t[1],    t[2],    u[1])}
                  join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
                  join {E["f3"](u[m - 2],t[m],    r)});
 end if;
+end for;
 
 // Weil restriction
 
@@ -138,18 +144,18 @@ end function;
 
 // Point decomposition
 
-ECDLPDecompose := function(Q : Al := "All",Verbose := false)
+ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
   print "Decomposing",Q;
   if not IsPrime(Order(Q)) then return []; end if;
 
   z := E["FBtoV"](-Q);
   Icondition := Ideal({r - z});
-  J := WeilRestriction(Isummation + Icondition + E["Iauxiliary"]) + E["Jcondition"];
+  J := WeilRestriction(E["Isummation"] + Icondition + E["Iauxiliary"]) + E["Jcondition"];
 
   if h ge 0 then
     Z := C cat [K!0 : i in [(#C + 1)..n]] where C is Coefficients(phi(z));
     Jcondition := ideal<S1|{R[i] - Z[i] : i in [1..h]}>;
-    P,iota := CoreIdeal(WeilRestriction(Isummation) + E["Jcondition"] + Jcondition);
+    P,iota := CoreIdeal(WeilRestriction(E["Isummation"]) + E["Jcondition"] + Jcondition);
 
     t0 := Cputime();
     Jb := Ideal({iota(f) : f in GroebnerBasis(Basis(P),4)});
@@ -160,7 +166,7 @@ ECDLPDecompose := function(Q : Al := "All",Verbose := false)
   print "Rewriting variables";
   if not elim then
     print "  ... skipped";
-    Irewritten := Isummation + Icondition;
+    Irewritten := E["Isummation"] + Icondition;
   else
     case m:
       when 2:
@@ -172,7 +178,7 @@ ECDLPDecompose := function(Q : Al := "All",Verbose := false)
       when 5:
         I := Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],r)});
       else
-        I := Isummation;
+        I := E["Isummation"];
     end case;
     b := GetVerbose("Faugere"); SetVerbose("Faugere",Verbose select 2 else 0);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
@@ -201,26 +207,25 @@ ECDLPDecompose := function(Q : Al := "All",Verbose := false)
   return Qs;
 end function;
 
-// Random elements from V and FB
+// Random elements from FB
 
-RandomV := function()
-  return isoKk([Random(K) : i in [1..l]]);
-end function;
-
-RandomFB := function()
+RandomFB := function(E)
   repeat
-    Qs := E["VtoFB"](RandomV());
+    Qs := E["VtoFB"](isoKk([Random(K) : i in [1..l]]));
   until not IsEmpty(Qs);
   return Random(Qs);
 end function;
 
 // Experiments
 
+for E in curves do
+  print ""; print "Working on",E["form"],E["curve"];
+
 for point := 1 to 1 do
   print ""; print "Point A",point;
   repeat
-    Ps := [RandomFB() : i in [1..m]]; Ps;
-    Qs := ECDLPDecompose(&+Ps : Verbose := true);
+    Ps := [RandomFB(E) : i in [1..m]]; Ps;
+    Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
   until not IsEmpty(Qs);
   Qs;
 
@@ -228,7 +233,7 @@ for point := 1 to 1 do
   ntrials := 10;
   for trial := 1 to ntrials do
     print ""; print "Point B",point,trial;
-    Qs := ECDLPDecompose(Random(Order(P))*P : Al := Al);
+    Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
     if not IsEmpty(Qs) then
       Qs; success +:= 1;
     end if;
@@ -236,5 +241,6 @@ for point := 1 to 1 do
   if ntrials gt 0 then
     print ""; print "Success probability:",success/ntrials;
   end if;
+end for;
 end for;
 

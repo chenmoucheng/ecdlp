@@ -9,6 +9,18 @@ end if;
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
+if not IsEmpty(curves) then
+  E0 := curves[1];
+  assert IsSimplifiedModel(E0["curve"]);
+  V := Variety(Ideal({(3 - R.1^2) - a4*(3*R.2^2),(2*R.1^3 - 9*R.1) - a6*(27*R.2^3)}))
+       where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,2);
+  assert not IsEmpty(V);
+  A,B := Explode(Random(V));
+  assert B*(A^2 - 4) ne 0;
+  E["curve"] := EllipticCurve([(3 - A^2)/(3*B^2),(2*A^3 - 9*A)/(27*B^3)]);
+  order := Order(E["curve"](k));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+else
 repeat
   repeat
     A := Random(k);
@@ -18,11 +30,12 @@ repeat
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 until cofactor le 256;
-P := cofactor*Random(E["curve"](k));
+end if;
+E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
+print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
@@ -69,4 +82,6 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
 E["f3"] := function(x0,x1,x2)
   return x0^2*x1^2 - 2*x0^2*x1*x2 + x0^2*x2^2 - 2*x0*x1^2*x2 - 2*x0*x1*x2^2 - 4*x0*x1*x2*A - 2*x0*x1 - 2*x0*x2 + x1^2*x2^2 - 2*x1*x2 + 1;
 end function;
+
+Append(~curves,E); delete E;
 

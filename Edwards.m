@@ -17,21 +17,19 @@ repeat
 until cofactor le 256;
 E["O"] := <k!0,k!c>;
 E["Q"] := <k!0,k!-c>;
-P := cofactor*Random(E["curve"](k));
+E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",P; print "Order:",Order(P); assert IsPrime(Order(P));
+print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
 E["FBtoV"] := function(Q)
   if Q eq E["curve"]!0 then
-    // x := E["O"][1];
-    y := E["O"][2];
+    _,y := Explode(E["O"]);
   elif Q eq E["curve"]![0,0] then
-    // x := E["Q"][1];
-    y := E["Q"][2];
+    _,y := Explode(E["Q"]);
   else
     u := Q[1]/Q[3]/a0;
     // v := Q[2]/Q[3]/a0^2;
@@ -51,8 +49,7 @@ E["VtoFB"] := function(t)
     elif s eq E["Q"] then
       Append(~Qs,E["curve"]![0,0]);
     else
-      x := s[1];
-      y := s[2];
+      x,y := Explode(s);
       u := a0      *(c + y)/ (c - y);
       v := a0^2*2*c*(c + y)/((c - y)*x);
       Append(~Qs,E["curve"]![u,v]);
@@ -90,10 +87,12 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * 
  * S<y1,y2,y3,c,d> := PolynomialRing(Rationals(),5);
  * phi := hom<R->S|[0,0,0,y1,0,y2,c,d,y3]>;
- * f3 := Factorization(phi(g3))[4][1];
+ * _,_,_,f3 := Explode(Factorization(phi(g3)))[1];
  */
 
 E["f3"] := function(y1,y2,y3)
   return y1^2*y2^2*y3^2*c^4*d - y1^2*y2^2*d - y1^2*y3^2*c^4*d + y1^2 + 2*y1*y2*y3*c^2*d - 2*y1*y2*y3*c^2 - y2^2*y3^2*c^4*d + y2^2 + y3^2*c^4 - 1;
 end function;
+
+Append(~curves,E); delete E;
 
