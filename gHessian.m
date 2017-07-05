@@ -4,7 +4,6 @@
 
 E := AssociativeArray();
 E["form"] := "Hessian"; E["form"];
-cofactor := 3;
 repeat
   repeat
     c := Random(k);
@@ -13,9 +12,8 @@ repeat
   a1 := d/3;
   a3 := ((d/3)^3 - c)/27;
   E["curve"] := EllipticCurve([a1,0,a3,0,0]);
-  order := Order(E["curve"](k));
-  assert IsDivisibleBy(order,cofactor);
-until IsPrime(Integers()!(order/cofactor));
+  ok,cofactor := Check(E["curve"]);
+until ok;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
@@ -96,5 +94,5 @@ E["f3"] := function(t1,t2,t3)
   return t1^2*t2^2*t3 + 1/3*t1^2*t2^2*d + t1^2*t2*t3^2 + 1/3*t1^2*t2*t3*d + 1/3*t1^2*t3^2*d - t1^2*c + t1*t2^2*t3^2 + 1/3*t1*t2^2*t3*d + 1/3*t1*t2*t3^2*d + 1/3*t1*t2*t3*d^2 + 2*t1*t2*c + 2*t1*t3*c + 2/3*t1*c*d + 1/3*t2^2*t3^2*d - t2^2*c + 2*t2*t3*c + 2/3*t2*c*d - t3^2*c + 2/3*t3*c*d + 1/3*c*d^2;
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 

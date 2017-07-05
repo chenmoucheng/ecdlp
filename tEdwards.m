@@ -5,8 +5,8 @@
 E := AssociativeArray();
 E["form"] := "tEdwards"; E["form"];
 assert q ne 2;
-if not IsEmpty(curves) then
-  E0 := curves[1];
+if not IsEmpty(Curves) then
+  E0 := Curves[1];
   assert IsWeierstrassModel(E0["curve"]);
   V := Variety(Ideal({(3 - R.1^2) - a4*(3*R.2^2),(2*R.1^3 - 9*R.1) - a6*(27*R.2^3)}))
        where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,2);
@@ -17,8 +17,7 @@ if not IsEmpty(curves) then
   assert a ne 0 and d ne 0 and a ne d;
   a0 := 1/(a - d);
   E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
-  order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  _,cofactor := Check(E["curve"]);
 else
   repeat
     repeat
@@ -28,9 +27,8 @@ else
     a0 := 1/(a - d);
     E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
     assert jInvariant(E["curve"]) eq 16*(a^2 + 14*a*d + d^2)^3/(a*d*(a - d)^4);
-    order := Order(E["curve"](k));
-    cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  until cofactor le 256;
+    ok,cofactor := Check(E["curve"]);
+  until ok;
 end if;
 E["O"] := <k!0,k!1>;
 E["P"] := cofactor*Random(E["curve"](k));
@@ -83,5 +81,5 @@ E["f3"] := function(y1,y2,y3)
   return (y1^2*y2^2 - y1^2 - y2^2 + a/d)*y3^2 + 2*(d - a)/d*y1*y2*y3 + (a/d)*(y1^2 + y2^2 - 1) - y1^2*y2^2;
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 

@@ -5,7 +5,6 @@
 E := AssociativeArray();
 E["form"] := "bEdwards"; E["form"];
 assert q eq 2;
-cofactor := 4;
 repeat
   repeat
     d1 := Random(k);
@@ -13,8 +12,8 @@ repeat
   until d1 ne 0 and d2 ne d1^2 + d1;
   E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
   assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
-  order := Order(E["curve"](k));
-until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
+  ok,cofactor := Check(E["curve"]);
+until ok;
 E["O"] := <k!0,k!0>;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
@@ -65,5 +64,5 @@ E["f3"] := function(t1,t2,t3)
   return (d2*t1^2*t2^2 + d1*(t1^2*t2 + t1*t2^2 + t1*t2 + d1))*t3^2 + d1*(t1^2*t2^2 + t1^2*t2 + t1*t2^2 + t1*t2)*t3 +d1^2*(t1^2 + t2^2);
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 

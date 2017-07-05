@@ -4,8 +4,8 @@
 
 E := AssociativeArray();
 E["form"] := "Hessian"; E["form"];
-if not IsEmpty(curves) then
-  E0 := curves[1];
+if not IsEmpty(Curves) then
+  E0 := Curves[1];
   assert IsSimplifiedModel(E0["curve"]);
   V := Variety(Ideal({-27*R.1*(R.1^3 + 8) - a4,54*(R.1^6 - 20*R.1^3 - 8) - a6}))
        where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,1);
@@ -13,18 +13,15 @@ if not IsEmpty(curves) then
   d := Explode(Random(V));
   assert (3*d)^3 ne 1;
   E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
-  order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  _,cofactor := Check(E["curve"]);
 else
   repeat
     repeat
       d := Random(k);
     until (3*d)^3 ne 1;
     E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
-    order := Order(E["curve"](k));
-    assert IsDivisibleBy(order,3);
-    cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  until cofactor le 256;
+    ok,cofactor := Check(E["curve"]);
+  until ok;
 end if;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
@@ -104,5 +101,5 @@ E["f3"] := function(t1,t2,t3)
   return t1^2*t2^2*t3 + t1^2*t2^2*d + t1^2*t2*t3^2 + t1^2*t2*t3*d + t1^2*t3^2*d - t1^2 + t1*t2^2*t3^2 + t1*t2^2*t3*d + t1*t2*t3^2*d + 3*t1*t2*t3*d^2 + 2*t1*t2 + 2*t1*t3 + 2*t1*d + t2^2*t3^2*d - t2^2 + 2*t2*t3 + 2*t2*d - t3^2 + 2*t3*d + 3*d^2;
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 

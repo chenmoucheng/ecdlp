@@ -9,8 +9,8 @@ end if;
 
 E := AssociativeArray();
 E["form"] := "Montgomery"; E["form"];
-if not IsEmpty(curves) then
-  E0 := curves[1];
+if not IsEmpty(Curves) then
+  E0 := Curves[1];
   assert IsSimplifiedModel(E0["curve"]);
   V := Variety(Ideal({(3 - R.1^2) - a4*(3*R.2^2),(2*R.1^3 - 9*R.1) - a6*(27*R.2^3)}))
        where _,_,_,a4,a6 is Explode(Coefficients(E0["curve"])) where R is PolynomialRing(k,2);
@@ -18,8 +18,7 @@ if not IsEmpty(curves) then
   A,B := Explode(Random(V));
   assert B*(A^2 - 4) ne 0;
   E["curve"] := EllipticCurve([(3 - A^2)/(3*B^2),(2*A^3 - 9*A)/(27*B^3)]);
-  order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  _,cofactor := Check(E["curve"]);
 else
   repeat
     repeat
@@ -27,9 +26,8 @@ else
       B := Random(k);
     until B*(A^2 - 4) ne 0;
     E["curve"] := EllipticCurve([(3 - A^2)/(3*B^2),(2*A^3 - 9*A)/(27*B^3)]);
-    order := Order(E["curve"](k));
-    cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  until cofactor le 256;
+    ok,cofactor := Check(E["curve"]);
+  until ok;
 end if;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);
@@ -83,5 +81,5 @@ E["f3"] := function(x0,x1,x2)
   return x0^2*x1^2 - 2*x0^2*x1*x2 + x0^2*x2^2 - 2*x0*x1^2*x2 - 2*x0*x1*x2^2 - 4*x0*x1*x2*A - 2*x0*x1 - 2*x0*x2 + x1^2*x2^2 - 2*x1*x2 + 1;
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 

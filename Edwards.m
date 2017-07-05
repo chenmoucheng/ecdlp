@@ -12,9 +12,8 @@ repeat
   until c*d*(1 - d*c^4) ne 0;
   a0 := 1/(1 - d*c^4);
   E["curve"] := QuadraticTwist(EllipticCurve([0,4/(1 - d*c^4) - 2,0,1,0]),a0);
-  order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-until cofactor le 256;
+  ok,cofactor := Check(E["curve"]);
+until ok;
 E["O"] := <k!0,k!c>;
 E["Q"] := <k!0,k!-c>;
 E["P"] := cofactor*Random(E["curve"](k));
@@ -94,5 +93,5 @@ E["f3"] := function(y1,y2,y3)
   return y1^2*y2^2*y3^2*c^4*d - y1^2*y2^2*d - y1^2*y3^2*c^4*d + y1^2 + 2*y1*y2*y3*c^2*d - 2*y1*y2*y3*c^2 - y2^2*y3^2*c^4*d + y2^2 + y3^2*c^4 - 1;
 end function;
 
-Append(~curves,E); delete E;
+Append(~Curves,E); delete E;
 
