@@ -16,15 +16,15 @@ if not IsEmpty(curves) then
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 else
-repeat
   repeat
-    d := Random(k);
-  until (3*d)^3 ne 1;
-  E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
-  order := Order(E["curve"](k));
-  assert IsDivisibleBy(order,3);
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-until cofactor le 256;
+    repeat
+      d := Random(k);
+    until (3*d)^3 ne 1;
+    E["curve"] := EllipticCurve([-27*d*(d^3 + 8),54*(d^6 - 20*d^3 - 8)]);
+    order := Order(E["curve"](k));
+    assert IsDivisibleBy(order,3);
+    cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  until cofactor le 256;
 end if;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);

@@ -20,17 +20,17 @@ if not IsEmpty(curves) then
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 else
-repeat
   repeat
-    a := Random(k);
-    d := Random(k);
-  until a ne 0 and d ne 0 and a ne d;
-  a0 := 1/(a - d);
-  E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
-  assert jInvariant(E["curve"]) eq 16*(a^2 + 14*a*d + d^2)^3/(a*d*(a - d)^4);
-  order := Order(E["curve"](k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-until cofactor le 256;
+    repeat
+      a := Random(k);
+      d := Random(k);
+    until a ne 0 and d ne 0 and a ne d;
+    a0 := 1/(a - d);
+    E["curve"] := QuadraticTwist(EllipticCurve([0,4*a/(a - d) - 2,0,1,0]),a0);
+    assert jInvariant(E["curve"]) eq 16*(a^2 + 14*a*d + d^2)^3/(a*d*(a - d)^4);
+    order := Order(E["curve"](k));
+    cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  until cofactor le 256;
 end if;
 E["O"] := <k!0,k!1>;
 E["P"] := cofactor*Random(E["curve"](k));

@@ -98,39 +98,39 @@ load "Weierstrass.m";
 for i in [1..#curves] do
   E := curves[i];
 
-curves[i]["f4"] := function(x0,x1,x2,x3)
-  R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
-  f31 := E["f3"](T,X0,X1);
-  f32 := E["f3"](T,X2,X3);
-  f4 := Resultant(f31,f32,T);
-  return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
-end function;
+  curves[i]["f4"] := function(x0,x1,x2,x3)
+    R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
+    f31 := E["f3"](T,X0,X1);
+    f32 := E["f3"](T,X2,X3);
+    f4 := Resultant(f31,f32,T);
+    return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
+  end function;
 
-curves[i]["f5"] := function(x0,x1,x2,x3,x4)
-  R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
-  f3 := E["f3"](T,X0,X1);
-  f4 := E["f4"](T,X2,X3,X4);
-  f5 := Resultant(f3,f4,T);
-  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
-end function;
+  curves[i]["f5"] := function(x0,x1,x2,x3,x4)
+    R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
+    f3 := E["f3"](T,X0,X1);
+    f4 := E["f4"](T,X2,X3,X4);
+    f5 := Resultant(f3,f4,T);
+    return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
+  end function;
 
-curves[i]["f6"] := function(x0,x1,x2,x3,x4,x5)
-  R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
-  f41 := E["f4"](T,X0,X1,X2);
-  f42 := E["f4"](T,X3,X4,X5);
-  f6 := Resultant(f41,f42,T);
-  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
-end function;
+  curves[i]["f6"] := function(x0,x1,x2,x3,x4,x5)
+    R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
+    f41 := E["f4"](T,X0,X1,X2);
+    f42 := E["f4"](T,X3,X4,X5);
+    f6 := Resultant(f41,f42,T);
+    return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
+  end function;
 
-// Semaev's summation ideal
+  // Semaev's summation ideal
 
-if m eq 2 then
-  curves[i]["Isummation"] := Ideal({E["f3"](t[1],t[2],r)});
-else
-  curves[i]["Isummation"] := Ideal({E["f3"](t[1],    t[2],    u[1])}
-                 join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
-                 join {E["f3"](u[m - 2],t[m],    r)});
-end if;
+  if m eq 2 then
+    curves[i]["Isummation"] := Ideal({E["f3"](t[1],t[2],r)});
+  else
+    curves[i]["Isummation"] := Ideal({E["f3"](t[1],    t[2],    u[1])}
+                                join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
+                                join {E["f3"](u[m - 2],t[m],    r)});
+  end if;
 end for;
 
 // Weil restriction
@@ -221,26 +221,26 @@ end function;
 for E in curves do
   print ""; print "Working on",E["form"],E["curve"];
 
-for point := 1 to 1 do
-  print ""; print "Point A",point;
-  repeat
-    Ps := [RandomFB(E) : i in [1..m]]; Ps;
-    Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
-  until not IsEmpty(Qs);
-  Qs;
+  for point := 1 to 1 do
+    print ""; print "Point A",point;
+    repeat
+      Ps := [RandomFB(E) : i in [1..m]]; Ps;
+      Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
+    until not IsEmpty(Qs);
+    Qs;
 
-  success := 0;
-  ntrials := 10;
-  for trial := 1 to ntrials do
-    print ""; print "Point B",point,trial;
-    Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
-    if not IsEmpty(Qs) then
-      Qs; success +:= 1;
+    success := 0;
+    ntrials := 10;
+    for trial := 1 to ntrials do
+      print ""; print "Point B",point,trial;
+      Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
+      if not IsEmpty(Qs) then
+        Qs; success +:= 1;
+      end if;
+    end for;
+    if ntrials gt 0 then
+      print ""; print "Success probability:",success/ntrials;
     end if;
   end for;
-  if ntrials gt 0 then
-    print ""; print "Success probability:",success/ntrials;
-  end if;
-end for;
 end for;
 

@@ -12,12 +12,12 @@ if not IsEmpty(curves) then
   order := Order(E["curve"](k));
   cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
 else
-repeat
   repeat
-    E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
-  until Discriminant(E["curve"]) ne 0;
-  order := Order(E["curve"](k));
-until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
+    repeat
+      E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
+    until Discriminant(E["curve"]) ne 0;
+    order := Order(E["curve"](k));
+  until IsDivisibleBy(order,cofactor) and IsPrime(Integers()!(order/cofactor));
 end if;
 E["P"] := cofactor*Random(E["curve"](k));
 E["curve"]; Coefficients(E["curve"]);

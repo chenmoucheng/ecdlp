@@ -50,8 +50,8 @@ end function;
 // Ideal of singleton variety v
 
 IdealOfSingleton := function(R,v)
-    assert BaseRing(R) eq Parent(v[1]) and Rank(R) eq #v;
-    return Ideal({R.i - v[i] : i in [1..Rank(R)]});
+  assert BaseRing(R) eq Parent(v[1]) and Rank(R) eq #v;
+  return Ideal({R.i - v[i] : i in [1..Rank(R)]});
 end function;
 
 // Ideals of singletons of zero-dimensional variety V
