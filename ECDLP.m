@@ -229,10 +229,14 @@ for E in Curves do
 
   for point := 1 to 1 do
     print ""; print "Point A",point;
-    repeat
+    for ntrials := 1 to 65536 do
       Ps := [RandomFB(E) : i in [1..m]]; Ps;
       Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
-    until not IsEmpty(Qs);
+      if not IsEmpty(Qs) then
+        print "#trials:",ntrials;
+        break;
+      end if;
+    end for;
     Qs;
 
     success := 0;
