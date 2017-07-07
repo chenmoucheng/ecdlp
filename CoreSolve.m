@@ -133,6 +133,7 @@ end function;
 // Variety of zero-dimensional ideal I with core ideal Ic
 
 CoreVariety := function(I,Ic : Al := "All",Verbose := false)
+  if Verbose then print "Computing core variety..."; end if;
   Jc,phi := CoreIdeal(Ic);
   Rc := Generic(Jc);
   b := GetVerbose("Faugere");
