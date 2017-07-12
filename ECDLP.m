@@ -102,28 +102,26 @@ load "tEdwards.m";
 load "Weierstrass.m";
 
 for i in [1..#Curves] do
-  E := Curves[i];
-
   Curves[i]["f4"] := function(x0,x1,x2,x3)
     R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
-    f31 := E["f3"](T,X0,X1);
-    f32 := E["f3"](T,X2,X3);
+    f31 := Curves[i]["f3"](T,X0,X1);
+    f32 := Curves[i]["f3"](T,X2,X3);
     f4 := Resultant(f31,f32,T);
     return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
   end function;
 
   Curves[i]["f5"] := function(x0,x1,x2,x3,x4)
     R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
-    f3 := E["f3"](T,X0,X1);
-    f4 := E["f4"](T,X2,X3,X4);
+    f3 := Curves[i]["f3"](T,X0,X1);
+    f4 := Curves[i]["f4"](T,X2,X3,X4);
     f5 := Resultant(f3,f4,T);
     return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
   end function;
 
   Curves[i]["f6"] := function(x0,x1,x2,x3,x4,x5)
     R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
-    f41 := E["f4"](T,X0,X1,X2);
-    f42 := E["f4"](T,X3,X4,X5);
+    f41 := Curves[i]["f4"](T,X0,X1,X2);
+    f42 := Curves[i]["f4"](T,X3,X4,X5);
     f6 := Resultant(f41,f42,T);
     return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
   end function;
@@ -131,11 +129,11 @@ for i in [1..#Curves] do
   // Semaev's summation ideal
 
   if m eq 2 then
-    Curves[i]["Isummation"] := Ideal({E["f3"](t[1],t[2],r)});
+    Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],t[2],r)});
   else
-    Curves[i]["Isummation"] := Ideal({E["f3"](t[1],    t[2],    u[1])}
-                                join {E["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
-                                join {E["f3"](u[m - 2],t[m],    r)});
+    Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],    t[2],    u[1])}
+                                join {Curves[i]["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
+                                join {Curves[i]["f3"](u[m - 2],t[m],    r)});
   end if;
 end for;
 
