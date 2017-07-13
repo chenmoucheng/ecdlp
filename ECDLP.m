@@ -140,7 +140,7 @@ for i in [1..#Curves] do
     Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],    t[2],    r)});
   else
     Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],    t[2],    u[1])}
-                                join {Curves[i]["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
+                                join {Curves[i]["f3"](u[j - 1],t[j + 1],u[j]) : j in [2..(m - 2)]}
                                 join {Curves[i]["f3"](u[m - 2],t[m],    r)});
   end if;
 end for;
