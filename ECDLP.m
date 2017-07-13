@@ -137,7 +137,7 @@ end function;
 
 for i in [1..#Curves] do
   if m eq 2 then
-    Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],t[2],r)});
+    Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],    t[2],    r)});
   else
     Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],    t[2],    u[1])}
                                 join {Curves[i]["f3"](u[i - 1],t[i + 1],u[i]) : i in [2..(m - 2)]}
@@ -182,13 +182,13 @@ ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
   else
     case m:
       when 2:
-        I := Ideal({Semaev3(E,t[1],t[2],r)});
+        I := Ideal(Semaev3(E,t[1],t[2],r));
       when 3:
-        I := Ideal({Semaev4(E,t[1],t[2],t[3],r)});
+        I := Ideal(Semaev4(E,t[1],t[2],t[3],r));
       when 4:
-        I := Ideal({Semaev5(E,t[1],t[2],t[3],t[4],r)});
+        I := Ideal(Semaev5(E,t[1],t[2],t[3],t[4],r));
       when 5:
-        I := Ideal({Semaev6(E,t[1],t[2],t[3],t[4],t[5],r)});
+        I := Ideal(Semaev6(E,t[1],t[2],t[3],t[4],t[5],r));
       else
         I := E["Isummation"];
     end case;
@@ -254,8 +254,9 @@ for point := 1 to 1 do
       end if;
     end for;
     if ntrials gt 0 then
-      print ""; print "Success probability:",success/ntrials;
+      print "Success probability:",success/ntrials;
     end if;
   end for;
+  print "Finished Point",point;
 end for;
 

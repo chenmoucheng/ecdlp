@@ -57,7 +57,7 @@ end function;
 // Ideals of singletons of zero-dimensional variety V
 
 IdealsOfSingletons := function(R,V)
-  return [IdealOfSingleton(R,v) : v in V];
+  return {IdealOfSingleton(R,v) : v in V};
 end function;
 
 // Ideal of zero-dimensional variety V
