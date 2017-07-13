@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "bEdwards"; E["form"];
+E["form"] := "bEdwards";
 assert q eq 2;
 repeat
   repeat

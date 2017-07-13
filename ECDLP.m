@@ -9,6 +9,8 @@ SetNthreads(1);
 SetVerbose("FGLM",2);
 print "Nthreads =",GetNthreads();
 
+SomethingBig := 65536;
+
 // Core solving logic
 
 load "CoreSolve.m";
@@ -52,7 +54,7 @@ R2 := PolynomialRing(kK,M*n);
 phi12 := hom<R1->R2|isokK,F>
          where F is [Evaluate(Polynomial([R2.((i - 1)*n + j) : j in [1..n]]),W) : i in [1..M]];
 
-if q lt 65536 then
+if q lt SomethingBig then
   R3,phi23 := R2/Ideal({R2.i^q - R2.i : i in [1..Rank(R2)]});
   phi32 := hom<R3->R2|[R2.i : i in [1..Rank(R2)]]>;
   phi22 := phi23 * phi32;
@@ -101,33 +103,39 @@ load "Montgomery.m";
 load "tEdwards.m";
 load "Weierstrass.m";
 
+// Semaev's summation polynomials
+
+Semaev3 := function(E,x0,x1,x2)
+  return E["f3"](x0,x1,x2);
+end function;
+
+Semaev4 := function(E,x0,x1,x2,x3)
+  R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
+  f31 := Semaev3(E,T,X0,X1);
+  f32 := Semaev3(E,T,X2,X3);
+  f4 := Resultant(f31,f32,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
+end function;
+
+Semaev5 := function(E,x0,x1,x2,x3,x4)
+  R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
+  f3 := Semaev3(E,T,X0,X1);
+  f4 := Semaev4(E,T,X2,X3,X4);
+  f5 := Resultant(f3,f4,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
+end function;
+
+Semaev6 := function(E,x0,x1,x2,x3,x4,x5)
+  R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
+  f41 := Semaev4(E,T,X0,X1,X2);
+  f42 := Semaev4(E,T,X3,X4,X5);
+  f6 := Resultant(f41,f42,T);
+  return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
+end function;
+
+// Semaev's summation ideal
+
 for i in [1..#Curves] do
-  Curves[i]["f4"] := function(x0,x1,x2,x3)
-    R<T,X0,X1,X2,X3> := PolynomialRing(k,5);
-    f31 := Curves[i]["f3"](T,X0,X1);
-    f32 := Curves[i]["f3"](T,X2,X3);
-    f4 := Resultant(f31,f32,T);
-    return hom<R->Parent(x0)|[0,x0,x1,x2,x3]>(f4);
-  end function;
-
-  Curves[i]["f5"] := function(x0,x1,x2,x3,x4)
-    R<T,X0,X1,X2,X3,X4> := PolynomialRing(k,6);
-    f3 := Curves[i]["f3"](T,X0,X1);
-    f4 := Curves[i]["f4"](T,X2,X3,X4);
-    f5 := Resultant(f3,f4,T);
-    return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4]>(f5);
-  end function;
-
-  Curves[i]["f6"] := function(x0,x1,x2,x3,x4,x5)
-    R<T,X0,X1,X2,X3,X4,X5> := PolynomialRing(k,7);
-    f41 := Curves[i]["f4"](T,X0,X1,X2);
-    f42 := Curves[i]["f4"](T,X3,X4,X5);
-    f6 := Resultant(f41,f42,T);
-    return hom<R->Parent(x0)|[0,x0,x1,x2,x3,x4,x5]>(f6);
-  end function;
-
-  // Semaev's summation ideal
-
   if m eq 2 then
     Curves[i]["Isummation"] := Ideal({Curves[i]["f3"](t[1],t[2],r)});
   else
@@ -174,13 +182,13 @@ ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
   else
     case m:
       when 2:
-        I := Ideal({E["f3"](t[1],t[2],r)});
+        I := Ideal({Semaev3(E,t[1],t[2],r)});
       when 3:
-        I := Ideal({E["f4"](t[1],t[2],t[3],r)});
+        I := Ideal({Semaev4(E,t[1],t[2],t[3],r)});
       when 4:
-        I := Ideal({E["f5"](t[1],t[2],t[3],t[4],r)});
+        I := Ideal({Semaev5(E,t[1],t[2],t[3],t[4],r)});
       when 5:
-        I := Ideal({E["f6"](t[1],t[2],t[3],t[4],t[5],r)});
+        I := Ideal({Semaev6(E,t[1],t[2],t[3],t[4],t[5],r)});
       else
         I := E["Isummation"];
     end case;
@@ -222,20 +230,19 @@ end function;
 
 // Experiments
 
-for E in Curves do
-  print ""; print "Working on",E["form"],E["curve"];
+for point := 1 to 1 do
+  for E in Curves do
+    print ""; print "Working on",E["form"],E["curve"];
 
-  for point := 1 to 1 do
-    print ""; print "Point A",point;
-    for ntrials := 1 to 65536 do
-      Ps := [RandomFB(E) : i in [1..m]]; Ps;
+    print "Point A",point;
+    for ntrials := 1 to SomethingBig do
+      Ps := [RandomFB(E) : i in [1..m]];
       Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
       if not IsEmpty(Qs) then
-        print "#trials:",ntrials;
+        Qs; print "#trials:",ntrials;
         break;
       end if;
     end for;
-    Qs;
 
     success := 0;
     ntrials := 10;

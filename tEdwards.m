@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "tEdwards"; E["form"];
+E["form"] := "tEdwards";
 assert q ne 2;
 if not IsEmpty(Curves) then
   E0 := Curves[1];

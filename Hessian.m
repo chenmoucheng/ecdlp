@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "Hessian"; E["form"];
+E["form"] := "Hessian";
 if not IsEmpty(Curves) then
   E0 := Curves[1];
   assert IsSimplifiedModel(E0["curve"]);

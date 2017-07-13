@@ -8,7 +8,7 @@ if T2 then
 end if;
 
 E := AssociativeArray();
-E["form"] := "Montgomery"; E["form"];
+E["form"] := "Montgomery";
 if not IsEmpty(Curves) then
   E0 := Curves[1];
   assert IsSimplifiedModel(E0["curve"]);

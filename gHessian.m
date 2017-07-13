@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "Hessian"; E["form"];
+E["form"] := "Hessian";
 repeat
   repeat
     c := Random(k);

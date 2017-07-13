@@ -3,7 +3,7 @@
  */
 
 E := AssociativeArray();
-E["form"] := "Weierstrass"; E["form"];
+E["form"] := "Weierstrass";
 cofactor := q eq 2 select 2 else 1;
 if not IsEmpty(Curves) then
   E0 := Curves[1];
