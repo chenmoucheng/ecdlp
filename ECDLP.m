@@ -35,8 +35,9 @@ elim := (l eq 1) or (l gt 1 and IX);
 
 K := FiniteField(q);
 k<w> := ext<K|n>;
-kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
+ind := func<a|Evaluate(f,q) where f is hom<k->R|R.1>(a) where R is PolynomialRing(Integers())>;
 
+kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
 isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
 
@@ -228,6 +229,25 @@ RandomFB := function(E)
   return Random(Qs);
 end function;
 
+// Sign of point
+
+SignOfPoint := function(E,Q)
+  f := func<t|ind((t[1] - t[2])/t[3])>;
+  return forall(t){P : P in E["VtoFB"](E["FBtoV"](Q)) | f(P) le f(Q)} select -1 else 1;
+end function;
+
+// Relation matrix
+
+RelationMatrix := function(E,Qs)
+  M := [];
+  for i := 1 to #Qs do
+    for Q in Qs[i] do
+      Append(~M,<i,ind(E["FBtoV"](Q)) + 1,SignOfPoint(E,Q)>);
+    end for;
+  end for;
+  return SparseMatrix(#Qs,q^l,M);
+end function;
+
 // Experiments
 
 for point := 1 to 1 do
@@ -239,7 +259,9 @@ for point := 1 to 1 do
       Ps := [RandomFB(E) : i in [1..m]];
       Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
       if not IsEmpty(Qs) then
-        Qs; print "#trials:",ntrials;
+        M := RelationMatrix(E,Qs);
+        print M,"Rank:",Rank(M);
+        print "#trials:",ntrials;
         break;
       end if;
     end for;
@@ -250,7 +272,9 @@ for point := 1 to 1 do
       print ""; print "Point B",point,trial;
       Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
       if not IsEmpty(Qs) then
-        Qs; success +:= 1;
+        M := RelationMatrix(E,Qs);
+        print M,"Rank:",Rank(M);
+        success +:= 1;
       end if;
     end for;
     if ntrials gt 0 then
