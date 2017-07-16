@@ -6,7 +6,6 @@
 
 SetColumns(0);
 SetNthreads(1);
-SetVerbose("FGLM",2);
 print "Nthreads =",GetNthreads();
 
 SomethingBig := 65536;
@@ -151,14 +150,14 @@ end for;
 WeilRestriction := function(I)
   t0 := Cputime();
   J := &+[ideal<S1|Coefficients(phi(f))> : f in Basis(I)];
-  print "Weil restriction time:",Cputime(t0);
+  if IsVerbose("User1") then print "Weil restriction time:",Cputime(t0); end if;
   return J;
 end function;
 
 // Point decomposition
 
-ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
-  print "Decomposing",Q;
+ECDLPDecompose := function(E,Q : Al := "All")
+  if IsVerbose("User1") then print "Decomposing",Q; end if;
   if not IsPrime(Order(Q)) then return []; end if;
 
   z := E["FBtoV"](-Q);
@@ -173,12 +172,12 @@ ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
     t0 := Cputime();
     Jb := Ideal({iota(f) : f in GroebnerBasis(Basis(P),4)});
     Zb := Variety(J + Jb);
-    print "Batch decomposition time:",Cputime(t0);
+    if IsVerbose("User1") then print "Batch decomposition time:",Cputime(t0); end if;
   end if;
 
-  print "Rewriting variables";
+  if IsVerbose("User1") then print "Rewriting variables"; end if;
   if not elim then
-    print "  ... skipped";
+    if IsVerbose("User1") then print "  ... skipped"; end if;
     Irewritten := E["Isummation"] + Icondition;
   else
     case m:
@@ -193,7 +192,7 @@ ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
       else
         I := E["Isummation"];
     end case;
-    b := GetVerbose("Faugere"); SetVerbose("Faugere",Verbose select 2 else 0);
+    b := GetVerbose("Faugere"); SetVerbose("Faugere",GetVerbose("User2")*2);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
     SetVerbose("Faugere",0);
   end if;
@@ -201,8 +200,8 @@ ECDLPDecompose := function(E,Q : Al := "All",Verbose := false)
 
   Jp := WeilRestriction(Irewritten) + E["Jcondition"];
   t0 := Cputime();
-  Zp := CoreVariety(J,Jp : Al := Al,Verbose := Verbose);
-  print "Point decomposition time:",Cputime(t0);
+  Zp := CoreVariety(J,Jp : Al := Al);
+  if IsVerbose("User1") then print "Point decomposition time:",Cputime(t0); end if;
 
   if h ge 0 then
     assert Seqset(Zb) eq Seqset(Zp);
@@ -254,31 +253,36 @@ for point := 1 to 1 do
   for E in Curves do
     print ""; print "Working on",E["form"],E["curve"];
 
+    SetVerbose("User1",true);
+    SetVerbose("User2",true);
     print "Point A",point;
     for ntrials := 1 to SomethingBig do
       Ps := [RandomFB(E) : i in [1..m]];
-      Qs := ECDLPDecompose(E,&+Ps : Verbose := true);
+      Qs := ECDLPDecompose(E,&+Ps);
       if not IsEmpty(Qs) then
+        print "#trials:",ntrials;
         M := RelationMatrix(E,Qs);
         print M,"Rank:",Rank(M);
-        print "#trials:",ntrials;
         break;
       end if;
     end for;
 
+    SetVerbose("User1",true);
+    SetVerbose("User2",false);
     success := 0;
+    relation := 0;
     ntrials := 10;
     for trial := 1 to ntrials do
-      print ""; print "Point B",point,trial;
+      print "Point B",point,trial;
       Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
       if not IsEmpty(Qs) then
-        M := RelationMatrix(E,Qs);
-        print M,"Rank:",Rank(M);
         success +:= 1;
+        relation +:= Rank(M);
       end if;
     end for;
     if ntrials gt 0 then
       print "Success probability:",success/ntrials;
+      print "Total relations found:",relation;
     end if;
   end for;
   print "Finished Point",point;

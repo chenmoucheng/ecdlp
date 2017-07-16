@@ -34,14 +34,14 @@ GapDegrees := function(L,...)
   H := [[] : i in [1..(d - 1)]];
   t0 := Cputime();
   H[d] := GroebnerBasis(F,d);
-  print "Groebner basis time:",Cputime(t0),d,#H[d],"=",Degrees(H[d]);
+  if IsVerbose("User2") then print "Groebner basis time:",Cputime(t0),d,#H[d],"=",Degrees(H[d]); end if;
   repeat
     d +:= 1;
     t0 := Cputime();
     H[d] := GroebnerBasis(F,d);
-    print "Groebner basis time:",Cputime(t0),d,#H[d],"=",Degrees(H[d]);
+    if IsVerbose("User2") then print "Groebner basis time:",Cputime(t0),d,#H[d],"=",Degrees(H[d]); end if;
     F_ := {f : f in H[d] | TotalDegree(f) lt d and NormalForm(f,H[d - 1]) ne 0};
-    if not IsEmpty(F_) then print "  Gap degree and sizes:",d,#F_,"=",Degrees(F_); end if;
+    if IsVerbose("User2") and not IsEmpty(F_) then print "  Gap degree and sizes:",d,#F_,"=",Degrees(F_); end if;
   until #G eq #H[d] and Seqset(G) eq Seqset(H[d]);
 
   return H;
@@ -82,20 +82,22 @@ end function;
 
 // Variety of zero-dimensional ideal I using SAT solver
 
-SATVariety := function(I : Bound := 0,Verbose := false)
+SATVariety := function(I : Bound := 0)
   V := []; L := [];
   if Seqset(Basis(I)) ne {1} then
     if Bound eq 0 then Bound := VarietySizeOverCoefficientField(I); end if;
     t0 := Cputime();
     for i := 1 to Bound do
-      sat,sol,L := SAT(Basis(I) : Cpulim := 200,Exclude := V,Litlim := 5,Termlim := 100,Verbose := Verbose);
+      sat,sol,L := SAT(Basis(I) : Cpulim := 200,Exclude := V,Litlim := 5,Termlim := 100,Verbose := IsVerbose("User2"));
       if sat then
         Append(~V,sol);
-        if i eq Bound then
+        if IsVerbose("User2") and i eq Bound then
           print "SAT time:",Cputime(t0),i,#L;
         end if;
       else
-        print "SAT time:",Cputime(t0),i - 1,Bound,#L;
+        if IsVerbose("User2") then
+          print "SAT time:",Cputime(t0),i - 1,Bound,#L;
+        end if;
         break;
       end if;
     end for;
@@ -132,15 +134,15 @@ end function;
 
 // Variety of zero-dimensional ideal I with core ideal Ic
 
-CoreVariety := function(I,Ic : Al := "All",Verbose := false)
-  if Verbose then print "Computing core variety..."; end if;
+CoreVariety := function(I,Ic : Al := "All")
+  if IsVerbose("User2") then print "Computing core variety..."; end if;
   Jc,phi := CoreIdeal(Ic);
   Rc := Generic(Jc);
   b := GetVerbose("Faugere");
   case Al:
     when "All":
       Ic := Ideal(Basis(Jc));
-      SetVerbose("Faugere",Verbose select 2 else 0);
+      SetVerbose("Faugere",GetVerbose("User2")*2);
       Groebner(Ic);
       SetVerbose("Faugere",0);
       Vc := Variety(Ic);
@@ -156,16 +158,16 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
       // P := IdealOfVariety(Rc,V); Groebner(P);
       // assert Seqset(Basis(Ic)) eq Seqset(Basis(P));
     when "SAGB":
-      _,L := SATVariety(Ideal(RandomSubset(F,#F - 0)) : Bound := 1,Verbose := true) where F is Seqset(Basis(Jc));
-      SetVerbose("Faugere",Verbose select 2 else 0);
+      _,L := SATVariety(Ideal(RandomSubset(F,#F - 0)) : Bound := 1) where F is Seqset(Basis(Jc));
+      SetVerbose("Faugere",GetVerbose("User2")*2);
       Vc := Variety(Jc + ideal<Rc|L>);
       SetVerbose("Faugere",0);
     when "SAT":
-      SetVerbose("Faugere",Verbose select 2 else 0);
+      SetVerbose("Faugere",GetVerbose("User2")*2);
       Vc := SATVariety(Jc);
       SetVerbose("Faugere",0);
     else
-      SetVerbose("Faugere",Verbose select 2 else 0);
+      SetVerbose("Faugere",GetVerbose("User2")*2);
       Vc := Variety(Jc);
       SetVerbose("Faugere",0);
   end case;
@@ -174,7 +176,7 @@ CoreVariety := function(I,Ic : Al := "All",Verbose := false)
     v := Variety(I + Ideal({phi(f) : f in Basis(J)}));
     if not IsEmpty(v) then
       V cat:= v;
-    else
+    elif IsVerbose("User2") then
       print "Extraneous root found";
     end if;
   end for;
