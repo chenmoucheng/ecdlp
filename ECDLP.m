@@ -158,7 +158,7 @@ end function;
 
 ECDLPDecompose := function(E,Q : Al := "All")
   if IsVerbose("User1") then print "Decomposing",Q; end if;
-  if not IsPrime(Order(Q)) then return []; end if;
+  if Order(Q) ne E["order"] then return []; end if;
 
   z := E["FBtoV"](-Q);
   Icondition := Ideal({r - z});
@@ -244,7 +244,7 @@ RelationMatrix := function(E,Qs)
       Append(~M,<i,ind(E["FBtoV"](Q)) + 1,SignOfPoint(E,Q)>);
     end for;
   end for;
-  return SparseMatrix(#Qs,q^l,M);
+  return SparseMatrix(Integers(),#Qs,q^l,M);
 end function;
 
 // Experiments
@@ -267,22 +267,16 @@ for point := 1 to 1 do
       end if;
     end for;
 
-    SetVerbose("User1",true);
+    SetVerbose("User1",false);
     SetVerbose("User2",false);
-    success := 0;
-    relation := 0;
     ntrials := 10;
+    M := RelationMatrix(E,[]);
     for trial := 1 to ntrials do
       print "Point B",point,trial;
-      Qs := ECDLPDecompose(E,Random(Order(E["P"]))*E["P"] : Al := Al);
-      if not IsEmpty(Qs) then
-        success +:= 1;
-        relation +:= Rank(M);
-      end if;
+      M := VerticalJoin(M,RelationMatrix(E,ECDLPDecompose(E,Random(E["order"])*E["P"] : Al := Al)));
     end for;
     if ntrials gt 0 then
-      print "Success probability:",success/ntrials;
-      print "Total relations found:",relation;
+      print M,"Average rank:",Rank(M)/ntrials;
     end if;
   end for;
   print "Finished Point",point;

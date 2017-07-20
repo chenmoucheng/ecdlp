@@ -24,10 +24,11 @@ else
   until ok;
 end if;
 E["P"] := cofactor*Random(E["curve"](k));
+E["order"] := Order(E["P"]);
 E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
-print "Base point:",E["P"]; print "Order:",Order(E["P"]); assert IsPrime(Order(E["P"]));
+print "Base point:",E["P"]; print "Order:",E["order"]; assert IsPrime(E["order"]);
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 
