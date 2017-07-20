@@ -35,10 +35,10 @@ def do(URL):
   D = []
   output = []
   parameters = []
-  header = ["Curve", "Dreg", "Matcost", "Time", "#trials",
-            "Curve", "Dreg", "Matcost", "Time", "#trials",
-            "Curve", "Dreg", "Matcost", "Time", "#trials",
-            "Curve", "Dreg", "Matcost", "Time", "#trials" ]
+  header = ["Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
+            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
+            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
+            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank"]
   output_rows = []
   core = False
   output_rows.append(header)
@@ -47,14 +47,23 @@ def do(URL):
   for line in root.text.split("\n"):
   #for line in open("input.txt", 'r'):
     pickup("([A-z]([A-z0-9])?\s=\s.+)", line, parameters)
-    if re.match("Point [AB] .+",line) is not None:
-      if len(output): output_rows.append(output) 
+
+    pickup("Working on ([A-z]+) Elliptic.+", line, output)
+
+    # append output list for each set (experiment for 4 curves) finishing.
+    if re.match("Finished Point .+",line) is not None:
+      output_rows.append(output) 
       output = []
+
+    # ignore f4 logs for rewriting variables 
     if re.match("Rewriting variables", line) is not None:
       core = False
-    pickup("Working on ([A-z]+) Elliptic.+", line, output)
+
+    # sign of starting core f4.
     if re.match("Computing core variety...",line) is not None:
       core = True
+
+    # pick up from core f4 logs  
     if core:
       pickup("Basis length.+step degree:\s(\d+),.+", line, D)
       if re.match("No pairs.+", line) is not None: 
@@ -65,6 +74,7 @@ def do(URL):
       pickup("Approx mat cost: ([0-9./e/+]+),.+", line, output)
       pickup("Total Faugere.+:\s(\d+\.\d+),.+", line, output)
       pickup("#trials: ([0-9]+)", line, output)
+      pickup("Rank of relation matrix: ([0-9]+)", line, output)
 
   output_rows.insert(0,parameters)
 
@@ -84,7 +94,8 @@ def do(URL):
   spreadsheet_id = "1opFSZCBUryQBTF2JrmRGKubJdd_j2aeAAPYQzWMb-Ys"
 
   values = output_rows
-  newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
+  #newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
+  newsheet_title = ','.join(parameters[1:4])
 
   create_sheet_body = {
     "requests": [
@@ -102,7 +113,7 @@ def do(URL):
   response = request.execute()
   newsheetId = response["replies"][0]["addSheet"]["properties"]["sheetId"]
 
-  newsheetrange = newsheet_title + "!A:T"
+  newsheetrange = newsheet_title + "!A:X"
   data = [
   {
     'range': newsheetrange,
