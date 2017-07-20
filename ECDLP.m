@@ -271,12 +271,14 @@ for point := 1 to 1 do
     SetVerbose("User2",false);
     ntrials := 10;
     M := RelationMatrix(E,[]);
+    t0 := Cputime();
     for trial := 1 to ntrials do
       print "Point B",point,trial;
       M := VerticalJoin(M,RelationMatrix(E,ECDLPDecompose(E,Random(E["order"])*E["P"] : Al := Al)));
     end for;
     if ntrials gt 0 then
       print M,"Average rank:",Rank(M)/ntrials;
+      print "Relations per second:",Rank(M)/Cputime(t0);
     end if;
   end for;
   print "Finished Point",point;
