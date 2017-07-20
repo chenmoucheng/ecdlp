@@ -262,7 +262,7 @@ for point := 1 to 1 do
       if not IsEmpty(Qs) then
         print "#trials:",ntrials;
         M := RelationMatrix(E,Qs);
-        print M,"Rank:",Rank(M);
+        print M,"Rank of relation matrix:",Rank(M);
         break;
       end if;
     end for;
