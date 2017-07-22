@@ -8,7 +8,8 @@ SetColumns(0);
 SetNthreads(1);
 print "Nthreads =",GetNthreads();
 
-SomethingBig := 65536;
+SomethingBig := 2^12;
+SomethingBIG := 2^24;
 
 // Core solving logic
 
@@ -20,7 +21,7 @@ h  := 1;          print "h =",h;
 l  := 2;          print "l =",l;
 m  := 2;          print "m =",m;
 n  := 5;          print "n =",n;
-q  := 251;        print "q =",q;
+q  := 2^31;        print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
 Al := "Groebner"; print "Al =",Al;
@@ -32,10 +33,16 @@ elim := (l eq 1) or (l gt 1 and IX);
 
 // Base and extension fields
 
-K := FiniteField(q);
-k<w> := ext<K|n>;
-ind := func<a|Evaluate(f,q) where f is hom<k->R|R.1>(a) where R is PolynomialRing(Integers())>;
+ind := function(x)
+  k := Parent(x);
+  if IsPrimeField(k) then
+    return hom<k->Integers()|>(x);
+  end if;
+  return Evaluate(PolynomialRing(Integers())![$$(y) : y in ElementToSequence(x)],#BaseField(k));
+end function;
 
+K := FiniteField(q);
+k<w> := RandomExtension(K,n);
 kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
 isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
@@ -95,13 +102,15 @@ end function;
 
 Curves := [];
 
+load "OakleyEC2N3.m";
+
 // load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
-load "Hessian.m";
-load "Montgomery.m";
-load "tEdwards.m";
-load "Weierstrass.m";
+// load "Hessian.m";
+// load "Montgomery.m";
+// load "tEdwards.m";
+// load "Weierstrass.m";
 
 // Semaev's summation polynomials
 
@@ -235,17 +244,14 @@ SignOfPoint := function(E,Q)
   return forall(t){P : P in E["VtoFB"](E["FBtoV"](Q)) | f(P) le f(Q)} select -1 else 1;
 end function;
 
-// Relation matrix
+// Relation collection
 
-RelationMatrix := function(E,Qs)
-  M := [];
-  for i := 1 to #Qs do
-    for Q in Qs[i] do
-      Append(~M,<i,ind(E["FBtoV"](Q)) + 1,SignOfPoint(E,Q)>);
-    end for;
+CollectRelations := procedure(~M,E,Qs)
+  for Ps in Qs do
+    i := IsEmpty(M) select 1 else M[#M][1] + 1;
+    M cat:= [<i,ind(E["FBtoV"](P)) + 1,SignOfPoint(E,P)> : P in Ps];
   end for;
-  return SparseMatrix(Integers(),#Qs,q^l,M);
-end function;
+end procedure;
 
 // Experiments
 
@@ -256,13 +262,18 @@ for point := 1 to 1 do
     SetVerbose("User1",true);
     SetVerbose("User2",true);
     print "Point A",point;
-    for ntrials := 1 to SomethingBig do
+    for ntrials := 1 to SomethingBIG do
       Ps := [RandomFB(E) : i in [1..m]];
       Qs := ECDLPDecompose(E,&+Ps);
       if not IsEmpty(Qs) then
         print "#trials:",ntrials;
-        M := RelationMatrix(E,Qs);
-        print M,"Rank of relation matrix:",Rank(M);
+        M := []; CollectRelations(~M,E,Qs);
+        if q^l lt SomethingBIG then
+          M := SparseMatrix(Integers(),M[#M][1],q^l,M);
+          print M,"Rank of relation matrix:",Rank(M);
+        else
+          print "Number of relations:",#M;
+        end if;
         break;
       end if;
     end for;
@@ -270,15 +281,21 @@ for point := 1 to 1 do
     SetVerbose("User1",false);
     SetVerbose("User2",false);
     ntrials := 10;
-    M := RelationMatrix(E,[]);
+    M := [];
     t0 := Cputime();
     for trial := 1 to ntrials do
       print "Point B",point,trial;
-      M := VerticalJoin(M,RelationMatrix(E,ECDLPDecompose(E,Random(E["order"])*E["P"] : Al := Al)));
+      CollectRelations(~M,E,ECDLPDecompose(E,Random(E["order"])*E["P"] : Al := Al));
     end for;
     if ntrials gt 0 then
-      print M,"Average rank:",Rank(M)/ntrials;
-      print "Relations per second:",Rank(M)/Cputime(t0);
+      if q^l lt SomethingBIG then
+        M := SparseMatrix(Integers(),M[#M][1],q^l,M);
+        print M,"Average rank:",Rank(M)/ntrials;
+        print "Rank per second:",Rank(M)/Cputime(t0);
+      else
+        print "Average relations:",#M/ntrials;
+        print "Relations per second:",#M/Cputime(t0);
+      end if;
     end if;
   end for;
   print "Finished Point",point;
