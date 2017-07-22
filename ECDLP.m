@@ -17,14 +17,16 @@ load "CoreSolve.m";
 
 // Parameters
 
-h  := 1;          print "h =",h;
+h  := -1;         print "h =",h;
 l  := 2;          print "l =",l;
-m  := 2;          print "m =",m;
-n  := 5;          print "n =",n;
-q  := 2^31;        print "q =",q;
+m  := 3;          print "m =",m;
+n  := 7;          print "n =",n;
+q  := 251;        print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
 Al := "Groebner"; print "Al =",Al;
+
+ntrials := 2; print "ntrials =",ntrials;
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -102,15 +104,15 @@ end function;
 
 Curves := [];
 
-load "OakleyEC2N3.m";
+// load "OakleyEC2N3.m";
 
 // load "bEdwards.m";
 // load "Edwards.m";
 // load "gHessian.m";
-// load "Hessian.m";
-// load "Montgomery.m";
-// load "tEdwards.m";
-// load "Weierstrass.m";
+load "Hessian.m";
+load "Montgomery.m";
+load "tEdwards.m";
+load "Weierstrass.m";
 
 // Semaev's summation polynomials
 
@@ -262,38 +264,33 @@ for point := 1 to 1 do
     SetVerbose("User1",true);
     SetVerbose("User2",true);
     print "Point A",point;
-    for ntrials := 1 to SomethingBIG do
+    repeat
       Ps := [RandomFB(E) : i in [1..m]];
       Qs := ECDLPDecompose(E,&+Ps);
-      if not IsEmpty(Qs) then
-        print "#trials:",ntrials;
-        M := []; CollectRelations(~M,E,Qs);
-        if q^l lt SomethingBIG then
-          M := SparseMatrix(Integers(),M[#M][1],q^l,M);
-          print M,"Rank of relation matrix:",Rank(M);
-        else
-          print "Number of relations:",#M;
-        end if;
-        break;
-      end if;
-    end for;
+    until not IsEmpty(Qs);
+    M := []; CollectRelations(~M,E,Qs);
+    if q^l lt SomethingBIG then
+      M := SparseMatrix(Integers(),M[#M][1],q^l,M);
+      print M,"Rank of relation matrix:",Rank(M);
+    else
+      print "Number of relations:",#M;
+    end if;
 
     SetVerbose("User1",false);
     SetVerbose("User2",false);
-    ntrials := 10;
+    print "Point B",point;
     M := [];
     t0 := Cputime();
     for trial := 1 to ntrials do
-      print "Point B",point,trial;
       CollectRelations(~M,E,ECDLPDecompose(E,Random(E["order"])*E["P"] : Al := Al));
     end for;
-    if ntrials gt 0 then
+    if not IsEmpty(M) then
       if q^l lt SomethingBIG then
         M := SparseMatrix(Integers(),M[#M][1],q^l,M);
         print M,"Average rank:",Rank(M)/ntrials;
         print "Rank per second:",Rank(M)/Cputime(t0);
       else
-        print "Average relations:",#M/ntrials;
+        print "Average #relations:",#M/ntrials;
         print "Relations per second:",#M/Cputime(t0);
       end if;
     end if;
