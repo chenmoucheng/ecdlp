@@ -29,12 +29,6 @@ Al := "Groebner"; print "Al =",Al;
 npoints := 1; print "npoints =",npoints;
 ntrials := 2; print "ntrials =",ntrials;
 
-Check := function(E)
-  order := Order(E(k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
-end function;
-
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
 assert not (l eq 1 and IX);
@@ -55,6 +49,12 @@ k<w> := RandomExtension(K,n);
 kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
 isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
+
+Check := function(E)
+  order := Order(E(k));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
+end function;
 
 // Various structures for performing Weil restriction
 

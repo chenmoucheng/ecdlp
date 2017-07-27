@@ -4,7 +4,6 @@
 
 E := AssociativeArray();
 E["form"] := "Weierstrass";
-cofactor := q eq 2 select 2 else 1;
 if not IsEmpty(Curves) then
   E0 := Curves[1];
   assert IsSimplifiedModel(E0["curve"]);
