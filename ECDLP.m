@@ -26,7 +26,14 @@ T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;
 Al := "Groebner"; print "Al =",Al;
 
+npoints := 1; print "npoints =",npoints;
 ntrials := 2; print "ntrials =",ntrials;
+
+Check := function(E)
+  order := Order(E(k));
+  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
+  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
+end function;
 
 // Symmetrization is free in subfield (l = 1), so no need to include X variables (IX = false)
 
@@ -90,12 +97,6 @@ psi := function(Z,x)
 end function;
 
 // Curve-specific definitions
-
-Check := function(E)
-  order := Order(E(k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
-end function;
 
 RewriteESP := function(V,i)
   return hom<S->R|V>(ElementarySymmetricPolynomial(S,i))
@@ -257,7 +258,7 @@ end procedure;
 
 // Experiments
 
-for point := 1 to 1 do
+for point := 1 to npoints do
   for E in Curves do
     print ""; print "Working on",E["form"],E["curve"];
 
