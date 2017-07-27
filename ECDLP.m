@@ -19,8 +19,8 @@ load "CoreSolve.m";
 
 h  := -1;         print "h =",h;
 l  := 2;          print "l =",l;
-m  := 3;          print "m =",m;
-n  := 7;          print "n =",n;
+m  := 2;          print "m =",m;
+n  := 5;          print "n =",n;
 q  := 251;        print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := true;       print "IX =",IX;

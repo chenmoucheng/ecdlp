@@ -31,6 +31,7 @@ else
   until ok;
 end if;
 E["O"] := <k!0,k!1>;
+E["Q"] := <k!0,k!-1>;
 E["P"] := cofactor*Random(E["curve"](k));
 E["order"] := Order(E["P"]);
 E["curve"]; Coefficients(E["curve"]);
@@ -59,6 +60,8 @@ E["VtoFB"] := function(t)
   for s in Variety(I) do
     if s eq E["O"] then
       Append(~Qs,E["curve"]!0);
+    elif s eq E["Q"] then
+      Append(~Qs,E["curve"]![0,0]);
     else
       x,y := Explode(s);
       u := a0  *  (1 + y)/   (1 - y);
