@@ -33,12 +33,13 @@ def do(URL):
   root = lxml.html.fromstring(req.text)
 
   D = []
+  gap = []
   output = []
   parameters = []
-  header = ["Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
-            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
-            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank",
-            "Curve", "Dreg", "Matcost", "Time", "#trials", "Rank"]
+  header = ["Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
+            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
+            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
+            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank"]
   output_rows = []
   core = False
   output_rows.append(header)
@@ -68,16 +69,22 @@ def do(URL):
       pickup("Basis length.+step degree:\s(\d+),.+", line, D)
       if re.match("No pairs.+", line) is not None: 
         D.pop()
-      if re.match("Approx mat cost.+", line) is not None: 
+      pickup("Approx mat cost: ([0-9./e/+]+),.+", line, output)
+      # consider only first one
+      if re.match("Total Faugere F4 time.+",line)is not None:
+        pickup("Total Faugere.+:\s(\d+\.\d+),.+", line, output)
         output.append(max(D))
         D = []  
-      pickup("Approx mat cost: ([0-9./e/+]+),.+", line, output)
-      pickup("Total Faugere.+:\s(\d+\.\d+),.+", line, output)
-      pickup("#trials: ([0-9]+)", line, output)
-      pickup("Rank of relation matrix: ([0-9]+)", line, output)
+        core = False
+
+    pickup("\s\sGap degree.+ (\d+) .+=.+", line, gap)
+    if re.match("Rank of relation.+",line)is not None:
+      output.append(','.join(map(str,gap)))
+      gap = []
+      pickup("Rank of relation matrix: (\d+)", line, output)
+
 
   output_rows.insert(0,parameters)
-
 
 
   home_dir = os.path.expanduser('~')
@@ -95,7 +102,7 @@ def do(URL):
 
   values = output_rows
   #newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
-  newsheet_title = ','.join(parameters[1:4])
+  newsheet_title = ' '.join(parameters[1:4])
 
   create_sheet_body = {
     "requests": [
