@@ -4,7 +4,7 @@
 
 E := AssociativeArray();
 E["form"] := "tEdwards";
-assert q ne 2;
+assert Characteristic(k) ne 2;
 if not IsEmpty(Curves) then
   E0 := Curves[1];
   assert IsWeierstrassModel(E0["curve"]);

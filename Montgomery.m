@@ -2,7 +2,7 @@
  * Montgomery curves
  */
 
-assert q ne 2;
+assert Characteristic(k) ne 2;
 if T2 then
   assert IsDivisibleBy(n,l);
 end if;

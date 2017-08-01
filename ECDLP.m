@@ -243,7 +243,7 @@ end function;
 // Sign of point
 
 SignOfPoint := function(E,Q)
-  f := func<t|ind((t[1] - t[2])/t[3])>;
+  f := func<t|t eq E["curve"]!0 select -1 else ind((t[1] - t[2])/t[3])>;
   return forall(t){P : P in E["VtoFB"](E["FBtoV"](Q)) | f(P) le f(Q)} select -1 else 1;
 end function;
 

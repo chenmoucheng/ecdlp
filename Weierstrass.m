@@ -12,7 +12,7 @@ if not IsEmpty(Curves) then
 else
   repeat
     repeat
-      E["curve"] := q eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
+      E["curve"] := Characteristic(k) eq 2 select EllipticCurve([1,1,0,0,Random(k)]) else EllipticCurve([Random(k),Random(k)]);
     until Discriminant(E["curve"]) ne 0;
     ok,cofactor := Check(E["curve"]);
   until ok;

@@ -4,7 +4,7 @@
 
 E := AssociativeArray();
 E["form"] := "Edwards";
-assert q ne 2;
+assert Characteristic(k) ne 2;
 repeat
   repeat
     c := 1;

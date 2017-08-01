@@ -8,7 +8,7 @@ Degrees := function(F)
   D := [];
   for f in F do
     d := TotalDegree(f);
-    if d eq 0 then continue; end if;
+    if d le 0 then continue; end if;
     D[d] := IsDefined(D,d) select D[d] + 1 else 1;
   end for;
   for d := 1 to #D do
