@@ -35,6 +35,7 @@ E["curve"]; Coefficients(E["curve"]);
 print "cofactor:",cofactor;
 print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",E["P"]; print "Order:",E["order"]; assert IsPrime(E["order"]);
+print "A =",A; print "B =",B;
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 

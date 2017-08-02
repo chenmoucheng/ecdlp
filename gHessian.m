@@ -19,6 +19,7 @@ E["order"] := Order(E["P"]);
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
 print "Base point:",E["P"]; print "Order:",E["order"]; assert IsPrime(E["order"]);
+print "c =",c; print "d =",d;
 
 // V: l-dimensional linear subspace of k over K that determines factor base FB
 

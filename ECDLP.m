@@ -45,7 +45,7 @@ ind := function(x)
 end function;
 
 K := FiniteField(q);
-k<w> := RandomExtension(K,n);
+k<w> := RandomExtension(K,n); MinimalPolynomial(w);
 kK<W> := quo<PolynomialRing(K)|DefiningPolynomial(k,K)>;
 isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
@@ -108,11 +108,11 @@ Curves := [];
 // load "OakleyEC2N3.m";
 
 // load "bEdwards.m";
-// load "Edwards.m";
 // load "gHessian.m";
 load "Hessian.m";
 load "Montgomery.m";
-load "tEdwards.m";
+load "Edwards.m";
+// load "tEdwards.m";
 load "Weierstrass.m";
 
 // Semaev's summation polynomials
