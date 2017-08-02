@@ -1,0 +1,115 @@
+%
+% Isomorphisms among curves in various forms
+%
+
+\section{Isomorphisms among curves in various forms}
+\label{sec:isomorphisms}
+
+We study elliptic curves in 4 different forms: Hessian ($H$),
+Montgomery ($M$), twisted Edwards ($tE$), and Weierstrass ($W$).
+%
+In order to make an apple-to-apple comparison, we will experiment on
+curves that are isomorphic to one another over \F{p^n}.
+%
+That is, $H(\F{p^n})\cong M(\F{p^n})\cong tE(\F{p^n})\cong W(\F{p^n})$
+as groups.
+%
+In this section, we present the isomorphisms that we will use in our
+experiments, as well as describe whether the factor base will be
+invariant under the action of 2-torsion points for each of the 4 forms
+under investgation.
+
+We start from a Hessian curve $H_d$ satisfying $x^3 + y^3 + 1 = 3dxy$
+for some $d\in\F{p^n}$ such that the number of its rational points
+$\#H_d(\F{p^n})$ is divisible by 12.
+%
+From $H_d$, we can obtain an isomorphic Weierstrass curve $W_{a,b}$
+satisfying $y^2 = x^3 + ax + b$ for $a = - 27d(d^3 + 8)$ and
+$b = 54(d^6 - 20d^3 - 8)$~\cite{DBLP:conf/ches/Smart01}.
+%
+The isomorphism $\phi_{W,H}$ from $W_{a,b}(\F{p^n})$ to $H_d(\F{p^n})$
+is defined over $\F{p^n}$ and is given by sending $(u,v)\in W_{a,b}$
+to $(x,y)\in H_d$ where
+\[ \left\{\begin{aligned}
+x = & \frac{36(d^3 - 1) - v}{6(u + 9d^2)} - \frac{d}{2}, \\
+y = & \frac{36(d^3 - 1) + v}{6(u + 9d^2)} - \frac{d}{2}.
+\end{aligned}\right. \]
+%
+The inverse $\phi_{H,W}$ is given by
+\[ \left\{\begin{aligned}
+u = & \frac{12(d^3 - 1)}{d + x + y} - 9d^2, \\
+v = & \frac{36(d^3 - 1)(y - x)}{d + x + y}.
+\end{aligned}\right. \]
+%
+For Hessian curves, the 3rd summation polynomial $f_3$ is given by
+\[ \begin{aligned} & T_1^2T_2^2T_3 + T_1^2T_2^2d + T_1^2T_2T_3^2 +
+    T_1^2T_2T_3d + T_1^2T_3^2d - T_1^2 + T_1T_2^2T_3^2 + T_1T_2^2T_3d
+    + T_1T_2T_3^2d + \\
+    & 3T_1T_2T_3d^2 + 2T_1T_2 + 2T_1T_3 + 2T_1d + T_2^2T_3^2d - T_2^2
+    + 2T_2T_3 + 2T_2d - T_3^2 + 2T_3d + 3d^2.
+ \end{aligned} \]
+%
+$H_d(\F{p^n})$ has a 2-torsion point $(\zeta,\zeta)$ if the polynomial
+$2X^3 - 3dX^2 + 1$ has a root $\zeta$ in $\F{p^n}$.
+%
+In this case, the addition of this 2-torsion point to a point $(x,y)$
+would give another point $(x',y')$ where
+\[ \left\{\begin{aligned}
+x' = & \frac{\zeta y^2 - \zeta^2x}{\zeta^2 - xy}, \\
+y' = & \frac{\zeta x^2 - \zeta^2y}{\zeta^2 - xy}.
+\end{aligned}\right. \]
+%
+Obviously, the factor base is not invariant under the action of this
+2-torsion point in general.
+%
+Furthermore, as shown by Faug\`ere, Gaudry, Hout, and
+Renault~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}, the factor base of
+$W_{a,b}$ is in general not invariant under the addition of any
+2-torsion point, either.
+
+
+From $W_{a,b}$, we can obtain with a high probability a Montgomery
+curve $M_{A,B}$ satisfying $By^2 = x^3 + Ax^2 + x$ by solving the
+following equations
+%
+\[ \left\{\begin{aligned}
+a = & \frac{3 - A^2}{3B^2}, \\
+b = & \frac{2A^3 - 9A}{27B^3}.
+\end{aligned}\right. \]
+%
+The isomorphism $\phi_{W,M}$ is defined over
+$\F{p^n}$ and is given by sending $(u,v)\in W_{a,b}$ to
+$(x,y)\in M_{A,B}$ where $x = Bu - 1/3A$ and $y = Bv$.
+%
+The inverse $\phi_{M,W}$ can be obtained by equation solving.
+%
+As we have seen in Section~\ref{sec:montgomery-symmetry}, the factor
+base is invariant under the addition of a particular 2-torsion point
+$(0,0)$, though we are not able to exploit this symmetry.
+
+Finally, we can  obtain a twisted Edwards curve $tE_{a',d}$ from
+$M_{A,B}$ satisfying
+\[ y^2 = x^3 + a_0(\frac{4a'}{a' - d} - 2)x^2 + a_0^2x \]
+where 
+\[ \left\{\begin{aligned}
+a' = & \frac{A + 2}{B}, \\
+d = & \frac{A - 2}{B}, \\
+a_0 = & \frac{1}{a' - d}.
+\end{aligned}\right. \]
+%
+The isomorphism $\phi_{W,tE}$ is defined over $\F{p^n}$ and given by
+sending $(u,v)\in W_{a,b}$ to $(x,y)\in tE_{a',d}$ where
+\[ \left\{\begin{aligned}
+x = & \frac{2a_0u}{v}, \\
+y = & \frac{u - a_0}{u + a_0}.
+\end{aligned}\right. \]
+%
+The inverse $\phi_{tE,W}$ is given by
+\[ \left\{\begin{aligned}
+u = & \frac{a_0(1 + y)}{1 - y}, \\
+v = & \frac{2a_0^2(1 + y)}{x(1 - y)}.
+\end{aligned}\right. \]
+%
+As shown by Faug\`ere, Gaudry, Hout, and
+Renault~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}, the factor base is
+invariant under the addition of the 2-torsion point $(0,-1)$.

@@ -1,0 +1,93 @@
+%
+%
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{algpseudocode,amsfonts,amsmath,amssymb}
+%
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\res}{Res}
+\newcommand{\F}[1]{\ensuremath{\mathbb F_{#1}}}
+%\def\F{{\mathbb F}}
+\def\Fqn{{\mathbb F}_{p^n}}
+\def\Fqm{{\mathbb F}_{p^m}}
+\long\def\comment#1{}
+%
+\begin{document}
+%
+\title{Untitled}
+%
+%\titlerunning{}
+%
+%\author{Kenta~Kodera \and Atsuko~Miyaji \and Chen-Mou~Cheng}
+%
+%\authorrunning{}
+%
+%\institute{Osaka University, Japan}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+%
+  The security of elliptic curve cryptography is closely related to
+  the complexity of solving the elliptic curve discrete logarithm
+  problem (ECDLP).
+%
+  Today, the best practical attacks against ECDLP are
+  exponential-time, generic discrete logarithm algorithms such as
+  Pollard's rho method~\cite{1978-pollard-kangaroo}.
+%
+  However, recently there is a line of research on index calculus
+  algorithms for ECDLP started by Semaev, Gaudry, and
+  Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
+%
+  Under certain heuristic assumptions, such algorithms could lead to
+  subexponential attacks to ECDLP in some
+  cases~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:journals/iacr/PetitQ12,DBLP:conf/iwsec/HuangPST13}.
+%
+  In this paper, we consider the complexity of solving ECDLP for
+  elliptic curves in various forms---including
+  Hessian~\cite{DBLP:conf/ches/Smart01},
+  Montgomery~\cite{1987-montgomery}, twisted
+  Edwards~\cite{DBLP:journals/iacr/BernsteinBJLP08}, and
+  Weierstrass---over optimal extension fields
+  (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index calculus
+  algorithms.
+%
+  An OEF is an extension field from a prime field \F p with $p$ close
+  to $2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+%
+  Such primes fit nicely into the processor words of 8, 16, 32, or
+  64-bit microprocessors and hence are particularly suitable for
+  software implementation, allowing for efficient utilization of fast
+  integer arithmetics on modern
+  microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
+%
+  The research question we would like to answer is: Using index
+  calculus algorithm, is there any significant difference in the
+  computational complexity of solving ECDLP for elliptic curves in
+  various forms?
+%
+  We will provide some empirical evidence showing an affirmative
+  answer in this paper.
+%
+  \keywords{ECDLP, index calculus, elliptic curves cryptography,
+    optimal extension fields, security evaluation}
+\end{abstract}
+
+\input{introduction}
+\input{index-calculus}
+\input{montgomery}
+\input{isomorphisms}
+
+%
+% ---- Bibliography ----
+%
+\bibliographystyle{abbrv}
+\bibliography{dblp,local}
+
+\end{document}
