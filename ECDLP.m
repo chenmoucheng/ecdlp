@@ -207,6 +207,8 @@ ECDLPDecompose := function(E,Q : Al := "All")
     b := GetVerbose("Faugere"); SetVerbose("Faugere",GetVerbose("User2")*2);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
     SetVerbose("Faugere",0);
+    assert #Basis(Irewritten) eq 1;
+    if IsVerbose("User1") then print "Degree & #terms:",TotalDegree(f),#Terms(f) where f is Basis(Irewritten)[1]; end if;
   end if;
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
