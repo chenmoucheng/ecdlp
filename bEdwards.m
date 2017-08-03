@@ -5,15 +5,26 @@
 E := AssociativeArray();
 E["form"] := "bEdwards";
 assert Characteristic(k) eq 2;
-repeat
-  repeat
-    d1 := Random(k);
-    d2 := d1;
-  until d1 ne 0 and d2 ne d1^2 + d1;
+if not IsEmpty(Curves) then
+  a1,a2,a3,a4,a6 := Explode(Coefficients(Curves[1]["curve"]));
+  assert a1 eq 1 and a3 eq 0 and a4 eq 0;
+  V := Variety(Ideal({R.1^2 + R.2 - a2,R.1^4*(R.1^4 + R.1^2 + R.2^2) - a6})) where R is PolynomialRing(k,2);
+  assert not IsEmpty(V);
+  d1,d2 := Explode(Random(V));
+  assert d1 ne 0 and d2 ne d1^2 + d1;
   E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
-  assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
-  ok,cofactor := Check(E["curve"]);
-until ok;
+  _,cofactor := Check(E["curve"]);
+else
+  repeat
+    repeat
+      d1 := Random(k);
+      d2 := d1;
+    until d1 ne 0 and d2 ne d1^2 + d1;
+    E["curve"] := EllipticCurve([1,d1^2 + d2,0,0,d1^4*(d1^4 + d1^2 + d2^2)]);
+    assert jInvariant(E["curve"]) eq 1/(d1^4*(d1^4 + d1^2 + d2^2));
+    ok,cofactor := Check(E["curve"]);
+  until ok;
+end if;
 E["O"] := <k!0,k!0>;
 E["P"] := cofactor*Random(E["curve"](k));
 E["order"] := Order(E["P"]);
