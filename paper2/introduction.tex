@@ -46,9 +46,9 @@ directions~\cite{DBLP:journals/dcc/GalbraithG16}.
 In this paper, we consider the complexity of solving ECDLP for
 elliptic curves in various forms---including
 Hessian~\cite{DBLP:conf/ches/Smart01},
-Montgomery~\cite{1987-montgomery}, twisted
-Edwards~\cite{DBLP:journals/iacr/BernsteinBJLP08}, and
-Weierstrass---over optimal extension fields
+Montgomery~\cite{1987-montgomery}, (twisted)
+Edwards~\cite{DBLP:journals/iacr/BernsteinL07,DBLP:journals/iacr/BernsteinBJLP08},
+and Weierstrass---over optimal extension fields
 (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index calculus
 algorithms.
 %
@@ -59,11 +59,11 @@ implementation that is secure against timing-based side-channel
 attacks.
 %
 Furthermore, we can construct these curves not only over prime fields
-such as \F{2^{255} - 19} as used in Curve25519 but also extension
-fields.
+such as the field of $2^{255} - 19$ elements used in Curve25519 but
+also extension fields.
 %
 An OEF is an extension field from a prime field \F p with $p$ close to
-$2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+$2^8, 2^{16}, 2^{32}, 2^{64}$, etc.
 %
 Such primes fit nicely into the processor words of 8, 16, 32, or
 64-bit microprocessors and hence are particularly suitable for
@@ -73,13 +73,13 @@ microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
 %
 As we will see, our experimental results show quite significant
 difference in the computational complexity of solving ECDLP for
-elliptic curves in various forms over OEF.
+elliptic curves in various forms over OEFs.
 
 The rest of this paper is organized as follows.
 %
 In Section~\ref{sec:index-calculus-ecdlp}, we will give an high-level
 overview of the index calculus algorithm for attacking ECDLP.
 %
-In Section~\ref{sec:montgomery-symmetry}, we will describe curves of
-various forms and how we exploit the symmetry for speeding up index
-calculus on them.
+In Section~\ref{sec:montgomery-symmetry} and \ref{sec:hessian}, we
+will describe curves of various forms and how we exploit the symmetry
+for speeding up index calculus on them.

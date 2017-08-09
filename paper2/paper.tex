@@ -41,8 +41,8 @@
   exponential-time, generic discrete logarithm algorithms such as
   Pollard's rho method~\cite{1978-pollard-kangaroo}.
 %
-  However, recently there is a line of research on index calculus
-  algorithms for ECDLP started by Semaev, Gaudry, and
+  Recently, there is a line of research on index calculus algorithms
+  for ECDLP started by Semaev, Gaudry, and
   Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
 %
   Under certain heuristic assumptions, such algorithms could lead to
@@ -52,14 +52,14 @@
   In this paper, we consider the complexity of solving ECDLP for
   elliptic curves in various forms---including
   Hessian~\cite{DBLP:conf/ches/Smart01},
-  Montgomery~\cite{1987-montgomery}, twisted
-  Edwards~\cite{DBLP:journals/iacr/BernsteinBJLP08}, and
-  Weierstrass---over optimal extension fields
+  Montgomery~\cite{1987-montgomery}, (twisted)
+  Edwards~\cite{DBLP:journals/iacr/BernsteinL07,DBLP:journals/iacr/BernsteinBJLP08},
+  and Weierstrass---over optimal extension fields
   (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index calculus
   algorithms.
 %
   An OEF is an extension field from a prime field \F p with $p$ close
-  to $2^8, 2^{16}, 2^{32}, 2^{64}, \ldots$
+  to $2^8, 2^{16}, 2^{32}, 2^{64}$, etc.
 %
   Such primes fit nicely into the processor words of 8, 16, 32, or
   64-bit microprocessors and hence are particularly suitable for
@@ -70,7 +70,7 @@
   The research question we would like to answer is: Using index
   calculus algorithm, is there any significant difference in the
   computational complexity of solving ECDLP for elliptic curves in
-  various forms?
+  various forms over OEFs?
 %
   We will provide some empirical evidence showing an affirmative
   answer in this paper.
@@ -82,6 +82,7 @@
 \input{introduction}
 \input{index-calculus}
 \input{montgomery}
+\input{hessian}
 \input{isomorphisms}
 
 %

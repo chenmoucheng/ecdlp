@@ -19,12 +19,12 @@ Furthermore, the addition and doubling formulae for
 $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
 %
 \begin{itemize}
-\item When $x_1\neq x_2$:
+\item When $(x_1,y_1)\neq(x_2,y_2)$:
   \begin{align*}
     x_3 & = B\left(\frac{y_2 - y_1} {x_2 - x_1}\right)^2 - A - x_1 - x_2 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2} \\
     y_3 & = \frac{(2x_1 + x_2 + A)(y_2 - y_1)} {x_2 - x_1} - \frac{B(y_2 - y_1)^3} {(x_2 - x_1)^3} - y_1
   \end{align*}
-\item When $x_1=x_2$:
+\item When $(x_1,y_1)=(x_2,y_2)$:
   \begin{align*}
     x_3 & = \frac{(x_1^2 - 1)^2} {4x_1(x_1^2 + Ax_1 + 1)}  \\
     y_3 & = \frac{(2x_1 + x_1 + A)(3x_1^2 + 2Ax_1 + 1)} {2By_1} - \frac{B(3x_1^2 + 2Ax_1 + 1)^3} {(2By_1)^3} - y_1
@@ -91,7 +91,7 @@ polynomial:
 %
 as well as the subsequent summation polynomials via taking resultants:
 \[ f_{M,m}(X_1,\ldots,X_m) =
-  \res_X\left(f_{m-k}(X_1,\ldots,X_{m-k-1},X),f_{k+2}(X_{m-k},\ldots,X_m,X)\right). \]
+  \res_X\left(f_{M,m-k}(X_1,\ldots,X_{m-k-1},X),f_{M,k+2}(X_{m-k},\ldots,X_m,X)\right). \]
 %--------------------------------
 \subsection{Action of 2-torsion points for Montgomery curves} \label{subsec:TSPL}
 %------------------------
@@ -118,27 +118,16 @@ Substituting $(x_2,y_2)=(0,0)$ into the addition formula for
 Montgomery curves, we get that for any point $P=(x,y)\in M_{A,B}$,
 $P+(0,0)=(1/x,y')$ for some $y'$.
 
-Following the approach outlined by Faug\`ere, Gaudry, Hout, and
-Renault~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}, we consider a
-relation $R:=P_1+\cdots+P_m$ under the action of addition of 2-torsion
-points $T_2=(0,0)$:
-\[ R' :=
-  (P_1+u_1T_2)+(P_2+u_2T_2)+\cdots+(P_{m-1}+u_{m-1}T_2)+\left(P_m+\left(\sum_{i=1}^{m-1}u_i\right)T_2\right). \]
+To be able to exploit the symmetry of addition of $T_2=(0,0)$, we need
+to choose the factor base
+$\mathcal F=\{(x,y)\in E(\F{p^n}):x\in V\subset\F{p^n}\}$ invariant
+under addition of the 2-torsion point.
 %
-Clearly if $R$ holds, then $R'$ also holds for any
-$u_1,\ldots,u_{m-1}\in\{0,1\}$, and
-$D_m=(\mathbb{Z}/2\mathbb{Z})^{m-1}\rtimes S_m$ acts on the summation
-polynomial $f_m$.
+This means that $V$ needs to be closed under taking multiplicative
+inverses.
 %
-However, this assumes that the factor base
-$\mathcal F=\{(x,y)\in E(\F{p^n}):x\in V\subset\F{p^n}\}$ is invariant
-under addition of the 2-torsion point, which is indeed the case for
-binary Edwards curves but not necessarily true for Montgomery curves
-unless $V$ is closed under taking multiplicative inverses.
-%
-In other words, this means that for Montgomery curves, $V$ needs to be
-a \emph{subfield} of $\F{p^n}$, i.e., $V=\F{p^\ell}$ for some integer
-$\ell$ that divides $n$.
+In other words, $V$ needs to be a \emph{subfield} of $\F{p^n}$, i.e.,
+$V=\F{p^\ell}$ for some integer $\ell$ that divides $n$.
 %
 In this case, $f_m$ is invariant under the action of
 $x_i\mapsto 1/x_i$.
