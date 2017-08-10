@@ -166,6 +166,23 @@ WeilRestriction := function(I)
   return J;
 end function;
 
+
+Checkmonomial := procedure(I)
+  for f in Basis(I) do
+  	numberofodd := 0;
+    for mon in Monomials(f) do
+      degreeofodd := 0;
+      for i := (2*m - 1) to (3*m - 2) by 2 do
+        degreeofodd +:= Exponents(mon)[i];
+      end for;
+      if IsOdd(degreeofodd) then numberofodd +:= 1; end if;
+    end for;
+    print "Odd degree terms: ", numberofodd;
+    print "Even degree terms: ", #Monomials(f) - numberofodd;
+  end for;
+end procedure;
+
+
 // Point decomposition
 
 ECDLPDecompose := function(E,Q : Al := "All")
@@ -206,6 +223,7 @@ ECDLPDecompose := function(E,Q : Al := "All")
     end case;
     b := GetVerbose("Faugere"); SetVerbose("Faugere",GetVerbose("User2")*2);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
+    Checkmonomial(Irewritten);
     SetVerbose("Faugere",0);
     assert #Basis(Irewritten) eq 1;
     if IsVerbose("User1") then print "Degree & #terms:",TotalDegree(f),#Terms(f) where f is Basis(Irewritten)[1]; end if;
