@@ -4,27 +4,32 @@
 We conduct experiment to compare difficulity of solving ECDLP 
 defined over four different curves 
 (Hessian, Weierstrass, Montgomery, twisted Edwards) on $\mathbb{F}_{q^n}$.
+%
 For fully fair experiment, we use the set of these curves 
 that are isomorphic to one another as shown in previous section.
+%
 In other words, the set of curves have the same j-invariant 
 and prime order of subgroup.
 
 In this experiment, we focus on the cost of F4 algorithm for solving polynomial 
 system to find relations of point decomposition.
+%
 More precisely, we consider the polynomial system 
 after applying symmetry and Weil decent techniques to summation polynomial.
+%
 All of our experiment are done with MAGMA. 
 The cost is measured from time, Matcost, and degree of regularity 
 during F4 algorithm.
+%
 Matcost is one of outputs during F4 algorithm in MAGMA, 
 and it represents how much cost it takes.
+%
 In this paper, we define degree of regularity as max number of step degree, 
 which is upper bound for considering monomials in Macaulay matrix 
 in each step of F4 algorithm.
 
 All experiments is done by Intel(R) Xeon(R) CPU E7-4830 v4.
-
-
+%
 The following result is the case of $n=5$ and 
 $V$ for factor base is base field $\mathbb{F}_{q^n}$.
 
@@ -32,38 +37,52 @@ $V$ for factor base is base field $\mathbb{F}_{q^n}$.
 
 These tables show us twisted Edward curve is much faster than 
 other three curves independing from $q$ and $m$.
+%
 The result is caused by sparsity of terms.
 Table \ref{tb:terms} shows how many terms in a polynomial in polynomial systems 
 before and after Weil decent for each curves in the case of $m=2,3,4$.
+%
 There are $n$ equations after Weil decent, 
 so numbers in table are taken an average. 
+%
 We affix theoretical number of terms, which is calculated by considering
 the polynomial with $m$ variables and $2^{(m+1)-2}$ degree 
 having as many as possible terms. 
+%
 You can find number of terms on twisted Edwards curve is less than 
 other three curves for all cases.
+%
 It should lead making smaller matrix and faster calculation with F4 algorithm.
 
 \input{result2}
 
 In the next place, we focus on whether degree of each terms before 
 applying symmetry is even or odd in order to reveal the reason of the fact.
+%
 The polynomial we focus on is consisted of elementaly symmetric polynomials 
 $e_1, \dots ,e_m$. and we regard degree of monomials $e_i$ for all odd $i$ as odd.
+%
 For $m=2$, it is interesting that there is no monomial with odd degree 
 only for twisted Edwards curve.
+%
 In other words, there is no terms originated from monomial
 such as $e_1$, $e_1e_2$ in the polynomial system.
+%
 This is because addition fomula on twisted Edwards curve, 
 which is strongly related with summation polynomial, 
 is consisted of only even terms.
+%
 When one variable in summation polynomial with three variables
 is evaluated consistant which represents the point we want to decompose, 
 there is no odd degree terms on it.
+%
 For $m=3$, we use summation polynomial with 4 variatbles.
+%
 We calculate it by using resultant of two summation polynomials 
 with 3 variables, so there are some odd terms such as $e_3, e_2^2e_3$.
+%
 For $m=4$, there is also no terms with odd degree.
+%
 Through calculating resultant recursively, two variables are eliminated
 and it preserves all terms to even degree.
 
