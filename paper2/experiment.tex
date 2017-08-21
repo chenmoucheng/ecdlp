@@ -1,88 +1,106 @@
 \section{Experimental results}
 \label{sec:experiment}
 
-We conduct experiment to compare difficulity of solving ECDLP 
-defined over four different curves 
-(Hessian, Weierstrass, Montgomery, twisted Edwards) on $\mathbb{F}_{q^n}$.
+We have conducted a set of experiments to compare the difficulty of
+solving ECDLP for four different curves (Hessian, Montgomery, twisted
+Edwards, and Weierstrass) over \F{q^n}.
 %
-For fully fair experiment, we use the set of these curves 
-that are isomorphic to one another as shown in previous section.
+To make an apple-to-apple comparison, we use curves in different forms
+but are nonetheless isomorphic to one another, as explained in
+Section~\ref{sec:isomorphisms}.
 %
-In other words, the set of curves have the same j-invariant 
-and prime order of subgroup.
+In other words, the curves in different forms have the same
+j-invariant, and we consider the ECDLP in the same (largest)
+prime-order subgroup in each of the experiments.
 
-In this experiment, we focus on the cost of F4 algorithm for solving polynomial 
-system to find relations of point decomposition.
+In these experiment, we focus on the cost of F4 algorithm for solving
+polynomial system, which is the bottleneck computation in finding
+relations of point decomposition.
 %
-More precisely, we consider the polynomial system 
-after applying symmetry and Weil decent techniques to summation polynomial.
+More precisely, we consider the polynomial systems obtained after
+rewriting using the elementary symmetric polynomials and applying the
+Weil restriction technique to summation polynomials, as described in
+Section~\ref{sec:weil-restriction}.
 %
-All of our experiment are done with MAGMA. 
-The cost is measured from time, Matcost, and degree of regularity 
-during F4 algorithm.
-%
-Matcost is one of outputs during F4 algorithm in MAGMA, 
-and it represents how much cost it takes.
-%
-In this paper, we define degree of regularity as max number of step degree, 
-which is upper bound for considering monomials in Macaulay matrix 
-in each step of F4 algorithm.
+All our experiment are done using the MAGMA computation algebra
+system, version 2.23-1, on a single core of an Intel Xeon CPU E7-4830
+v4 running at 2~GHz.
 
-All experiments is done by Intel(R) Xeon(R) CPU E7-4830 v4.
+The main cost metrics are running time, Matcost, and the maximum step
+degree reached during the execution of the F4 algorithm.
 %
-The following result is the case of $n=5$ and 
-$V$ for factor base is base field $\mathbb{F}_{q^n}$.
+This is usually referred to as the ``degree of regularity'' in the
+literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, which provides an
+upper bound for the size of Macaulay matrices during the execution of
+the F4 algorithm.
+%
+Here ``Matcost'' is output by the MAGMA implementation of the F4
+algorithm, which is supposed to represent the cost of linear algebra
+in the algorithm.
 
+We first present the results for the case of $n=5$.
+%
+Here our factor base is taken such that $V$ is the base field \F q of
+\F{q^n}.
+%
 \input{result1}
 
-These tables show us twisted Edward curve is much faster than 
-other three curves independing from $q$ and $m$.
+We can clearly see that the solving time for twisted Edwards curve is
+much faster than the other three curves for different $q$ and $m$.
 %
-The result is caused by sparsity of terms.
-Table \ref{tb:terms} shows how many terms in a polynomial in polynomial systems 
-before and after Weil decent for each curves in the case of $m=2,3,4$.
+We suspect that this is due to the difference in the sparsity of the
+resulted polynomial systems.
 %
-There are $n$ equations after Weil decent, 
-so numbers in table are taken an average. 
+Table~\ref{tb:terms} shows how the sparsity before and after Weil
+restriction for each curves in the case of $m=2,3,4$.
 %
-We affix theoretical number of terms, which is calculated by considering
-the polynomial with $m$ variables and $2^{(m+1)-2}$ degree 
-having as many as possible terms. 
+There are $n$ equations after Weil restriction, so those numbers are
+the average.
 %
-You can find number of terms on twisted Edwards curve is less than 
-other three curves for all cases.
+We also include the maximum number of terms for a polynomial of degree
+$2^{(m+1)-2}$ in $m$ variables.
 %
-It should lead making smaller matrix and faster calculation with F4 algorithm.
+We can see that the number of terms for twisted Edwards curve is
+significantly fewer than the other three curves in all cases.
+%
+Naturally, this could lead to smaller matrices and hence faster
+solving time with the F4 algorithm.
 
 \input{result2}
 
-In the next place, we focus on whether degree of each terms before 
-applying symmetry is even or odd in order to reveal the reason of the fact.
+We further analyze which terms are missing from the summation
+polynomials for curves in different forms.
 %
-The polynomial we focus on is consisted of elementaly symmetric polynomials 
-$e_1, \dots ,e_m$. and we regard degree of monomials $e_i$ for all odd $i$ as odd.
+We classify terms into odd vs.~even degrees.
 %
-For $m=2$, it is interesting that there is no monomial with odd degree 
+Recall that the polynomials are expressed using elementary symmetric polynomials 
+$e_1, \dots ,e_m$.
+%
+Therefore, a monomial $e_i^j$ has odd degree only if both $i$ and $j$
+are odd.
+%
+For $m=2$, it is interesting that there are no monomials of odd degree
 only for twisted Edwards curve.
 %
-In other words, there is no terms originated from monomial
-such as $e_1$, $e_1e_2$ in the polynomial system.
+In other words, there are no terms originated from monomial such as
+$e_1$ or $e_1e_2$.
 %
-This is because addition fomula on twisted Edwards curve, 
-which is strongly related with summation polynomial, 
-is consisted of only even terms.
+This is because the addition formula for twisted Edwards curve, based
+on which the summation polynomial is derived, consists of only even
+terms.
 %
-When one variable in summation polynomial with three variables
-is evaluated consistant which represents the point we want to decompose, 
-there is no odd degree terms on it.
+Therefore, when one of the 3 variables in the summation polynomial is
+substituted with the point we want to decompose, the odd-degree terms
+all vanish.
+
+For $m=3$, we use summation polynomial with 4 variables, which is
+obtained by taking the resultant of two summation polynomials 
+with 3 variables.
 %
-For $m=3$, we use summation polynomial with 4 variatbles.
-%
-We calculate it by using resultant of two summation polynomials 
-with 3 variables, so there are some odd terms such as $e_3, e_2^2e_3$.
+Therefore, there are some odd terms such as $e_3$ or $e_2^2e_3$.
 %
 For $m=4$, there is also no terms with odd degree.
 %
-Through calculating resultant recursively, two variables are eliminated
-and it preserves all terms to even degree.
+Through calculating resultant recursively, two variables are
+eliminated, and it preserves all terms to even degree.
 
