@@ -63,7 +63,7 @@ E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Ia
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 /*
- * Semaev's summation polynomial for twisted Edwards curves
+ * Semaev's summation polynomial for Edwards curves
  *
  * R<C0,C1,X1,Y1,X2,Y2,C,D,Y> := PolynomialRing(Rationals(),9);
  * 
@@ -88,7 +88,7 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * 
  * S<y1,y2,y3,c,d> := PolynomialRing(Rationals(),5);
  * phi := hom<R->S|[0,0,0,y1,0,y2,c,d,y3]>;
- * _,_,_,f3 := Explode(Factorization(phi(g3)))[1];
+ * _,_,_,f3 := Explode(Factorization(phi(g3))); f3[1];
  */
 
 E["f3"] := function(y1,y2,y3)

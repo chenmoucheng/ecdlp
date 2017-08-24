@@ -18,12 +18,12 @@ load "CoreSolve.m";
 // Parameters
 
 h  := -1;         print "h =",h;
-l  := 2;          print "l =",l;
-m  := 2;          print "m =",m;
+l  := 1;          print "l =",l;
+m  := 3;          print "m =",m;
 n  := 5;          print "n =",n;
-q  := 2^31;       print "q =",q;
+q  := 241;        print "q =",q;
 T2 := false;      print "T2 =",T2;
-IX := true;       print "IX =",IX;
+IX := false;      print "IX =",IX;
 Al := "Groebner"; print "Al =",Al;
 
 npoints := 1; print "npoints =",npoints;
@@ -105,11 +105,12 @@ end function;
 
 Curves := [];
 
-load "OakleyEC2N3.m";
+// load "OakleyEC2N3.m";
 
-load "bEdwards.m";
+// load "bEdwards.m";
 // load "gHessian.m";
 // load "Hessian.m";
+load "JacobiQuartic.m";
 // load "Montgomery.m";
 // load "Edwards.m";
 // load "tEdwards.m";

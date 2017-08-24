@@ -96,7 +96,7 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  * 
  * S<t1,t2,t3,d> := PolynomialRing(Rationals(),4);
  * phi := hom<R->S|[0,0,0,0,t1,0,0,t2,d,t3]>;
- * _,_,f3 := Explode(Factorization(phi(g3)))[1];
+ * _,_,f3 := Explode(Factorization(phi(g3))); f3[1];
  */
 
 E["f3"] := function(t1,t2,t3)
