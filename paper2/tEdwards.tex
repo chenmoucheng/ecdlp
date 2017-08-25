@@ -1,0 +1,284 @@
+%
+% (twisted) Edwards curve
+%
+
+%------------------------------
+\section{(twisted) Edwards curves}
+%------------------------------------
+\label{sec:twisted-edwards}
+
+
+Faug\`ere, Gaudry, Hout, and Renault studied the point decomposition
+problem on twisted Edwards, twisted Jacobi intersections, and
+Weierstrass curves~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}.
+%
+For the sake of completeness, we include some basic facts about
+(twisted) Edwards curves here.
+%
+%
+An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
+equation \begin{equation*}
+  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for some
+$d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
+%
+A twisted Edwards curve $tE_{a',d'}$ over \F{p^n} for $p\neq 2$ is
+defined by the equation \begin{equation}
+  a'x^2+y^2=1+d'x^2y^2 \label{eq:twisted-edwards-curve} \end{equation}
+for some $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
+%
+A twisted Edwards curve is a quadratic twist of an Edwards curve by
+$a_0=1/(a'-d')$.
+%
+For $P=(x,y)\in H_d$, $-P=(-x,y)$.
+%
+Furthermore, the addition and doubling formulae for
+$(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
+%
+\begin{itemize}
+\item When $(x_1,y_1)\neq(x_2,y_2)$:
+  \begin{align*}
+    x_3 & = \frac{x_1y_2 + y_1x_2}{1 + d'x_1x_2y_1y_2} \\
+    y_3 & = \frac{y_1y_2 - a'x_1x_2}{1 - d'x_1x_2y_1y_2}
+  \end{align*}
+\item When $(x_1,y_1)=(x_2,y_2)$:
+  \begin{align*}
+    x_3 & = \frac{2x_1y_1}{1 + d'x_1^2y_1^2} \\
+    y_3 & = \frac{y_1^2 - a'x_1^2}{1 - d'x_1^2y_1^2}
+  \end{align*}
+\end{itemize}
+
+Summation polynomial on twisted Edwards curve is as follows.
+%
+\begin{align*}
+  f_{tE, 2}(Y_1, Y_2) &= Y_2-Y_1 \\
+    %
+  f_{tE, 3}(Y_1, Y_2, Y_3) &=
+    \left( Y_1^2Y_2^2-Y_1^2-Y_2^2+\frac{a}{d} \right)Y_3^2  \\
+    &~~~~~ + 2\frac{d-a}{d}Y_1Y_2Y_3 + \frac{a}{d}\left(Y_1^2+Y_2^2-1\right)-Y_1^2Y_2^2\\
+    %
+\end{align*}
+%
+As you have seen, summation polynomial for $m\geq4$ is 
+calculated by using resultants.
+
+
+\subsection{Observations of summation polynomial on twisted Edwards curve}
+
+We classify variables and monomials in from the viewpoint of parity. 
+%
+We refer to variable whose exponent is even number and odd number 
+as respectively \emph{even variable} and \emph{odd variable}
+%
+Similarly, we refer to monomial whose degree is even number and odd number 
+as respectively \emph{even monomial} and \emph{odd monoimal}
+
+
+\begin{description}
+  \item [Lemma 1]~\\
+  %
+  Considering resultant of two multivariate polynomial $a_1$ and $a_2$,
+  you will consider the polynomials as univariate polynomial of the variable
+  to eliminate $T$, such as $f_1 = a_mT^m + \dots +a_1T^1 + a_0$ 
+  and $f_2 = b_nT^n + \dots +b_1T^1 + b_0$.
+  %
+  If degree of both of $m$ and $n$ is even, 
+  then coefficients of odd monomial, $a_{2k+1}$ and $b_{2k+1}$ for integer $k$,
+  is contained even number times in the term of resultant.
+  %
+\end{description}
+
+\noindent
+\emph{Proof.}
+%
+Resultant of $a_1$ and $a_2$ is 
+determinant of following square matrix X of size $m+n$.
+%
+\begin{equation*}
+X =
+\begin{bmatrix}
+  a_m & a_{m-1} & \ldots & & a_0 & & &  \\
+          & a_m & a_{m-1} & \ldots & & a_0  & &  \\
+  & & \ddots & & & & \ddots &  \\
+    & & & a_m & a_{m-1} & \ldots & & a_0  \\
+  b_n & b_{n-1} & \ldots & & b_0 & & &  \\
+       & b_n & b_{n-1} & \ldots & & b_0  & &  \\
+  & & \ddots & & & & \ddots &  \\
+    & & & b_n & b_{n-1} & \ldots & & b_0
+\end{bmatrix}
+\end{equation*}
+
+Let components in the $i$-th row and $j$-th column in the matrix $X$ 
+be represented to $x_{ij}$. 
+%
+From assumption, $a_m$ and $b_n$ is the coefficients of even monomial
+and the number of row which include $a_i$ and $b_i$ is both even.
+%
+Consequently, coefficients of odd monomials, $a_{2k+1}$ and $b_{2k+1}$ 
+for integer $k$, correspond components whose sum of index (i+j) is odd.
+%
+Also, coefficients of even monomials, $a_{2k}$ and $b_{2k}$ for 
+integer $k$, correspond components whose sum of index is even.
+
+Here, determinant of $X$ is defined as
+%
+\begin{align*}
+  %
+  \mbox{det}(X) = \sum_{\sigma \in S_{n+m}} \mbox{sgn}(\sigma)x_{1\sigma(1)}
+                   x_{2\sigma(2)}\cdots x_{m+n\sigma(m+n)}
+\end{align*}
+%
+Under any permutation, total summation of sum of index remain even number,
+that is $2*(1+ \cdots +n)$.
+%
+Hence, components whose sum of index is odd is contained even number times.
+%
+Therefore, coefficients of odd monoials is contained even number times
+in the term of resultant.
+\qed \\
+
+We focus on each variable which is consisted term
+is whether even or odd variable.
+%
+We reffer to the term which consist of only the same parity of variables
+as \emph{well-regulated term}.
+
+
+\begin{description}
+  %
+  \item [Lemma 2]~\\
+  %
+  If all terms in 3rd summation polynomial are well-regulated terms,
+  all terms in summation polynomial with any variables are also
+  well-regulated.
+  %
+\end{description}
+
+\noindent
+\emph{Proof.}
+%
+We prove that summation polynomial $f_{n}$ for $n\geq3$ satisfy the
+proposion by mathematical inducution.
+
+Let $n=3$, from assumption, summation polynomial $f_3(Y_1, Y_2, Y_3)$
+satisfy proposion.
+%
+\begin{align*}
+  %
+  f_{3}(Y_1, Y_2, Y_3)=a_2Y_3^2 + a_1Y_3 + a_0
+  %
+\end{align*}
+%
+
+Let $n=k$, we assume that $f_{k}(Y_1, \dots , Y_{k})$ satisfy the proposion.
+% 
+we can express the polynomial as univariate polynomial of $Y_{k}$ 
+with $2^{k-2}$ degree. 
+%
+\begin{align*}
+  %
+  f_{k}(Y_1, \dots , Y_{k}) & = 
+  b_{2^{k-2}}Y_{k}^{2^{k-2}} + b_{2^{k-2}-1}Y_{k}^{2^{k-2}-1} + 
+   \cdots + b_2Y_{k}^2 + b_1Y_{k} + b_0
+  %
+\end{align*}
+%
+In other words, we assume polynomial $b_{2k}$ consist of only even variables 
+and $b_{2k+1}$ consist of only odd variables for integer $k$.
+
+Let $n=k+1$, we will consider about $f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1})$.
+%
+From the definition of summation polynomial, we can express the polynomial
+by using above coefficient $a_i$ and $b_i$.
+%
+\begin{align*}
+  %
+  f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1}) &= 
+   Res\left(f_{k}(Y_1, \dots , Y_{k-1}, T), f_3(Y_{k}, Y_{k+1}, T)\right)\\
+  %
+   & = Res(b_{2^{k-2}}T^{2^{k-2}} + \cdots + b_1T + b_0,~ a_2T^2 + a_1T + a_0)
+  %
+\end{align*}
+%
+Similarly, we can express as univariate polynoimal of $Y_{k+1}$ 
+with $2^{k-1}$ degree.
+%
+\begin{align*}
+  f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1}) =
+  c_{2^{k-1}}Y_{k+1}^{2^{k-1}} + c_{2^{k-1}-1}Y_{k+1}^{2^{k-1}-1} + 
+   \cdots + c_2Y_{k+1}^2 + c_1Y_{k+1} + c_0
+\end{align*}
+%
+All odd terms include multiplication of coefficient $a_1$ odd times.
+%
+Because degree of all summation polynomial are even, 
+we can consider Lemma 1 in this case.
+%
+Hence, coefficients of all odd terms $c_{2k+1}$ include 
+multiplication of coefficient $b_{2k+1}$ odd times.
+%
+From the assumption, $b_{2k+1}$ consist of only odd variables.
+%
+Therefore, all variables in all odd terms are odd variables.
+%
+Similarly, we can prove proposion in the case of even terms.
+%
+\qed \\
+
+
+\begin{description}
+  \item [theorem 1]~\\
+  %
+  Let us think about point decomposition of $m$ point 
+  by using summation polynomial with $m+1$ variables, 
+  $f_{m+1}(Y_0, \dots, Y_m, Y)$.
+  %
+  $Y$ is associated with point to decompose 
+  and will be substituted by some constant.
+
+  Suppose 3rd summation polynomial consists of only well-regulated terms.
+  %
+  When $m$ is even number,
+  polynomial after substituting consist of only even monomials.
+
+  When $m$ is odd number,
+  polynomial after substituting includes some odd monomials.
+  %
+\end{description}
+
+\noindent
+\emph{Proof.}
+%
+Because max degree of each variables of 
+$f_{m+1}(Y_0, \dots, Y_m, Y)$ are $2^{m-1}$,
+it can be written as univariate polynoimal of $Y$.
+%
+\begin{align*}
+  a_{2^{m-1}}Y^{2^{m-1}} + a_{2^{m-1}-1}Y^{2^{m-1}-1} + 
+  \cdots + a_2Y^2 + a_1Y + a_0
+\end{align*}
+%
+The coefficients $c_i$ are a polynomial 
+with $m$ variables ($Y_0, \dots, Y_m$).
+%
+After substituting of $Y$, summation polynomial is composed of $c_i$.
+%
+Let $k$ be integers. 
+From Lemma 2, all monomials in $a_{2k+1}$ consist of odd degree variables.
+%
+If $m$ is even number, there are all even monomials in $a_{2k+1}$
+because even times summation of odd numbers are even.
+%
+Similarly, if $m$ is odd number, all monomials in $a_{2k+1}$ are odd monomials.
+\qed \\
+
+\begin{description}
+  \item [Corollary 1]~\\
+    As you see above of this section, 
+    in twisted Edwards curve, 3rd summation polynomial consists of
+    only well-regulated terms.
+    %
+    Therefore, twisted Edwards curve is the case of Theorem 1.
+\end{description}
+
+
+

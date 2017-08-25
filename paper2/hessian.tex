@@ -2,10 +2,9 @@
 % Hessian curves
 %
 
-\section{Hessian and other curves}
+\section{Hessian curve}
 \label{sec:hessian}
 
-\subsection{Hessian curves}
 %
 A Hessian curve $H_d$ over \F{p^n} for $p^n=2\bmod 3$ is defined by
 the equation \begin{equation}
@@ -29,6 +28,7 @@ $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
     y_3 & = \frac{x_1(y_1^3 - 1)}{x_1^3 - y_1^3}
   \end{align*}
 \end{itemize}
+
 
 \subsection{Summation polynomials for Hessian curves}
 
@@ -101,44 +101,3 @@ Obviously, the factor base is not invariant under the action of this
 Therefore, it is not clearly how to exploit such symmetry for Hessian
 curves.
 
-\subsection{(Twisted) Edwards and Weierstrass curves}
-
-Faug\`ere, Gaudry, Hout, and Renault studied the point decomposition
-problem on twisted Edwards, twisted Jacobi intersections, and
-Weierstrass curves~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}.
-%
-For the sake of completeness, we include some basic facts about
-(twisted) Edwards curves here.
-%
-%
-An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
-equation \begin{equation*}
-  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for some
-$d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
-%
-A twisted Edwards curve $tE_{a',d'}$ over \F{p^n} for $p\neq 2$ is
-defined by the equation \begin{equation}
-  a'x^2+y^2=1+d'x^2y^2 \label{eq:twisted-edwards-curve} \end{equation}
-for some $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
-%
-A twisted Edwards curve is a quadratic twist of an Edwards curve by
-$a_0=1/(a'-d')$.
-%
-For $P=(x,y)\in H_d$, $-P=(-x,y)$.
-%
-Furthermore, the addition and doubling formulae for
-$(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
-%
-\begin{itemize}
-\item When $(x_1,y_1)\neq(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = \frac{x_1y_2 + y_1x_2}{1 + d'x_1x_2y_1y_2} \\
-    y_3 & = \frac{y_1y_2 - a'x_1x_2}{1 - d'x_1x_2y_1y_2}
-  \end{align*}
-\item When $(x_1,y_1)=(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = \frac{2x_1y_1}{1 + d'x_1^2y_1^2} \\
-    y_3 & = \frac{y_1^2 - a'x_1^2}{1 - d'x_1^2y_1^2}
-  \end{align*}
-\end{itemize}
- 
