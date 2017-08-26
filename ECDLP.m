@@ -21,7 +21,7 @@ h  := -1;         print "h =",h;
 l  := 1;          print "l =",l;
 m  := 3;          print "m =",m;
 n  := 5;          print "n =",n;
-q  := 241;        print "q =",q;
+q  := 2^31;       print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := false;      print "IX =",IX;
 Al := "Groebner"; print "Al =",Al;
@@ -51,9 +51,9 @@ isokK := hom<k->kK|W>;
 isoKk := hom<kK->k|w>;
 
 Check := function(E)
-  order := Order(E(k));
-  cofactor := Integers()!(order/fs[#fs][1]) where fs is Factorization(order);
-  return cofactor le 200 and IsDivisibleBy(cofactor,12),cofactor;
+  fs := FactoredOrder(E(k));
+  cofactor := #fs eq 1 select 1 else &*[f[1]^f[2] : f in fs[1..(#fs - 1)]];
+  return fs[#fs][2] eq 1 and cofactor le 200 and IsDivisibleBy(cofactor,1),cofactor;
 end function;
 
 // Various structures for performing Weil restriction
@@ -105,12 +105,12 @@ end function;
 
 Curves := [];
 
-// load "OakleyEC2N3.m";
+load "OakleyEC2N3.m";
 
-// load "bEdwards.m";
+load "bEdwards.m";
 // load "gHessian.m";
 // load "Hessian.m";
-load "JacobiQuartic.m";
+// load "JacobiQuartic.m";
 // load "Montgomery.m";
 // load "Edwards.m";
 // load "tEdwards.m";
