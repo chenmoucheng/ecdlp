@@ -8,10 +8,11 @@ assert IsEmpty(Curves);
 assert q^n eq 2^155;
 k_ := ExtensionField<GF(2),X|X^155 + X^62 + 1>;
 isok_ := hom<k_->k|Roots(R.1^155 + R.1^62 + 1)[1][1]> where R is PolynomialRing(k);
-E["curve"] := EllipticCurve([1,A,0,0,B])
+E_ := EllipticCurve([1,A,0,0,B])
   where A is 0
   where B is isok_(k_.1^18 + k_.1^17 + k_.1^16 + k_.1^13 + k_.1^12 + k_.1^9 + k_.1^8 + k_.1^7 + k_.1^3 + k_.1^2 + k_.1 + 1);
-E["P"] := 4*E["curve"]![isok_(k_.1^6 + k_.1^5 + k_.1^4 + k_.1^3 + k_.1 + 1),isok_(k_.1^8 + k_.1^7 + k_.1^6 + k_.1^3)];
+E["curve"],phi_,psi_ := SimplifiedModel(E_);
+E["P"] := 4*phi_(E_![isok_(k_.1^6 + k_.1^5 + k_.1^4 + k_.1^3 + k_.1 + 1),isok_(k_.1^8 + k_.1^7 + k_.1^6 + k_.1^3)]);
 E["order"] := Order(E["P"]);
 E["curve"]; Coefficients(E["curve"]);
 print "jInvariant:",jInvariant(E["curve"]);
@@ -21,14 +22,15 @@ print "Base point:",E["P"]; print "Order:",E["order"]; assert IsPrime(E["order"]
 
 E["FBtoV"] := function(Q)
   assert Q ne E["curve"]!0;
-  return Q[1]/Q[3];
+  P := psi_(Q);
+  return P[1]/P[3];
 end function;
 
 E["VtoFB"] := function(t)
   Z := Roots(Evaluate(f,[t,R.1,1]))
-    where f is DefiningPolynomial(E["curve"])
+    where f is DefiningPolynomial(E_)
     where R is PolynomialRing(k);
-  return [E["curve"]![t,z[1]] : z in Z];
+  return [phi_(E_![t,z[1]]) : z in Z];
 end function;
 
 E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Iauxiliary"]);
@@ -41,7 +43,7 @@ E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i 
  */
 
 E["f3"] := function(x0,x1,x2)
-  a1,a2,a3,a4,a6 := Explode(Coefficients(E["curve"]));
+  a1,a2,a3,a4,a6 := Explode(Coefficients(E_));
 
   b2 := a1^2 + 4*a2;
   b4 := a1*a3 + 2*a4;
