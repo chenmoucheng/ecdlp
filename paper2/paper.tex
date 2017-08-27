@@ -35,8 +35,8 @@
 \begin{abstract}
 %
   The security of elliptic curve cryptography is closely related to
-  the complexity of solving the elliptic curve discrete logarithm
-  problem (ECDLP).
+  the computational complexity of solving the elliptic curve discrete
+  logarithm problem (ECDLP).
 %
   Today, the best practical attacks against ECDLP are
   exponential-time, generic discrete logarithm algorithms such as
@@ -55,29 +55,18 @@
   Hessian~\cite{DBLP:conf/ches/Smart01},
   Montgomery~\cite{1987-montgomery}, (twisted)
   Edwards~\cite{DBLP:journals/iacr/BernsteinL07,DBLP:journals/iacr/BernsteinBJLP08},
-  and Weierstrass---over optimal extension fields
-  (OEFs)~\cite{DBLP:conf/crypto/BaileyP98} using index calculus
-  algorithms.
-%
-  An OEF is an extension field from a prime field \F p with $p$ close
-  to $2^8, 2^{16}, 2^{32}, 2^{64}$, etc.
-%
-  Such primes fit nicely into the processor words of 8, 16, 32, or
-  64-bit microprocessors and hence are particularly suitable for
-  software implementation, allowing for efficient utilization of fast
-  integer arithmetics on modern
-  microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
+  and Weierstrass using index calculus algorithms.
 %
   The research question we would like to answer is: Using index
   calculus algorithm, is there any significant difference in the
   computational complexity of solving ECDLP for elliptic curves in
-  various forms over OEFs?
+  various forms?
 %
-  We will provide some empirical evidence showing an affirmative
-  answer in this paper.
+  We will provide some insights and empirical evidence showing an
+  affirmative answer in this paper.
 %
   \keywords{ECDLP, index calculus, elliptic curves cryptography,
-    optimal extension fields, security evaluation}
+    security evaluation}
 \end{abstract}
 
 \input{introduction}

@@ -3,14 +3,14 @@
 %
 
 %------------------------------
-\section{(twisted) Edwards curves}
+\subsection{(Twisted) Edwards curves}
 %------------------------------------
 \label{sec:twisted-edwards}
 
 
-Faug\`ere, Gaudry, Hout, and Renault studied the point decomposition
-problem on twisted Edwards, twisted Jacobi intersections, and
-Weierstrass curves~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}.
+Faug\`ere, Gaudry, Hout, and Renault studied PDP on twisted Edwards,
+twisted Jacobi intersections, and Weierstrass
+curves~\cite{DBLP:journals/joc/FaugereGHR14}.
 %
 For the sake of completeness, we include some basic facts about
 (twisted) Edwards curves here.
@@ -18,18 +18,18 @@ For the sake of completeness, we include some basic facts about
 %
 An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
 equation \begin{equation*}
-  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for some
+  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for
 $d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
 %
 A twisted Edwards curve $tE_{a',d'}$ over \F{p^n} for $p\neq 2$ is
 defined by the equation \begin{equation}
   a'x^2+y^2=1+d'x^2y^2 \label{eq:twisted-edwards-curve} \end{equation}
-for some $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
+for $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
 %
 A twisted Edwards curve is a quadratic twist of an Edwards curve by
 $a_0=1/(a'-d')$.
 %
-For $P=(x,y)\in H_d$, $-P=(-x,y)$.
+For $P=(x,y)\in tE_{a',d'}$, $-P=(-x,y)$.
 %
 Furthermore, the addition and doubling formulae for
 $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
@@ -46,23 +46,25 @@ $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
     y_3 & = \frac{y_1^2 - a'x_1^2}{1 - d'x_1^2y_1^2}
   \end{align*}
 \end{itemize}
-
-Summation polynomial on twisted Edwards curve is as follows.
+%
+As given by Faug\`ere, Gaudry, Hout, and
+Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the 3rd summation
+polynomial for twisted Edwards curve is
 %
 \begin{align*}
-  f_{tE, 2}(Y_1, Y_2) &= Y_2-Y_1 \\
-    %
-  f_{tE, 3}(Y_1, Y_2, Y_3) &=
-    \left( Y_1^2Y_2^2-Y_1^2-Y_2^2+\frac{a}{d} \right)Y_3^2  \\
-    &~~~~~ + 2\frac{d-a}{d}Y_1Y_2Y_3 + \frac{a}{d}\left(Y_1^2+Y_2^2-1\right)-Y_1^2Y_2^2\\
-    %
+  f_{tE, 3}(Y_1,Y_2,Y_3) = & \left(Y_1^2Y_2^2 - Y_1^2 - Y_2^2 + \frac{a}{d}\right)Y_3^2  + 2\frac{d-a}{d}Y_1Y_2Y_3 +
+                             \frac{a}{d}\left(Y_1^2 + Y_2^2 - 1\right)
+                             - Y_1^2Y_2^2.
 \end{align*}
 %
-As you have seen, summation polynomial for $m\geq4$ is 
-calculated by using resultants.
+As usual, subsequent summation polynomials can be obtained by using
+resultants.
 
 
-\subsection{Observations of summation polynomial on twisted Edwards curve}
+
+\section{Observations of summation polynomial on twisted Edwards
+  curve}
+\label{sec:twisted-edwards-summation-polynomial}
 
 We classify variables and monomials in from the viewpoint of parity. 
 %

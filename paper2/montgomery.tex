@@ -59,12 +59,13 @@ implementation.
 \subsection{Summation polynomials for Montgomery curves}
 
 Following Semaev's approach~\cite{DBLP:journals/iacr/Semaev04}, we can
-construct summation polynomials for Montgomery curves as follows.
+construct summation polynomials for Montgomery curves.
 %
 Like Weierstrass curves, the 2nd summation polynomial for Montgomery
 curves is simply $f_{M,2} = X_1 - X_2$.
 %
-Now consider $P,Q\in M_{A, B}$ where $P=(x_1, y_1)$, $Q=(x_2, y_2)$.
+Now consider $P,Q\in M_{A, B}$ where $P=(x_1, y_1)$ and
+$Q=(x_2, y_2)$.
 %
 Let $P+Q=(x_3, y_3)$ and $P-Q=(x_4, y_4)$.
 %
@@ -112,11 +113,11 @@ Therefore, the set of rational points on a Montgomery curve includes
 at least two 2-torsion points, namely, $\mathcal O$ and $(0,0)$.
 %
 The other 2-torsion points may or may not be rational, so we will
-first focus on the 2-torsion point $(0,0)$.
+focus on the 2-torsion point $(0,0)$ in this paper.
 %
 Substituting $(x_2,y_2)=(0,0)$ into the addition formula for
 Montgomery curves, we get that for any point $P=(x,y)\in M_{A,B}$,
-$P+(0,0)=(1/x,y')$ for some $y'$.
+$P+(0,0)=(1/x,-y/x^2)$.
 
 To be able to exploit the symmetry of addition of $T_2=(0,0)$, we need
 to choose the factor base
@@ -134,4 +135,8 @@ $x_i\mapsto 1/x_i$.
 %
 Unfortunately, such an action is not linear and hence not easy to
 handle in polynomial system solving process.
+%
+How to take advantage of such kind of symmetry in PDP is still an open
+problem in the research direction of solving ECDLP using index
+calculus algorithms.
 

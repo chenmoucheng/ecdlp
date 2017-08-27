@@ -5,28 +5,30 @@
 \section{Isomorphisms among curves in various forms}
 \label{sec:isomorphisms}
 
-We study elliptic curves in 4 different forms: Hessian ($H$),
-Montgomery ($M$), twisted Edwards ($tE$), and Weierstrass ($W$).
+We study elliptic curves in four different forms: Hessian ($H$),
+Weierstrass ($W$), Montgomery ($M$), and twisted Edwards ($tE$).
 %
 In order to make an apple-to-apple comparison, we will experiment on
 curves that are isomorphic to one another over \F{p^n}.
 %
-That is, $H(\F{p^n})\cong M(\F{p^n})\cong tE(\F{p^n})\cong W(\F{p^n})$
+That is, $H(\F{p^n})\cong W(\F{p^n})\cong M(\F{p^n})\cong tE(\F{p^n})$
 as groups.
 %
 In this section, we present the isomorphisms that we will use in our
-experiments, as well as describe whether the factor base will be
-invariant under the action of 2-torsion points for each of the 4 forms
-under investgation.
+experiments.
+%
+We will also state whether the factor base will be invariant under the
+action of addition of 2-torsion points for each of the four forms
+under investigation.
 
 We start from a Hessian curve $H_d$ satisfying $x^3 + y^3 + 1 = 3dxy$
-for some $d\in\F{p^n}$ such that the number of its rational points
+for $d\in\F{p^n}$ such that the number of its rational points
 $\#H_d(\F{p^n})$ is divisible by 12.
 %
 As we have seen in Section~\ref{sec:hessian}, the factor base of $H_d$
 is in general not invariant under the addition of 2-torsion points.
 %
- From $H_d$, we can obtain an isomorphic Weierstrass curve $W_{a,b}$
+From $H_d$, we can obtain an isomorphic Weierstrass curve $W_{a,b}$
 satisfying $y^2 = x^3 + ax + b$ for $a = - 27d(d^3 + 8)$ and
 $b = 54(d^6 - 20d^3 - 8)$~\cite{DBLP:conf/ches/Smart01}.
 %
@@ -45,10 +47,10 @@ v = & \frac{36(d^3 - 1)(y - x)}{d + x + y}.
 \end{aligned}\right. \]
 %
 The factor base of $W_{a,b}$ is in general not invariant under the
-addition of 2-torsion points~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}.
+addition of 2-torsion points~\cite{DBLP:journals/joc/FaugereGHR14}.
 
-From $W_{a,b}$, we can obtain with a high probability a Montgomery
-curve $M_{A,B}$ satisfying $By^2 = x^3 + Ax^2 + x$ by solving the
+With a high probability, we can obtain a Montgomery curve $M_{A,B}$
+satisfying $By^2 = x^3 + Ax^2 + x$ from $W_{a,b}$ by solving the
 following equations
 %
 \[ \left\{\begin{aligned}
@@ -89,5 +91,5 @@ v = & \frac{2a_0^2(1 + y)}{x(1 - y)}.
 \end{aligned}\right. \]
 %
 As shown by Faug\`ere, Gaudry, Hout, and
-Renault~\cite{DBLP:conf/eurocrypt/FaugereHJRV14}, the factor base is
+Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the factor base is
 invariant under the addition of the 2-torsion point $(0,-1)$.

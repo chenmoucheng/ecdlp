@@ -1,84 +1,113 @@
-\section{Experimental results}
-\label{sec:experiment}
+\section{Experiment set-up}
+\label{sec:experiment-setup}
 
 We have conducted a set of experiments to compare the difficulty of
-solving ECDLP for four different curves (Hessian, Montgomery, twisted
-Edwards, and Weierstrass) over \F{q^n}.
+solving ECDLP for four different curves (Hessian, Weierstrass,
+Montgomery, and twisted Edwards) over \F{p^n}.
 %
 To make an apple-to-apple comparison, we use curves in different forms
-but are nonetheless isomorphic to one another, as explained in
-Section~\ref{sec:isomorphisms}.
+but are nonetheless isomorphic to one another over \F{p^n}, as
+explained in Section~\ref{sec:isomorphisms}.
 %
 In other words, the curves in different forms have the same
 j-invariant, and we consider the ECDLP in the same (largest)
 prime-order subgroup in each of the experiments.
 
-In these experiment, we focus on the cost of F4 algorithm for solving
-polynomial system, which is the bottleneck computation in finding
-relations of point decomposition.
+As explained in Section~\ref{sec:index-calculus-ecdlp}, we focus on
+the PDP computation in these experiments, as the other bottleneck
+computation, the linear algebra step is already well understood.
 %
-More precisely, we consider the polynomial systems obtained after
-rewriting using the elementary symmetric polynomials and applying the
-Weil restriction technique to summation polynomials, as described in
-Section~\ref{sec:weil-restriction}.
+We focus on the bottleneck computation in PDP, namely, the cost of the
+F4 algorithm for computing Gr\"obner bases for polynomial systems
+obtained after rewriting using the elementary symmetric polynomials
+and applying the Weil restriction technique to summation polynomials.
 %
-All our experiment are done using the MAGMA computation algebra
-system, version 2.23-1, on a single core of an Intel Xeon CPU E7-4830
-v4 running at 2~GHz.
+This way we will be taking advantage of the symmetry of $S_m$ acting
+on point decompositions.
+% 
+However, we \emph{did not} exploit the symmetry of group actions on
+point decomposition except the action of $S_m$.
+%
+This is because we want to compare the \emph{intrinsic} computational
+complexity of solving PDP for various curves and hence can only
+consider the symmetry that is present in \emph{all} curves.
+%
+Exploiting further curve-specific symmetry whenever possible will
+result in further speed-up, but it would be independent of our
+findings here.
 
+All our experiment are done using the MAGMA computation algebra system
+(version 2.23-1) on a single core of an Intel Xeon CPU E7-4830 v4
+running at 2~GHz.
+%
 The main cost metrics are running time, Matcost, and the maximum step
 degree reached during the execution of the F4 algorithm.
 %
-This is usually referred to as the ``degree of regularity'' in the
-literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, which provides an
-upper bound for the size of Macaulay matrices during the execution of
-the F4 algorithm.
+The last metric is usually referred to as the ``degree of regularity''
+in the literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, which
+provides an upper bound for the size of the Macaulay submatrices
+involved in the process.
 %
-Here ``Matcost'' is output by the MAGMA implementation of the F4
-algorithm, which is supposed to represent the cost of linear algebra
-in the algorithm.
+The ``Matcost'' is a number output by the MAGMA implementation of the
+F4 algorithm and provides an estimate of the linear algebra cost
+during the execution of the F4 algorithm.
 
-We also compare four curves in a point of "Rank", 
-which represents how many linearly independent relations we can get 
-through solving polynomial system once.
+Lastly, we report ``rank,'' or the number of linearly independent
+relations we can get once successfully solving a PDP instance for each
+of the four curves.
 %
-This is important factor because we need $\#\mathcal F$ linearly
-independent rerations overall of index calculus attack
-and if we can get many relations from one polynomial system, 
-number of computing bottleneck computation phase are decreased.
+We note that the action of $S_m$ will not contribute to rank, as
+permutations of a point decomposition do not give any new relations.
 %
-In general, summation polynomial has completeness in the sense that
-it gives us all set of solutions corresponding point in factor base
-whose summation is point at infinity.
+As previewed in Section~\ref{sec:symmetry-decomposition-probability},
+we would expect that the effect of the decrease in decomposition
+probability due to additional symmetry in a factor base $\mathcal F$
+can be offset by that of the increase in number of solutions.
 %
-Hence, there are $m!\dot2^(m-1)$ solutions generated from 
-one set of solutions as most. 
-%
-Factor $m!$ comes from permutation of each solution, and
-factor $2^(m-1)$ is related with 2-torsion point as you see 
-in section~\cite{sec:exploit-symmetry}.
-%
-The factor base is always invariant under permutation,
-so there are always factor $m!$, but it is not related from Rank
-because all relations generated by 
-these solutions are linearly dependent.
-%
-Therefore, the Rank should depends on whether if factor base is 
-invarinant under the addition of 2-torsion or not.
+Again using the example of group action of adding $T_2$ in
+Section~\ref{sec:exploit-symmetry}, if we could get $2^{n-1}$
+solutions, then the loss of the factor of $2^{n-1}$ in decomposition
+probability would be compensated, and everything would be the same as
+if there were no such symmetry.
 
-
-We first present the results for the case of $n=5$.
+Unfortunately, this proposition is \emph{false} in general.
 %
-Here our factor base is taken such that $V$ is the base field \F q of
-\F{q^n}.
+Consider an example of $n=4$.
+%
+Let $Q_i=P_i+ T_2$ for $i=1,2,3,4$.
+%
+We can write down all $2^{n-1}=8$ possible ways of point decomposition
+under this group action:
+%
+\[ \begin{aligned}
+P_1 + P_2 + P_3 + P_4 = & Q_1 + Q_2 + P_3 + P_4 \\
+= Q_1 + P_2 + Q_3 + P_4 = & Q_1 + P_2 + P_3 + Q_4 \\
+= P_1 + Q_2 + Q_3 + P_4 = & P_1 + Q_2 + P_3 + Q_4 \\
+= P_1 + P_2 + Q_3 + Q_4 = & Q_1 + Q_2 + Q_3 + Q_4.
+\end{aligned} \]
+%
+It is easy to find that we have only 5 linearly independent relations
+from these 8 relations, as there are nontrivial linear combinations
+summing to zero, e.g.:
+\[ (P_1 + P_2 + P_3 + P_4) - (Q_1 + Q_2 + P_3 + P_4) - (P_1 + P_2 +
+  Q_3 + Q_4) + (Q_1 + Q_2 + Q_3 + Q_4) = \mathcal O.\]
+
+\section{Experimental results and concluding remarks}
+\label{sec:experiment-result}
+
+We present the results for the case of $n=5$.
+%
+Here our factor base is taken such that $V$ is the base field \F p of
+\F{p^n}.
 %
 \input{result1}
 
 We can clearly see that the solving time for twisted Edwards curve is
 much faster than the other three curves for different $q$ and $m$.
 %
-We suspect that this is due to the difference in the sparsity of the
-resulted polynomial systems.
+As explained in
+Section~\ref{sec:twisted-edwards-summation-polynomial}, this is due to
+the difference in the sparsity of the resulted polynomial systems.
 %
 Table~\ref{tb:terms} shows how the sparsity before and after Weil
 restriction for each curves in the case of $m=2,3,4$.
