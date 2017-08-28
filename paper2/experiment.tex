@@ -1,5 +1,5 @@
-\section{Experiment set-up}
-\label{sec:experiment-setup}
+\section{Experimental results and concluding remarks}
+\label{sec:experiment}
 
 We have conducted a set of experiments to compare the difficulty of
 solving ECDLP for four different curves (Hessian, Weierstrass,
@@ -7,7 +7,7 @@ Montgomery, and twisted Edwards) over \F{p^n}.
 %
 To make an apple-to-apple comparison, we use curves in different forms
 but are nonetheless isomorphic to one another over \F{p^n}, as
-explained in Section~\ref{sec:isomorphisms}.
+explained in Section~\ref{sec:isomorphism}.
 %
 In other words, the curves in different forms have the same
 j-invariant, and we consider the ECDLP in the same (largest)
@@ -92,28 +92,26 @@ summing to zero, e.g.:
 \[ (P_1 + P_2 + P_3 + P_4) - (Q_1 + Q_2 + P_3 + P_4) - (P_1 + P_2 +
   Q_3 + Q_4) + (Q_1 + Q_2 + Q_3 + Q_4) = \mathcal O.\]
 
-\section{Experimental results and concluding remarks}
-\label{sec:experiment-result}
-
-We present the results for the case of $n=5$.
+We present our experimental results for the case of $n=5$.
 %
-Here our factor base is taken such that $V$ is the base field \F p of
-\F{p^n}.
+Here our factor base is to take $V$ as the base field \F p of \F{p^n}.
 %
 \input{result1}
 
-We can clearly see that the solving time for twisted Edwards curve is
-much faster than the other three curves for different $q$ and $m$.
+We can clearly see that the PDP solving time for twisted Edwards curve
+is much faster than the other three curves for different $q$ and $m$.
 %
 As explained in
 Section~\ref{sec:twisted-edwards-summation-polynomial}, this is due to
 the difference in the sparsity of the resulted polynomial systems.
 %
-Table~\ref{tb:terms} shows how the sparsity before and after Weil
+Table~\ref{tb:terms} shows the sparsity before and after Weil
 restriction for each curves in the case of $m=2,3,4$.
 %
-There are $n$ equations after Weil restriction, so those numbers are
-the average.
+\input{result2}
+%
+As there are $n$ equations after Weil restriction, we are only showing
+the average.  the average.
 %
 We also include the maximum number of terms for a polynomial of degree
 $2^{(m+1)-2}$ in $m$ variables.
@@ -124,58 +122,54 @@ significantly fewer than the other three curves in all cases.
 Naturally, this could lead to smaller matrices and hence faster
 solving time with the F4 algorithm.
 
-\input{result2}
+% We further analyze which terms are missing from the summation
+% polynomials for curves in different forms.
+% %
+% We classify terms into odd vs.~even degrees.
+% %
+% Recall that the polynomials are expressed using elementary symmetric polynomials 
+% $e_1, \dots ,e_m$.
+% %
+% Therefore, a monomial $e_i^j$ has odd degree only if both $i$ and $j$
+% are odd.
+% %
+% For $m=2$, it is interesting that there are no monomials of odd degree
+% only for twisted Edwards curve.
+% %
+% In other words, there are no terms originated from monomial such as
+% $e_1$ or $e_1e_2$.
+% %
+% This is because the addition formula for twisted Edwards curve, based
+% on which the summation polynomial is derived, consists of only even
+% terms.
+% %
+% Therefore, when one of the 3 variables in the summation polynomial is
+% substituted with the point we want to decompose, the odd-degree terms
+% all vanish.
 
-We further analyze which terms are missing from the summation
-polynomials for curves in different forms.
-%
-We classify terms into odd vs.~even degrees.
-%
-Recall that the polynomials are expressed using elementary symmetric polynomials 
-$e_1, \dots ,e_m$.
-%
-Therefore, a monomial $e_i^j$ has odd degree only if both $i$ and $j$
-are odd.
-%
-For $m=2$, it is interesting that there are no monomials of odd degree
-only for twisted Edwards curve.
-%
-In other words, there are no terms originated from monomial such as
-$e_1$ or $e_1e_2$.
-%
-This is because the addition formula for twisted Edwards curve, based
-on which the summation polynomial is derived, consists of only even
-terms.
-%
-Therefore, when one of the 3 variables in the summation polynomial is
-substituted with the point we want to decompose, the odd-degree terms
-all vanish.
+% For $m=3$, we use summation polynomial with 4 variables, which is
+% obtained by taking the resultant of two summation polynomials 
+% with 3 variables.
+% %
+% Therefore, there are some odd terms such as $e_3$ or $e_2^2e_3$.
+% %
+% For $m=4$, there is also no terms with odd degree.
+% %
+% Through calculating resultant recursively, two variables are
+% eliminated, and it preserves all terms to even degree.
 
-For $m=3$, we use summation polynomial with 4 variables, which is
-obtained by taking the resultant of two summation polynomials 
-with 3 variables.
+Last but not least, we report rank information in each of the four
+curves under invesigation.
 %
-Therefore, there are some odd terms such as $e_3$ or $e_2^2e_3$.
+As explained in Section~\ref{sec:isomorphism}, the factor bases for
+Montgomery and twisted Edwards curves are invariant under addition of
+2-torsion point.
 %
-For $m=4$, there is also no terms with odd degree.
+For $m=3$, we achieve maximum rank of $2^{m-1}=4$.
 %
-Through calculating resultant recursively, two variables are
-eliminated, and it preserves all terms to even degree.
-
-Finally, we focus on the Rank.
-%
-As we see section~\cite{sec:isomorphisms}, factor base on
-Montgomery and twisted Edwards curve is invariant under addition
-of 2-torsion point.
-%
-When $m=3$, the Rank is the case $4 = 2^{m-1}$,
-however the case of $m=4$, the Rank is $5 \neq 8 = 2^{m-1}$.
-%
-This is because dimention of kernel of matrix consist of 8 
-columns which correspond four points and four points added 
-2-torsion point and has 8 rows which corerspond all combinations
-of points we can choose from four point in practice is three.
-%
+For $m=4$, as we have explained earlier in this section, we can only
+have rank $5$, which is strictly less than the maximum possible rank
+$2^{m-1}=8$.
 
 
 

@@ -40,7 +40,7 @@ the rest of this paper.
 
 \subsection{Semaev's summation polynomials}
 %
-\label{sec:summation-polynomials}
+\label{sec:summation-polynomial}
 %
 We can solve PDP by considering when a set of points sum to zero on
 the elliptic curve.
@@ -81,7 +81,11 @@ signs, and $f_3$ is the 3rd \emph{summation polynomial}, that is, the
 summation polynomial for three distinct points summing to zero.
 
 Starting from the 3rd summation polynomial, one can recursively obtain
-the subsequent summation polynomials via taking resultants.
+the subsequent summation polynomials $f_m$ for $m>3$ via taking
+resultants.
+%
+As a result, the degree of each variable in the $m$-th summation
+polynomial grows exponentially as $m$, i.e., $2^{m-2}$.
 %
 This is the observation Semaev made in his seminal
 work~\cite{DBLP:journals/iacr/Semaev04}.
@@ -91,7 +95,13 @@ form:
 \[ \mathcal F=\Big\{(x,y)\in E(\F{p^n}):x\in
   V\subset\F{p^n})\Big\}, \] where $V$ is a subset of \F{p^n}.
 %
-Note that this factor base is invariant under negation.
+Let PDP of $m$-th order be the problem of decomposing a point
+$(x,y)\in E(\F{p^n})$ into $m$ points from a factor base.
+%
+Then one way to solve it is via solving the corresponding $(m+1)$-th
+summation polynomial $f_{m+1}(X_1,\ldots,X_m,x)=0$.
+
+Note that this factor base is naturally invariant under negation.
 %
 That is, $P_i\in\mathcal F$ implies $-P_i\in\mathcal F$.
 %
@@ -208,7 +218,7 @@ However, such a simple fact seems to have been largely ignored in the
 literature.
 %
 For example, Faug\`ere, Gaudry, Hout, and Renault explicitly stated in
-Section 5.3 of their paper that ``[the] probability to decompose a
+Section~5.3 of their paper that ``[the] probability to decompose a
 point [into a sum of $n$ points from the factor base] is
 $\frac{1}{n!}$'' for twisted Edwards or twisted Jacobi intersections
 curves, despite the fact that the factor base is invariant under
@@ -219,7 +229,7 @@ obtain $2^{n-1}$ solutions if we can successfully solve a PDP
 instance.
 %
 (Unfortunately this is also \emph{not true} in general.  We will come
-back to it in more detail in Section~\ref{sec:experiment-setup}.)
+back to it in more detail in Section~\ref{sec:experiment}.)
 % 
 However, when estimating the cost of a complete ECDLP attack, they
 also proposed to \emph{collapse} these $2^{n-1}$ relations into one in

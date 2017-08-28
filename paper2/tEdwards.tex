@@ -62,225 +62,288 @@ resultants.
 
 
 
-\section{Observations of summation polynomial on twisted Edwards
-  curve}
+\section{What summation polynomials are easier to solve?}
 \label{sec:twisted-edwards-summation-polynomial}
 
-We classify variables and monomials in from the viewpoint of parity. 
+In this section, we present the main result of this paper, namely,
+some insights into what kind of summation polynomials are easier to
+solve.
 %
-We refer to variable whose exponent is even number and odd number 
-as respectively \emph{even variable} and \emph{odd variable}
+For example, the summation polynomials for (twisted) Edwards form of
+elliptic curves seem easier to solve compared with those for
+Weierstrass or Montgomery forms.
 %
-Similarly, we refer to monomial whose degree is even number and odd number 
-as respectively \emph{even monomial} and \emph{odd monoimal}
+The explanation offered by Faug\`ere, Gaudry, Hout, and Renault is
+``due to the smaller degree appearing in the computation of Gr\"obner
+basis of $\mathscr S_{D_n}$ in comparison with the Weierstrass case,''
+cf.~Section~4.1.1 of their
+paper~\cite{DBLP:journals/joc/FaugereGHR14}.
+%
+Unfortunately, as will be detailed in Section~\ref{sec:experiment},
+this \emph{cannot} explain the difference in solving time between
+(twisted) Edwards and Montgomery forms, as the highest degrees
+appearing in the computation of Gr\"obner bases are \emph{the same}
+for these two forms.
 
+We offer a simpler explanation to this difference by counting the
+number of terms in the summation polynomials for curves in different
+forms.
+%
+We will show that the summation polynomials for (twisted) Edwards form
+of elliptic curves \emph{mainly} have terms of \emph{even} powers.
+%
+The set of terms of even powers are closed under multiplication, so
+intuitively polynomials mainly consisting of even-power terms also
+``generate'' such kind of polynomials after taking resultants.
+%
+We believe that this kind of summation polynomials are easier to
+solve, which is main reason for the efficiency gain observed in the
+case of (twisted) Edwards curves.
 
-\begin{description}
-  \item [Lemma 1]~\\
+We shall make such intuition precise in Theorem~\ref{th:main}, but
+before we state the main result, we need to define some terminology
+for ease of exposition.
+%
+When a multivariate polynomial is regarded as a univariate polynomial
+in one of its variables $T$, we say that the coefficient $a_i$ of a
+term $a_iT^i$ is \emph{of even power} or simply an \emph{even-power
+  coefficient} if $i$ is even; that it is \emph{of odd power} or
+simply an \emph{odd-power coefficient} otherwise.
+%
+Note that these coefficients are themselves multivariate polynomials
+in one fewer variables.
+%
+Also, we take 0 as an even number.
+
+Similarly, we say that a monomial $m=\prod_i^n x_i^{e_i},e_i\geq 0$ in
+a multivariate polynomial in $n$ variables is \emph{of even power} or
+simply an \emph{even-power monomial} if $\sum_i e_i$ is even; that it
+is \emph{of odd power} or simply an \emph{odd-power monomial}
+otherwise.
+%
+In contrast, a monomial is \emph{of homogeneous even parity} if all
+$e_i$ are even; it is \emph{of homogeneous odd parity} if all $e_i$
+are odd.
+%
+A monomial is \emph{of homogeneous parity} if it is either of
+homogeneous even parity or of homogeneous odd parity.
+%
+Note that the definition of monomials of homogeneous odd parity
+depends on the number of variables in the polynomial, which is not the
+case for monomials of homogeneous even parity, as 0 is even in our
+definition.
+%
+For example, the monomial $x_1x_2$ is a monomial of homogeneous odd
+parity in a polynomial in $x_1$ and $x_2$ but not so in another
+polynomial in $x_1,\ldots,x_n$ for $n>2$.
+%
+\begin{theorem}
+  % 
+  \label{th:main}
+  % 
+  Let $\mathcal E$ be a family of elliptic curves such that its 3rd
+  summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
+  in each variable $X_i$ and consists only of monomials of homogeneous
+  parity.
+  % 
+  Let $g_{m,\mathcal E}$ be the polynomial corresponding to the PDP of
+  $m$-th order for $\mathcal E$ as described in
+  Section~\ref{sec:summation-polynomial}.
+  % 
+  That is,
+  $g_{m,\mathcal E}(X_1,\ldots,X_m)=f_{m+1,\mathcal
+    E}(X_1,\ldots,X_m,x)$, where $x$ is a constant depending on the
+  point to be decomposed.
+  % 
+  \begin{enumerate}
+    % 
+  \item If $m$ is even, then $g_{m,\mathcal E}$ has no monomials of
+    odd power.
+    % 
+  \item If $m$ is odd, then $g_{m,\mathcal E}$ has some but not all
+    monomials of odd power.
+    % 
+  \end{enumerate}
+  % 
+\end{theorem}
+%
+Among the four forms of elliptic curves presented in the last two
+sections, only the (twisted) Edwards form satisfies the premises of
+Theorem~\ref{th:main}.
+%
+As we will see in Section~\ref{sec:experiment}, the solving time for
+the summation polynomials of (twisted) Edwards form is thus
+significantly faster than that of the other forms.
+
+We will prove Theorem~\ref{th:main} in the rest of this section, for
+which we will need the following lemmas.
+%
+\begin{lemma}
+  % 
+  \label{th:resultant}
+  % 
+  Let $f_1(T_1,\ldots,T_r,T)=a_0 + a_1T + \cdots + a_mT^m$ and
+  $f_2(T_1,\ldots,T_r,T)=b_0 + b_1T + \cdots + b_nT^n$ be two
+  polynomials in $r+1$ variables, where $a_i$ and $b_i$ are
+  polynomials in $T_1,\ldots,T_r$.
+  % 
+  Let $f(T_1,\ldots,T_r)=\res_T(f_1,f_2)$ be the resultant of $f_1$
+  and $f_2$ regarded as two univariate polynomials in $T$.
+  % 
+  If both $m$ and $n$ are even, then every term of $f$ is a product of
+  an even number or none of the odd-power coefficients of $f_1$ and
+  $f_2$, some or none of the even-power coefficients of $f_1$ and
+  $f_2$, and $\pm 1$.
+  % 
+  Specifically, the odd-power coefficients $a_{2k+1}$ and $b_{2k+1}$
+  of $f_1$ and $f_2$, respectively, appear in total an even number of
+  times in each term of $f$.
+  % 
+\end{lemma}
+%
+\begin{proof}
+  % 
+  The resultant $\res_T(f_1,f_2)$ of $f_1$ and $f_2$ is the
+  determinant of the following $(m+n)\times(m+n)$ matrix $S$:
+  % 
+  \begin{equation*}
+    S = \begin{bmatrix}
+      a_m & a_{m-1} & \ldots & & a_0 & & &  \\
+      & a_m & a_{m-1} & \ldots & & a_0  & &  \\
+      & & \ddots & & & & \ddots &  \\
+      & & & a_m & a_{m-1} & \ldots & & a_0  \\
+      b_n & b_{n-1} & \ldots & & b_0 & & &  \\
+      & b_n & b_{n-1} & \ldots & & b_0  & &  \\
+      & & \ddots & & & & \ddots &  \\
+      & & & b_n & b_{n-1} & \ldots & & b_0
+    \end{bmatrix}.
+  \end{equation*}
+  % 
+  We denote as $s_{ij}$ the entry at the $i$-th row and $j$-th column
+  of $S$ for $1\leq i,j\leq m+n$.
+  % 
+  Since both $m$ and $n$ are even, an even-power coefficient $a_{2k}$
+  or $b_{2k}$ will appear in $s_{ij}$ for which the sum of indices
+  $i+j$ is even.
+  % 
+  Similarly, an odd-power coefficient $a_{2k+1}$ or $b_{2k+1}$ will
+  appear in $s_{ij}$ for which the sum of indices $i+j$ is odd.
+  % 
+  Now recall that the determinant of $S$ is defined as
+  \[ \sum_{\sigma\in S_{n+m}}\sgn(\sigma)s_{1,\sigma(1)}\cdot
+    s_{2,\sigma(2)}\cdots s_{m+n,\sigma(m+n)}. \]
+  % 
+  We note that the sum of the indices of the factors is
+  \[ \sum_i^{m+n}i+\sigma(i)=(m+n)(m+n+1), \] which is always even.
+  % 
+  Therefore, the odd-power coefficients must appear an even number of
+  times, thus completing the proof.
+  % 
+  \qed
+  % 
+\end{proof}
+%
+\begin{lemma}
+  % 
+  \label{th:summation-polynomial}
   %
-  Considering resultant of two multivariate polynomial $a_1$ and $a_2$,
-  you will consider the polynomials as univariate polynomial of the variable
-  to eliminate $T$, such as $f_1 = a_mT^m + \dots +a_1T^1 + a_0$ 
-  and $f_2 = b_nT^n + \dots +b_1T^1 + b_0$.
-  %
-  If degree of both of $m$ and $n$ is even, 
-  then coefficients of odd monomial, $a_{2k+1}$ and $b_{2k+1}$ for integer $k$,
-  is contained even number times in the term of resultant.
-  %
-\end{description}
-
-\noindent
-\emph{Proof.}
-%
-Resultant of $a_1$ and $a_2$ is 
-determinant of following square matrix X of size $m+n$.
-%
-\begin{equation*}
-X =
-\begin{bmatrix}
-  a_m & a_{m-1} & \ldots & & a_0 & & &  \\
-          & a_m & a_{m-1} & \ldots & & a_0  & &  \\
-  & & \ddots & & & & \ddots &  \\
-    & & & a_m & a_{m-1} & \ldots & & a_0  \\
-  b_n & b_{n-1} & \ldots & & b_0 & & &  \\
-       & b_n & b_{n-1} & \ldots & & b_0  & &  \\
-  & & \ddots & & & & \ddots &  \\
-    & & & b_n & b_{n-1} & \ldots & & b_0
-\end{bmatrix}
-\end{equation*}
-
-Let components in the $i$-th row and $j$-th column in the matrix $X$ 
-be represented to $x_{ij}$. 
-%
-From assumption, $a_m$ and $b_n$ is the coefficients of even monomial
-and the number of row which include $a_i$ and $b_i$ is both even.
-%
-Consequently, coefficients of odd monomials, $a_{2k+1}$ and $b_{2k+1}$ 
-for integer $k$, correspond components whose sum of index (i+j) is odd.
-%
-Also, coefficients of even monomials, $a_{2k}$ and $b_{2k}$ for 
-integer $k$, correspond components whose sum of index is even.
-
-Here, determinant of $X$ is defined as
-%
-\begin{align*}
-  %
-  \mbox{det}(X) = \sum_{\sigma \in S_{n+m}} \mbox{sgn}(\sigma)x_{1\sigma(1)}
-                   x_{2\sigma(2)}\cdots x_{m+n\sigma(m+n)}
-\end{align*}
-%
-Under any permutation, total summation of sum of index remain even number,
-that is $2*(1+ \cdots +n)$.
-%
-Hence, components whose sum of index is odd is contained even number times.
-%
-Therefore, coefficients of odd monoials is contained even number times
-in the term of resultant.
-\qed \\
-
-We focus on each variable which is consisted term
-is whether even or odd variable.
-%
-We reffer to the term which consist of only the same parity of variables
-as \emph{well-regulated term}.
-
-
-\begin{description}
-  %
-  \item [Lemma 2]~\\
-  %
-  If all terms in 3rd summation polynomial are well-regulated terms,
-  all terms in summation polynomial with any variables are also
-  well-regulated.
-  %
-\end{description}
-
-\noindent
-\emph{Proof.}
-%
-We prove that summation polynomial $f_{n}$ for $n\geq3$ satisfy the
-proposion by mathematical inducution.
-
-Let $n=3$, from assumption, summation polynomial $f_3(Y_1, Y_2, Y_3)$
-satisfy proposion.
-%
-\begin{align*}
-  %
-  f_{3}(Y_1, Y_2, Y_3)=a_2Y_3^2 + a_1Y_3 + a_0
-  %
-\end{align*}
-%
-
-Let $n=k$, we assume that $f_{k}(Y_1, \dots , Y_{k})$ satisfy the proposion.
+  Let $\mathcal E$ be a family of elliptic curves such that its 3rd
+  summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
+  in each variable $X_i$ and consists only of monomials of homogeneous
+  parity.
+  % 
+  Then any subsequent summation polynomial
+  $f_{m,\mathcal E}(X_1,\ldots,X_m)$ for $m>3$ consists only of
+  monomials of homogeneous parity.
+  % 
+\end{lemma}
 % 
-we can express the polynomial as univariate polynomial of $Y_{k}$ 
-with $2^{k-2}$ degree. 
-%
-\begin{align*}
+\begin{proof}
   %
-  f_{k}(Y_1, \dots , Y_{k}) & = 
-  b_{2^{k-2}}Y_{k}^{2^{k-2}} + b_{2^{k-2}-1}Y_{k}^{2^{k-2}-1} + 
-   \cdots + b_2Y_{k}^2 + b_1Y_{k} + b_0
+  As the summation polynomial $f_{m+1,\mathcal E}$ for
+  $m\geq 3$ is defined recursively from $f_{m,\mathcal E}$ and
+  $f_{3,\mathcal E}$ via taking resultants
+  \[ f_{m+1,\mathcal E}(X_1,\dots,X_{m+1}) = \res_X\left(f_{m,\mathcal
+        E}(X_1,\dots,X_{m-1},X),f_{3,\mathcal
+        E}(X_m,X_{m+1},X)\right), \]
+  % 
+  we shall prove this lemma by induction on $m$.
   %
-\end{align*}
-%
-In other words, we assume polynomial $b_{2k}$ consist of only even variables 
-and $b_{2k+1}$ consist of only odd variables for integer $k$.
+  Let
+  $f_{m,\mathcal
+    E}(X_1,\ldots,X_{m-1},X)=a_{2^{m-2}}X^{2^{m-2}}+\cdots+a_1X+a_0$
+  and $f_{3,\mathcal E}(X_m,X_{m+1},X)=b_2X^2+b_1X+b_0$.
+  % 
+  By the premises that $f_{3,\mathcal E}$ consists only of monomials
+  of homogeneous parity, $b_0$ and $b_2$ must consist only of
+  monomials (in $X_m$ and $X_{m+1}$) of homogeneous even parity.
+  % 
+  Furthermore, $b_1=X_mX_{m+1}$.
+  % 
+  This is because the definition of monomials of homogeneous odd
+  parity depends on the number of variables.
+  % 
+  In this case, the only such monomial is $X_mX_{m+1}X$.
 
-Let $n=k+1$, we will consider about $f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1})$.
-%
-From the definition of summation polynomial, we can express the polynomial
-by using above coefficient $a_i$ and $b_i$.
-%
-\begin{align*}
-  %
-  f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1}) &= 
-   Res\left(f_{k}(Y_1, \dots , Y_{k-1}, T), f_3(Y_{k}, Y_{k+1}, T)\right)\\
-  %
-   & = Res(b_{2^{k-2}}T^{2^{k-2}} + \cdots + b_1T + b_0,~ a_2T^2 + a_1T + a_0)
-  %
-\end{align*}
-%
-Similarly, we can express as univariate polynoimal of $Y_{k+1}$ 
-with $2^{k-1}$ degree.
-%
-\begin{align*}
-  f_{k+1}(Y_1, \dots , Y_{k}, Y_{k+1}) =
-  c_{2^{k-1}}Y_{k+1}^{2^{k-1}} + c_{2^{k-1}-1}Y_{k+1}^{2^{k-1}-1} + 
-   \cdots + c_2Y_{k+1}^2 + c_1Y_{k+1} + c_0
-\end{align*}
-%
-All odd terms include multiplication of coefficient $a_1$ odd times.
-%
-Because degree of all summation polynomial are even, 
-we can consider Lemma 1 in this case.
-%
-Hence, coefficients of all odd terms $c_{2k+1}$ include 
-multiplication of coefficient $b_{2k+1}$ odd times.
-%
-From the assumption, $b_{2k+1}$ consist of only odd variables.
-%
-Therefore, all variables in all odd terms are odd variables.
-%
-Similarly, we can prove proposion in the case of even terms.
-%
-\qed \\
-
-
-\begin{description}
-  \item [theorem 1]~\\
-  %
-  Let us think about point decomposition of $m$ point 
-  by using summation polynomial with $m+1$ variables, 
-  $f_{m+1}(Y_0, \dots, Y_m, Y)$.
-  %
-  $Y$ is associated with point to decompose 
-  and will be substituted by some constant.
-
-  Suppose 3rd summation polynomial consists of only well-regulated terms.
-  %
-  When $m$ is even number,
-  polynomial after substituting consist of only even monomials.
-
-  When $m$ is odd number,
-  polynomial after substituting includes some odd monomials.
-  %
-\end{description}
-
-\noindent
-\emph{Proof.}
-%
-Because max degree of each variables of 
-$f_{m+1}(Y_0, \dots, Y_m, Y)$ are $2^{m-1}$,
-it can be written as univariate polynoimal of $Y$.
-%
-\begin{align*}
-  a_{2^{m-1}}Y^{2^{m-1}} + a_{2^{m-1}-1}Y^{2^{m-1}-1} + 
-  \cdots + a_2Y^2 + a_1Y + a_0
-\end{align*}
-%
-The coefficients $c_i$ are a polynomial 
-with $m$ variables ($Y_0, \dots, Y_m$).
-%
-After substituting of $Y$, summation polynomial is composed of $c_i$.
-%
-Let $k$ be integers. 
-From Lemma 2, all monomials in $a_{2k+1}$ consist of odd degree variables.
-%
-If $m$ is even number, there are all even monomials in $a_{2k+1}$
-because even times summation of odd numbers are even.
-%
-Similarly, if $m$ is odd number, all monomials in $a_{2k+1}$ are odd monomials.
-\qed \\
-
-\begin{description}
-  \item [Corollary 1]~\\
-    As you see above of this section, 
-    in twisted Edwards curve, 3rd summation polynomial consists of
-    only well-regulated terms.
+  Now consider a term $c_kX_{m+1}^k$ of
+  \[ f_{m+1,\mathcal
+      E}(X_1,\ldots,X_m,X_{m+1})=c_{2^{m-1}}X_{m+1}^{2^{m-1}}+\cdots+c_1X_{m+1}+c_0 \]
+  as a univariate polynomial in $X_{m+1}$.
+  % 
+  \begin{enumerate}
     %
-    Therefore, twisted Edwards curve is the case of Theorem 1.
-\end{description}
+  \item If $k$ is odd, then $b_1$ must appear an odd number of times
+    in $c_kX_{m+1}^k$ to produce an odd power of $X_{m+1}$ because
+    $b_0$ and $b_2$ can only produce even powers of $X_{m+1}$.
+    % 
+    \emph{As $b_1=X_mX_{m+1}$, $c_k$ must consist only of odd powers
+      of $X_m$.}
 
+    By induction hypothesis, $f_{m,\mathcal E}$ consists only of
+    monomials of homogeneous parity.
+    %
+    Now consider an odd-power coefficient $a_{2\ell+1}$ of
+    $f_{m,\mathcal E}$ as univariate polynomial in $X$.
+    %
+    This means that $a_{2\ell+1}$ consists only of monomials in
+    $X_1,\ldots,X_{m-1}$ of homogeneous odd parity.
+    % 
+    By Lemma~\ref{th:resultant}, these odd-power coefficients appear
+    in total an odd number of times in $c_kX_{m+1}^k$.
+    % 
+    \emph{Therefore, $c_k$ must consist only of odd powers of
+      $X_1,\ldots,X_{m-1}$, and $c_kX_{m+1}^k$ is a monomial of
+      homogeneous odd parity.}
+    %
+  \item By changing ``odd'' to ``even'' in the above argument, we
+    conclude that \emph{for $k$ even, $c_kX_{m+1}^k$ is a monomial of
+      homogeneous even parity.}
+      % 
+  \end{enumerate}
+  % 
+  \qed
+  % 
+\end{proof}
 
-
+We are now ready to complete the proof of Theorem~\ref{th:main}.
+%
+By Lemma~\ref{th:summation-polynomial},
+$g_{m,\mathcal E}(X_1,\ldots,X_m)=f_{m+1,\mathcal
+  E}(X_1,\ldots,X_m,x)$ consists only of monomials of homogeneous
+parity.
+%
+Obviously, the monomials of homogeneous even parity will remain of
+even power after the substitution of $x$, as the exponent of $x$ must
+be even as well.
+%
+If $m$ is even, then the monomials of homogeneous odd parity in
+$f_{m+1,\mathcal E}$ will be an even-power monomial after the
+substitution of $x$.
+%
+For odd $m$, the monomials of homogeneous odd parity will be of even
+power after the substitution of $x$.
+%
+However, as $f_{m+1,\mathcal E}$ consists only of monomials of
+homogeneous parity, it is impossible for some odd-power monomials to
+appear in $g_{m,\mathcal E}$ after the substitution of $x$, thus
+completing the proof of Theorem~\ref{th:main}.
