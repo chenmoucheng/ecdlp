@@ -90,10 +90,10 @@ number of terms in the summation polynomials for curves in different
 forms.
 %
 We will show that the summation polynomials for (twisted) Edwards form
-of elliptic curves \emph{mainly} have terms of \emph{even} powers.
+of elliptic curves \emph{mainly} have terms of \emph{even} degrees.
 %
-The set of terms of even powers are closed under multiplication, so
-intuitively polynomials mainly consisting of even-power terms also
+The set of terms of even degrees are closed under multiplication, so
+intuitively polynomials mainly consisting of even-degree terms also
 ``generate'' such kind of polynomials after taking resultants.
 %
 We believe that this kind of summation polynomials are easier to
@@ -101,50 +101,61 @@ solve, which is main reason for the efficiency gain observed in the
 case of (twisted) Edwards curves.
 
 We shall make such intuition precise in Theorem~\ref{th:main}, but
-before we state the main result, we need to define some terminology
-for ease of exposition.
+before we state the main result, we need to clarify some of our
+terminology for ease of exposition.
 %
 When a multivariate polynomial is regarded as a univariate polynomial
 in one of its variables $T$, we say that the coefficient $a_i$ of a
-term $a_iT^i$ is \emph{of even power} or simply an \emph{even-power
-  coefficient} if $i$ is even; that it is \emph{of odd power} or
-simply an \emph{odd-power coefficient} otherwise.
+term $a_iT^i$ is an \emph{even- or odd-degree coefficient} depending
+on whether $i$ is even or odd, respectively.
 %
 Note that these coefficients are themselves multivariate polynomials
 in one fewer variables.
-%
-Also, we take 0 as an even number.
 
-Similarly, we say that a monomial $m=\prod_i^n x_i^{e_i},e_i\geq 0$ in
-a multivariate polynomial in $n$ variables is \emph{of even power} or
-simply an \emph{even-power monomial} if $\sum_i e_i$ is even; that it
-is \emph{of odd power} or simply an \emph{odd-power monomial}
+We say that a monomial $m=\prod_{i=1}^n x_i^{e_i},e_i\geq 0$ in a
+multivariate polynomial in $n$ variables is \emph{of even degree} or
+simply an \emph{even-degree monomial} if $\sum_i e_i$ is even; that it
+is \emph{of odd degree} or simply an \emph{odd-degree monomial}
 otherwise.
 %
-In contrast, a monomial is \emph{of homogeneous even parity} if all
-$e_i$ are even; it is \emph{of homogeneous odd parity} if all $e_i$
+In contrast, a monomial is \emph{of (homogeneous) even parity} if all
+$e_i$ are even; it is \emph{of (homogeneous) odd parity} if all $e_i$
 are odd.
 %
 A monomial is \emph{of homogeneous parity} if it is either of
 homogeneous even parity or of homogeneous odd parity.
 %
-Note that the definition of monomials of homogeneous odd parity
-depends on the number of variables in the polynomial, which is not the
-case for monomials of homogeneous even parity, as 0 is even in our
-definition.
+Note that the definition of monomials of odd parity depends on the
+total number of variables in the polynomial, which is not the case for
+monomials of even parity because we regard 0 as even.
 %
-For example, the monomial $x_1x_2$ is a monomial of homogeneous odd
-parity in a polynomial in $x_1$ and $x_2$ but not so in another
-polynomial in $x_1,\ldots,x_n$ for $n>2$.
+For example, the monomial $x_1x_2$ is a monomial of odd parity in a
+polynomial in $x_1$ and $x_2$ but not any more in another polynomial
+in $x_1,\ldots,x_n$ for $n>2$.
+
+By abuse of language, we say that a polynomial is \emph{of even or odd
+  parity} if it is a linear combination of monomials of even or odd
+parity, respectively; that a polynomial is \emph{of homogeneous
+  parity} if it is a linear combination of monomials of homogeneous
+parity.
 %
+The set of polynomials of even parity are closed under addition and
+multiplication and hence forms a subring.
+%
+On the other hand, a polynomial $f$ in $x_1,\ldots,x_n$ of homogeneous
+odd parity has the form
+$\sum_i c_i\left(\prod_{j=1} x_j^{e_{ij}}\right)$, for $e_{ij}$ odd.
+%
+Therefore, if $f$ is a polynomial of homogeneous odd parity and $g$, a
+polynomial of even parity, then $fg$ is a polynomial of odd parity.
+
 \begin{theorem}
   % 
   \label{th:main}
   % 
   Let $\mathcal E$ be a family of elliptic curves such that its 3rd
   summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
-  in each variable $X_i$ and consists only of monomials of homogeneous
-  parity.
+  in each variable $X_i$ and of homogeneous parity.
   % 
   Let $g_{m,\mathcal E}$ be the polynomial corresponding to the PDP of
   $m$-th order for $\mathcal E$ as described in
@@ -158,10 +169,10 @@ polynomial in $x_1,\ldots,x_n$ for $n>2$.
   \begin{enumerate}
     % 
   \item If $m$ is even, then $g_{m,\mathcal E}$ has no monomials of
-    odd power.
+    odd degrees.
     % 
   \item If $m$ is odd, then $g_{m,\mathcal E}$ has some but not all
-    monomials of odd power.
+    monomials of odd degrees.
     % 
   \end{enumerate}
   % 
@@ -190,14 +201,14 @@ which we will need the following lemmas.
   Let $f(T_1,\ldots,T_r)=\res_T(f_1,f_2)$ be the resultant of $f_1$
   and $f_2$ regarded as two univariate polynomials in $T$.
   % 
-  If both $m$ and $n$ are even, then every term of $f$ is a product of
-  an even number or none of the odd-power coefficients of $f_1$ and
-  $f_2$, some or none of the even-power coefficients of $f_1$ and
-  $f_2$, and $\pm 1$.
+  If both $m$ and $n$ are even, then every monomial of $f$ is a
+  product of an even number or none of the odd-degree coefficients of
+  $f_1$ and $f_2$ and some or none of the even-degree coefficients of
+  $f_1$ and $f_2$.
   % 
-  Specifically, the odd-power coefficients $a_{2k+1}$ and $b_{2k+1}$
+  Specifically, the odd-degree coefficients $a_{2k+1}$ and $b_{2k+1}$
   of $f_1$ and $f_2$, respectively, appear in total an even number of
-  times in each term of $f$.
+  times in each monomial of $f$.
   % 
 \end{lemma}
 %
@@ -205,8 +216,8 @@ which we will need the following lemmas.
   % 
   The resultant $\res_T(f_1,f_2)$ of $f_1$ and $f_2$ is the
   determinant of the following $(m+n)\times(m+n)$ matrix $S$:
-  % 
-  \begin{equation*}
+  \begin{equation}
+    \label{eq:resultant}
     S = \begin{bmatrix}
       a_m & a_{m-1} & \ldots & & a_0 & & &  \\
       & a_m & a_{m-1} & \ldots & & a_0  & &  \\
@@ -217,26 +228,31 @@ which we will need the following lemmas.
       & & \ddots & & & & \ddots &  \\
       & & & b_n & b_{n-1} & \ldots & & b_0
     \end{bmatrix}.
-  \end{equation*}
+    \begin{tabular}{@{}c@{}}
+      $\left.\begin{tabular}{@{}c@{}} \\ \\ \\ \\\end{tabular}\right\} n$\\
+      \\
+      $\left.\begin{tabular}{@{}c@{}} \\ \\ \\ \\\end{tabular}\right\} m$\\
+    \end{tabular}
+  \end{equation}
   % 
   We denote as $s_{ij}$ the entry at the $i$-th row and $j$-th column
   of $S$ for $1\leq i,j\leq m+n$.
   % 
-  Since both $m$ and $n$ are even, an even-power coefficient $a_{2k}$
+  Since both $m$ and $n$ are even, an even-degree coefficient $a_{2k}$
   or $b_{2k}$ will appear in $s_{ij}$ for which the sum of indices
   $i+j$ is even.
   % 
-  Similarly, an odd-power coefficient $a_{2k+1}$ or $b_{2k+1}$ will
+  Similarly, an odd-degree coefficient $a_{2k+1}$ or $b_{2k+1}$ will
   appear in $s_{ij}$ for which the sum of indices $i+j$ is odd.
   % 
   Now recall that the determinant of $S$ is defined as
   \[ \sum_{\sigma\in S_{n+m}}\sgn(\sigma)s_{1,\sigma(1)}\cdot
     s_{2,\sigma(2)}\cdots s_{m+n,\sigma(m+n)}. \]
   % 
-  We note that the sum of the indices of the factors is
+  We note that the sum of the indices of any summand is
   \[ \sum_i^{m+n}i+\sigma(i)=(m+n)(m+n+1), \] which is always even.
   % 
-  Therefore, the odd-power coefficients must appear an even number of
+  Therefore, the odd-degree coefficients must appear an even number of
   times, thus completing the proof.
   % 
   \qed
@@ -249,12 +265,11 @@ which we will need the following lemmas.
   %
   Let $\mathcal E$ be a family of elliptic curves such that its 3rd
   summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
-  in each variable $X_i$ and consists only of monomials of homogeneous
-  parity.
+  in each variable $X_i$ and of homogeneous parity.
   % 
   Then any subsequent summation polynomial
-  $f_{m,\mathcal E}(X_1,\ldots,X_m)$ for $m>3$ consists only of
-  monomials of homogeneous parity.
+  $f_{m,\mathcal E}(X_1,\ldots,X_m)$ for $m>3$ is of homogeneous
+  parity.
   % 
 \end{lemma}
 % 
@@ -274,76 +289,88 @@ which we will need the following lemmas.
     E}(X_1,\ldots,X_{m-1},X)=a_{2^{m-2}}X^{2^{m-2}}+\cdots+a_1X+a_0$
   and $f_{3,\mathcal E}(X_m,X_{m+1},X)=b_2X^2+b_1X+b_0$.
   % 
-  By the premises that $f_{3,\mathcal E}$ consists only of monomials
-  of homogeneous parity, $b_0$ and $b_2$ must consist only of
-  monomials (in $X_m$ and $X_{m+1}$) of homogeneous even parity.
+  By the premises that $f_{3,\mathcal E}$ is of homogeneous parity,
+  $b_0$ and $b_2$ must consist only of monomials (in $X_m$ and
+  $X_{m+1}$) of even parity.
   % 
-  Furthermore, $b_1=X_mX_{m+1}$.
+  Furthermore, $b_1=cX_mX_{m+1}$ for some constant $c$.
   % 
-  This is because the definition of monomials of homogeneous odd
-  parity depends on the number of variables.
-  % 
-  In this case, the only such monomial is $X_mX_{m+1}X$.
+  This is because $f_{3,\mathcal E}$ is of degree 2 in each variable,
+  for which the only monomial of odd parity is $X_mX_{m+1}X$.
 
   Now consider a term $c_kX_{m+1}^k$ of
   \[ f_{m+1,\mathcal
       E}(X_1,\ldots,X_m,X_{m+1})=c_{2^{m-1}}X_{m+1}^{2^{m-1}}+\cdots+c_1X_{m+1}+c_0 \]
   as a univariate polynomial in $X_{m+1}$.
   % 
+  Again as $f_{3,\mathcal E}$ is of degree 2 in $X$, we have the case
+  of $n=2$ in Equation~\ref{eq:resultant}.
+    % 
+  Now $X_{m+1}$ must come from $b_1$, so we can conclude that
+  \[ c_kX_{m+1}^k=\sum_i\alpha_i a_{\beta_i} a_{\gamma_i}
+    b_0^{\delta_i} b_2^{\epsilon_i} X_m^kX_{m+1}^k, \] where
+  $\alpha_i$ a constant, $\beta_i,\gamma_i\in\{0,\ldots,2^{m-2}\}$,
+  and $\delta_i,\epsilon_i$ nonnegative integers such that
+  $\delta_i+\epsilon_i+k=2^{m-2}$.
+  %
+  We will complete the proof by showing as follows that $c_kX_{m+1}^k$
+  is a polynomial in $X_1,\ldots,X_{m+1}$ of homogeneous parity for
+  all $k$.
+  % 
   \begin{enumerate}
     %
-  \item If $k$ is odd, then $b_1$ must appear an odd number of times
-    in $c_kX_{m+1}^k$ to produce an odd power of $X_{m+1}$ because
-    $b_0$ and $b_2$ can only produce even powers of $X_{m+1}$.
-    % 
-    \emph{As $b_1=X_mX_{m+1}$, $c_k$ must consist only of odd powers
-      of $X_m$.}
-
-    By induction hypothesis, $f_{m,\mathcal E}$ consists only of
-    monomials of homogeneous parity.
+  \item If $k$ is even, then by Lemma~\ref{th:resultant},  $\beta_i$
+    and $\gamma_i$ are both even or both odd in each summand.
     %
-    Now consider an odd-power coefficient $a_{2\ell+1}$ of
-    $f_{m,\mathcal E}$ as univariate polynomial in $X$.
-    %
-    This means that $a_{2\ell+1}$ consists only of monomials in
-    $X_1,\ldots,X_{m-1}$ of homogeneous odd parity.
+    In either case, the product $a_{\beta_i}a_{\gamma_i}$ is a
+    polynomial in $X_1,\ldots,X_{m-1}$ of even parity.
     % 
-    By Lemma~\ref{th:resultant}, these odd-power coefficients appear
-    in total an odd number of times in $c_kX_{m+1}^k$.
+    It follows that each summand is a polynomial of even parity
+    because it is a product of polynomials of even parity.
     % 
-    \emph{Therefore, $c_k$ must consist only of odd powers of
-      $X_1,\ldots,X_{m-1}$, and $c_kX_{m+1}^k$ is a monomial of
-      homogeneous odd parity.}
+    Hence $c_kX_{m+1}^k$ is a polynomial of even parity.
     %
-  \item By changing ``odd'' to ``even'' in the above argument, we
-    conclude that \emph{for $k$ even, $c_kX_{m+1}^k$ is a monomial of
-      homogeneous even parity.}
-      % 
+  \item If $k$ is odd, the situation is similar but slightly more
+    complicated.
+    % 
+    By Lemma~\ref{th:resultant}, exactly one of $\beta_i$ and
+    $\gamma_i$ is odd in each summand, say $\beta_i$.
+    % 
+    By induction hypothesis, $a_{\beta_i}$ is a polynomial in
+    $X_1,\ldots,X_{m-1}$ of odd parity because it comes from
+    $a_{\beta_i} X^{\beta_i}$ in $f_{m,\mathcal E}$.
+    %
+    It follows that each summand is a polynomial of odd parity because
+    it is a product of a polynomial of even parity
+    ($a_{\gamma_i} b_0^{\delta_i} b_2^{\epsilon_i}$) and a polynomial
+    of odd parity ($a_{\beta_i} X_m^kX_{m+1}^k$).
+    % 
+    Hence $c_kX_{m+1}^k$ is a polynomial of odd parity.
+    %
   \end{enumerate}
   % 
   \qed
   % 
 \end{proof}
 
-We are now ready to complete the proof of Theorem~\ref{th:main}.
-%
 By Lemma~\ref{th:summation-polynomial},
 $g_{m,\mathcal E}(X_1,\ldots,X_m)=f_{m+1,\mathcal
-  E}(X_1,\ldots,X_m,x)$ consists only of monomials of homogeneous
-parity.
+  E}(X_1,\ldots,X_m,x)$ is of homogeneous parity.
 %
-Obviously, the monomials of homogeneous even parity will remain of
-even power after the substitution of $x$, as the exponent of $x$ must
-be even as well.
+Obviously, the monomials of even parity will remain of even degree
+after $x$ is substituted.
 %
-If $m$ is even, then the monomials of homogeneous odd parity in
-$f_{m+1,\mathcal E}$ will be an even-power monomial after the
-substitution of $x$.
+If $m$ is even, then the monomials of odd parity in
+$f_{m+1,\mathcal E}$ will become of even degree after $x$ is
+substituted because an even number of odd numbers sum to an even
+number.
 %
-For odd $m$, the monomials of homogeneous odd parity will be of even
-power after the substitution of $x$.
+Similarly if $m$ is odd, then the monomials of odd parity in
+$f_{m+1,\mathcal E}$ will become of odd degree after $x$ is
+substituted.
 %
-However, as $f_{m+1,\mathcal E}$ consists only of monomials of
-homogeneous parity, it is impossible for some odd-power monomials to
-appear in $g_{m,\mathcal E}$ after the substitution of $x$, thus
-completing the proof of Theorem~\ref{th:main}.
+However, those odd-degree monomials that are \emph{not} of homogeneous
+parity, e.g., $X_1^2X_2$, cannot appear in $g_{m,\mathcal E}$ by
+Lemma~\ref{th:summation-polynomial}.
+%
+This completes the proof of Theorem~\ref{th:main}.
