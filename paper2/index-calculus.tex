@@ -2,7 +2,8 @@
 % Index calculus for ECDLP
 %
 
-\section{Index calculus for ECDLP}
+\section{Previous works}
+\subsection{Index calculus for ECDLP}
 %
 \label{sec:index-calculus-ecdlp}
 %
@@ -197,6 +198,66 @@ symmetry to speed up point decomposition depending on whether the
 action of addition of these small torsion points is ``easy to handle
 in the polynomial system solving
 process''~\cite{DBLP:journals/joc/FaugereGHR14}.
+
+
+%------------------------------
+\subsection{(Twisted) Edwards curves}
+%------------------------------------
+\label{sec:twisted-edwards}
+
+
+Faug\`ere, Gaudry, Hout, and Renault studied PDP on twisted Edwards,
+twisted Jacobi intersections, and Weierstrass
+curves~\cite{DBLP:journals/joc/FaugereGHR14}.
+%
+We include some basic facts about (twisted) Edwards curves here.
+%
+%
+An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
+equation \begin{equation*}
+  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for
+$d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
+%
+A twisted Edwards curve $tE_{a',d'}$ over \F{p^n} for $p\neq 2$ is
+defined by the equation \begin{equation}
+  a'x^2+y^2=1+d'x^2y^2 \label{eq:twisted-edwards-curve} \end{equation}
+for $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
+%
+A twisted Edwards curve is a quadratic twist of an Edwards curve by
+$a_0=1/(a'-d')$.
+%
+For $P=(x,y)\in tE_{a',d'}$, $-P=(-x,y)$.
+%
+Furthermore, the addition and doubling formulae for
+$(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
+%
+\begin{itemize}
+\item When $(x_1,y_1)\neq(x_2,y_2)$:
+  \begin{align*}
+    x_3 & = \frac{x_1y_2 + y_1x_2}{1 + d'x_1x_2y_1y_2} \\
+    y_3 & = \frac{y_1y_2 - a'x_1x_2}{1 - d'x_1x_2y_1y_2}
+  \end{align*}
+\item When $(x_1,y_1)=(x_2,y_2)$:
+  \begin{align*}
+    x_3 & = \frac{2x_1y_1}{1 + d'x_1^2y_1^2} \\
+    y_3 & = \frac{y_1^2 - a'x_1^2}{1 - d'x_1^2y_1^2}
+  \end{align*}
+\end{itemize}
+%
+As given by Faug\`ere, Gaudry, Hout, and
+Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the 3rd summation
+polynomial for twisted Edwards curve is
+%
+\begin{align*}
+  f_{tE, 3}(Y_1,Y_2,Y_3) = & \left(Y_1^2Y_2^2 - Y_1^2 - Y_2^2 + \frac{a}{d}\right)Y_3^2  + 2\frac{d-a}{d}Y_1Y_2Y_3 +
+                             \frac{a}{d}\left(Y_1^2 + Y_2^2 - 1\right)
+                             - Y_1^2Y_2^2.
+\end{align*}
+%
+As usual, subsequent summation polynomials can be obtained by using
+resultants.
+
+
 
 \subsection{Symmetry and decomposition probability}
 \label{sec:symmetry-decomposition-probability}

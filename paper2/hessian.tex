@@ -2,9 +2,6 @@
 % Hessian curves
 %
 
-\section{Hessian and (twisted) Edwards curves}
-\label{sec:hessian-edwards}
-
 \subsection{Hessian curves}
 \label{sec:hessian}
 
@@ -33,7 +30,8 @@ $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
 \end{itemize}
 
 
-% \subsection{Summation polynomials for Hessian curves}
+\subsection{Summation polynomials for Hessian curves}
+\label{sec:hessian-t2}
 
 Following a similar approach outlined by Galbraith and
 Gebregiyorgis~\cite{DBLP:conf/indocrypt/GalbraithG14}, we can
@@ -77,7 +75,16 @@ as well as the subsequent summation polynomials via taking resultants:
 \[ f_{H,m}(T_1,\ldots,T_m) =
   \res_T\left(f_{H,m-k}(T_1,\ldots,T_{m-k-1},T),f_{H,k+2}(T_{m-k},\ldots,T_m,T)\right). \]
 
-A Hessian curve can contain an affine 2-torsion point $T_2$.
+
+
+\subsection{torsion points for Hessian curve}
+%
+We will experiment all forms of Weierstrass, Montgomery, 
+twisted Edwards, and Hessian curves which are isomorphism over 
+definition field each other.
+%
+As a result, Hessian curves include 2-torsion points $T_2$
+in the same way as Montgomery or twisted Edwards curves.
 %
 Since $T_2+T_2=2T_2=\mathcal O$, it follows that $-T_2=T_2$.
 %

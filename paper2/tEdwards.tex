@@ -2,93 +2,34 @@
 % (twisted) Edwards curve
 %
 
-%------------------------------
-\subsection{(Twisted) Edwards curves}
-%------------------------------------
-\label{sec:twisted-edwards}
-
-
-Faug\`ere, Gaudry, Hout, and Renault studied PDP on twisted Edwards,
-twisted Jacobi intersections, and Weierstrass
-curves~\cite{DBLP:journals/joc/FaugereGHR14}.
-%
-For the sake of completeness, we include some basic facts about
-(twisted) Edwards curves here.
-%
-%
-An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
-equation \begin{equation*}
-  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for
-$d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
-%
-A twisted Edwards curve $tE_{a',d'}$ over \F{p^n} for $p\neq 2$ is
-defined by the equation \begin{equation}
-  a'x^2+y^2=1+d'x^2y^2 \label{eq:twisted-edwards-curve} \end{equation}
-for $a',d'\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
-%
-A twisted Edwards curve is a quadratic twist of an Edwards curve by
-$a_0=1/(a'-d')$.
-%
-For $P=(x,y)\in tE_{a',d'}$, $-P=(-x,y)$.
-%
-Furthermore, the addition and doubling formulae for
-$(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
-%
-\begin{itemize}
-\item When $(x_1,y_1)\neq(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = \frac{x_1y_2 + y_1x_2}{1 + d'x_1x_2y_1y_2} \\
-    y_3 & = \frac{y_1y_2 - a'x_1x_2}{1 - d'x_1x_2y_1y_2}
-  \end{align*}
-\item When $(x_1,y_1)=(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = \frac{2x_1y_1}{1 + d'x_1^2y_1^2} \\
-    y_3 & = \frac{y_1^2 - a'x_1^2}{1 - d'x_1^2y_1^2}
-  \end{align*}
-\end{itemize}
-%
-As given by Faug\`ere, Gaudry, Hout, and
-Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the 3rd summation
-polynomial for twisted Edwards curve is
-%
-\begin{align*}
-  f_{tE, 3}(Y_1,Y_2,Y_3) = & \left(Y_1^2Y_2^2 - Y_1^2 - Y_2^2 + \frac{a}{d}\right)Y_3^2  + 2\frac{d-a}{d}Y_1Y_2Y_3 +
-                             \frac{a}{d}\left(Y_1^2 + Y_2^2 - 1\right)
-                             - Y_1^2Y_2^2.
-\end{align*}
-%
-As usual, subsequent summation polynomials can be obtained by using
-resultants.
-
-
-
-\section{What summation polynomials are easier to solve?}
+\subsection{What summation polynomials are easier to solve?}
 \label{sec:twisted-edwards-summation-polynomial}
 
-In this section, we present the main result of this paper, namely,
-some insights into what kind of summation polynomials are easier to
-solve.
+% In this section, we present the main result of this paper, namely,
+% some insights into what kind of summation polynomials are easier to
+% solve.
 %
-For example, the summation polynomials for (twisted) Edwards form of
-elliptic curves seem easier to solve compared with those for
-Weierstrass or Montgomery forms.
+% For example, the summation polynomials for (twisted) Edwards form of
+% elliptic curves seem easier to solve compared with those for
+% Weierstrass or Montgomery forms.
 %
-The explanation offered by Faug\`ere, Gaudry, Hout, and Renault is
-``due to the smaller degree appearing in the computation of Gr\"obner
-basis of $\mathscr S_{D_n}$ in comparison with the Weierstrass case,''
-cf.~Section~4.1.1 of their
-paper~\cite{DBLP:journals/joc/FaugereGHR14}.
-%
-Unfortunately, as will be detailed in Section~\ref{sec:experiment},
-this \emph{cannot} explain the difference in solving time between
-(twisted) Edwards and Montgomery forms, as the highest degrees
-appearing in the computation of Gr\"obner bases are \emph{the same}
-for these two forms.
+% The explanation offered by Faug\`ere, Gaudry, Hout, and Renault is
+% ``due to the smaller degree appearing in the computation of Gr\"obner
+% basis of $\mathscr S_{D_n}$ in comparison with the Weierstrass case,''
+% cf.~Section~4.1.1 of their
+% paper~\cite{DBLP:journals/joc/FaugereGHR14}.
+% %
+% Unfortunately, as will be detailed in Section~\ref{sec:experiment},
+% this \emph{cannot} explain the difference in solving time between
+% (twisted) Edwards and Montgomery forms, as the highest degrees
+% appearing in the computation of Gr\"obner bases are \emph{the same}
+% for these two forms.
 
-We offer a simpler explanation to this difference by counting the
-number of terms in the summation polynomials for curves in different
-forms.
-%
+% We offer a simpler explanation to this difference by counting the
+% number of terms in the summation polynomials for curves in different
+% forms.
+
+
 We will show that the summation polynomials for (twisted) Edwards form
 of elliptic curves \emph{mainly} have terms of \emph{even} degrees.
 %
@@ -172,7 +113,7 @@ polynomial of even parity, then $fg$ is a polynomial of odd parity.
     odd degrees.
     % 
   \item If $m$ is odd, then $g_{m,\mathcal E}$ has some but not all
-    monomials of odd degrees.
+    monomials of odd degrees, that is of homogenous parity.
     % 
   \end{enumerate}
   % 

@@ -2,9 +2,7 @@
 % Montgomery curves
 %
 
-%------------------------------
-\section{Montgomery curves}
-%------------------------------------
+\subsection{Montgomery curves}
 \label{sec:montgomery-symmetry}
 %
 A Montgomery curve $M_{A,B}$ over \F{p^n} for $p\neq 2$ is defined by
@@ -93,6 +91,8 @@ polynomial:
 as well as the subsequent summation polynomials via taking resultants:
 \[ f_{M,m}(X_1,\ldots,X_m) =
   \res_X\left(f_{M,m-k}(X_1,\ldots,X_{m-k-1},X),f_{M,k+2}(X_{m-k},\ldots,X_m,X)\right). \]
+
+  
 %--------------------------------
 \subsection{Action of 2-torsion points for Montgomery curves} \label{subsec:TSPL}
 %------------------------
@@ -109,7 +109,8 @@ we get an equation $x^3+Ax^2+x=0$.
 The lefthand side factors into $x(x^2+Ax+1)=0$, so we get \[
   x=0,\frac{-A\pm\sqrt{A^2 - 4}}{2}. \]
 %
-Therefore, the set of rational points on a Montgomery curve includes
+Therefore, the set of points in a definition field $F_{p^n}$
+on a Montgomery curve includes
 at least two 2-torsion points, namely, $\mathcal O$ and $(0,0)$.
 %
 The other 2-torsion points may or may not be rational, so we will
