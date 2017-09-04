@@ -1,0 +1,120 @@
+
+\section{Analysis}
+\label{analysis}
+
+\subsection{What has brought faster solving on twisted Edwards curves}
+
+In general, complexity to solve polynomial system is 
+estimated from degree of regularity.
+%
+For example, 
+the explanation offered by Faug\`ere, Gaudry, Hout, and Renault is
+``due to the smaller degree appearing in the computation of Gr\"obner
+basis of $\mathscr S_{D_n}$ in comparison with the Weierstrass case,''
+cf.~Section~4.1.1 of their
+paper~\cite{DBLP:journals/joc/FaugereGHR14}.
+%
+Unfortunately, 
+this \emph{cannot} explain the difference in solving time between
+(twisted) Edwards and Montgomery forms, as the highest degrees
+appearing in the computation of Gr\"obner bases are \emph{the same}
+for these two forms.
+%
+In order to reveal the reason for this, we further explore 
+summation polynomial from the viewpoint of number of terms.
+%
+Table~\ref{tb:terms} shows the sparsity before and after Weil
+restriction for each curves in the case of $m=2,3,4$.
+%
+As there are $n$ equations after Weil restriction, we are only showing
+the average. 
+%
+We also include the maximum number of terms for a polynomial of degree
+$2^{(m+1)-2}$ in $m$ variables.
+%
+\input{result2}
+%
+We can see that total number of terms for twisted Edwards curve is
+significantly fewer than the other three curves in all cases.
+%
+Naturally, this could lead to smaller matrices and hence faster
+solving time with the F4 algorithm.
+%
+We also note that the number of terms for curves 
+excluding twisted Edwards curve are the same as the maximum number.
+
+We further analyze which terms are missing from the summation
+polynomials for curves in different forms.
+%
+We classify terms into odd vs.~even degrees.
+%
+From Table~\ref{tb:terms}, missing of only odd terms on twisted Edwards
+curve reduce the number of terms.
+
+\input{tEdwards}
+
+
+\subsection{Relation between Rank and factor base}
+
+Last but not least, we report rank information in each of the four
+curves under invesigation.
+%
+We note that the action of $S_m$ will not contribute to rank, as
+permutations of a point decomposition do not give any new relations.
+%
+As previewed in Section~\ref{sec:symmetry-decomposition-probability},
+we would expect that the effect of the decrease in decomposition
+probability due to additional symmetry in a factor base $\mathcal F$
+can be offset by that of the increase in number of solutions.
+%
+Again using the example of group action of adding $T_2$ in
+Section~\ref{sec:exploit-symmetry}, if we could get $2^{m-1}$
+solutions, then the loss of the factor of $2^{m-1}$ in decomposition
+probability would be compensated, and everything would be the same as
+if there were no such symmetry.
+
+Unfortunately, this proposition is \emph{false} in general.
+%
+Consider an example of $m=4$.
+%
+Let $Q_i=P_i+ T_2$ for $i=1,2,3,4$.
+%
+We can write down all $2^{m-1}=8$ possible ways of point decomposition
+under this group action:
+%
+\[ \begin{aligned}
+P_1 + P_2 + P_3 + P_4 = & Q_1 + Q_2 + P_3 + P_4 \\
+= Q_1 + P_2 + Q_3 + P_4 = & Q_1 + P_2 + P_3 + Q_4 \\
+= P_1 + Q_2 + Q_3 + P_4 = & P_1 + Q_2 + P_3 + Q_4 \\
+= P_1 + P_2 + Q_3 + Q_4 = & Q_1 + Q_2 + Q_3 + Q_4.
+\end{aligned} \]
+%
+It is easy to find that we have only 5 linearly independent relations
+from these 8 relations, as there are nontrivial linear combinations
+summing to zero, e.g.:
+\[ (P_1 + P_2 + P_3 + P_4) - (Q_1 + Q_2 + P_3 + P_4) - (P_1 + P_2 +
+  Q_3 + Q_4) + (Q_1 + Q_2 + Q_3 + Q_4) = \mathcal O.\]
+
+
+As explained in Section~\ref{subsec:conditions}, the factor bases for
+Montgomery and twisted Edwards curves are invariant under addition of
+2-torsion point.
+%
+For $m=3$, we achieve maximum rank of $2^{m-1}=4$.
+%
+For $m=4$, as we have explained above, we can only have rank $5$, 
+which is strictly less than the maximum possible rank $2^{m-1}=8$.
+
+Finally, we note that we have not exploited any symmetry for Hessian
+curves in our experiments.
+%
+However, the rank for experiments with Hessian curves is always 1.
+%
+This shows that the factor base we have chosen for Hessian curves is
+\emph{not} invariant under addition of small torsion points, as the
+rank would be $>1$ were it the case.
+
+
+
+
+

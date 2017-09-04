@@ -2,20 +2,20 @@
 % Isomorphisms among curves in various forms
 %
 
-\section{Isomorphisms among curves in various forms}
-\label{sec:isomorphism}
+% \section{Isomorphisms among curves in various forms}
+% \label{sec:isomorphism}
 
-We study elliptic curves in four different forms: Hessian ($H$),
-Weierstrass ($W$), Montgomery ($M$), and twisted Edwards ($tE$).
 %
-In order to make an apple-to-apple comparison, we will experiment on
-curves that are isomorphic to one another over \F{p^n}.
+To make an apple-to-apple comparison, we use curves in different forms
+but are nonetheless isomorphic to one another over \F{p^n}, as
+explained in Section~\ref{sec:isomorphism}.
 %
 That is, $H(\F{p^n})\cong W(\F{p^n})\cong M(\F{p^n})\cong tE(\F{p^n})$
 as groups.
 %
-In this section, we present the isomorphisms that we will use in our
-experiments.
+In other words, the curves in different forms have the same
+j-invariant, and we consider the ECDLP in the same (largest)
+prime-order subgroup in each of the experiments.
 %
 We will also state whether the factor base will be invariant under the
 action of addition of 2-torsion points for each of the four forms
@@ -25,7 +25,7 @@ We start from a Hessian curve $H_d$ satisfying $x^3 + y^3 + 1 = 3dxy$
 for $d\in\F{p^n}$ such that the number of its rational points
 $\#H_d(\F{p^n})$ is divisible by 12.
 %
-As we have seen in Section~\ref{sec:hessian}, the factor base of $H_d$
+As we have seen in Section~\ref{sec:hessian-t2}, the factor base of $H_d$
 is in general not invariant under the addition of 2-torsion points.
 %
 From $H_d$, we can obtain an isomorphic Weierstrass curve $W_{a,b}$
