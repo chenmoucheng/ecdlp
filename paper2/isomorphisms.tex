@@ -6,27 +6,23 @@
 % \label{sec:isomorphism}
 
 %
-To make an apple-to-apple comparison, we use curves in different forms
-but are nonetheless isomorphic to one another over \F{p^n}, as
-explained in Section~\ref{sec:isomorphism}.
+To make a fair comparison, we use curves in different forms but are
+nonetheless isomorphic to one another over \F{p^n}.
 %
 That is, $H(\F{p^n})\cong W(\F{p^n})\cong M(\F{p^n})\cong tE(\F{p^n})$
-as groups.
+as groups, and we consider ECDLP in the same largest prime-order
+subgroup.
 %
-In other words, the curves in different forms have the same
-j-invariant, and we consider the ECDLP in the same (largest)
-prime-order subgroup in each of the experiments.
-%
-We will also state whether the factor base will be invariant under the
-action of addition of 2-torsion points for each of the four forms
-under investigation.
+We will also explicitly state whether the factor base is invariant
+under addition of 2-torsion points for each of the four forms under
+investigation.
 
 We start from a Hessian curve $H_d$ satisfying $x^3 + y^3 + 1 = 3dxy$
 for $d\in\F{p^n}$ such that the number of its rational points
 $\#H_d(\F{p^n})$ is divisible by 12.
 %
-As we have seen in Section~\ref{sec:hessian-t2}, the factor base of $H_d$
-is in general not invariant under the addition of 2-torsion points.
+As we have seen in Section~\ref{sec:hessian-t2}, the factor base of
+$H_d$ is in general not invariant under addition of 2-torsion points.
 %
 From $H_d$, we can obtain an isomorphic Weierstrass curve $W_{a,b}$
 satisfying $y^2 = x^3 + ax + b$ for $a = - 27d(d^3 + 8)$ and
@@ -34,19 +30,17 @@ $b = 54(d^6 - 20d^3 - 8)$~\cite{DBLP:conf/ches/Smart01}.
 %
 The isomorphism $\phi_{W,H}$ from $W_{a,b}(\F{p^n})$ to $H_d(\F{p^n})$
 is defined over $\F{p^n}$ and is given by sending $(u,v)\in W_{a,b}$
-to $(x,y)\in H_d$ where
+to $(x,y)\in H_d$, where
 \[ \left\{\begin{aligned}
-x = & \frac{36(d^3 - 1) - v}{6(u + 9d^2)} - \frac{d}{2}, \\
-y = & \frac{36(d^3 - 1) + v}{6(u + 9d^2)} - \frac{d}{2}.
-\end{aligned}\right. \]
+      x = & \frac{36(d^3 - 1) - v}{6(u + 9d^2)} - \frac{d}{2}, \\
+      y = & \frac{36(d^3 - 1) + v}{6(u + 9d^2)} - \frac{d}{2}.
+    \end{aligned}\right. \text{The inverse $\phi_{H,W}$ is given by }
+  \left\{\begin{aligned}
+      u = & \frac{12(d^3 - 1)}{d + x + y} - 9d^2, \\
+      v = & \frac{36(d^3 - 1)(y - x)}{d + x + y}.
+    \end{aligned}\right. \]
 %
-The inverse $\phi_{H,W}$ is given by
-\[ \left\{\begin{aligned}
-u = & \frac{12(d^3 - 1)}{d + x + y} - 9d^2, \\
-v = & \frac{36(d^3 - 1)(y - x)}{d + x + y}.
-\end{aligned}\right. \]
-%
-The factor base of $W_{a,b}$ is in general not invariant under the
+The factor base of $W_{a,b}$ is in general not invariant under
 addition of 2-torsion points~\cite{DBLP:journals/joc/FaugereGHR14}.
 
 With a high probability, we can obtain a Montgomery curve $M_{A,B}$
@@ -58,38 +52,33 @@ a = & \frac{3 - A^2}{3B^2}, \\
 b = & \frac{2A^3 - 9A}{27B^3}.
 \end{aligned}\right. \]
 %
-The isomorphism $\phi_{W,M}$ is defined over
-$\F{p^n}$ and is given by sending $(u,v)\in W_{a,b}$ to
-$(x,y)\in M_{A,B}$ where $x = Bu - 1/3A$ and $y = Bv$.
+The isomorphism $\phi_{W,M}$ is defined over $\F{p^n}$ and is given by
+sending $(u,v)\in W_{a,b}$ to $(x,y)\in M_{A,B}$ for $x = Bu - 1/3A$
+and $y = Bv$.
 %
 The inverse $\phi_{M,W}$ can be obtained by equation solving.
 %
 As we have seen in Section~\ref{sec:montgomery-symmetry}, the factor
-base is invariant under the addition of a particular 2-torsion point
+base is invariant under addition of a particular 2-torsion point
 $(0,0)$, though we are not able to exploit this symmetry in general.
 
 Finally, we can obtain a twisted Edwards curve $tE_{a',d'}$ satisfying
-$a'x^2 + y^2 = 1 + d'x^2y^2$ from $M_{A,B}$ by taking
-\[ \left\{\begin{aligned}
-a' = & \frac{A + 2}{B}, \\
-d' = & \frac{A - 2}{B}.
-\end{aligned}\right. \]
+$a'x^2 + y^2 = 1 + d'x^2y^2$ from $M_{A,B}$ by taking $a' = (A + 2)/B$
+and $d' = (A - 2)/B$.
 %
 Again we let $a_0=1/(a' - d')$ be the amount of quadratic twist.
 %
 The isomorphism $\phi_{W,tE}$ is defined over $\F{p^n}$ and given by
-sending $(u,v)\in W_{a,b}$ to $(x,y)\in tE_{a',d'}$ where
+sending $(u,v)\in W_{a,b}$ to $(x,y)\in tE_{a',d'}$, where
 \[ \left\{\begin{aligned}
-x = & \frac{2a_0u}{v}, \\
-y = & \frac{u - a_0}{u + a_0}.
-\end{aligned}\right. \]
-%
-The inverse $\phi_{tE,W}$ is given by
-\[ \left\{\begin{aligned}
-u = & \frac{a_0(1 + y)}{1 - y}, \\
-v = & \frac{2a_0^2(1 + y)}{x(1 - y)}.
-\end{aligned}\right. \]
-%
+      x = & \frac{2a_0u}{v}, \\
+      y = & \frac{u - a_0}{u + a_0}.
+    \end{aligned}\right. \text{The inverse $\phi_{tE,W}$ is given by }
+  \left\{\begin{aligned}
+      u = & \frac{a_0(1 + y)}{1 - y}, \\
+      v = & \frac{2a_0^2(1 + y)}{x(1 - y)}.
+    \end{aligned}\right. \]
+% 
 As shown by Faug\`ere, Gaudry, Hout, and
 Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the factor base is
-invariant under the addition of the 2-torsion point $(0,-1)$.
+invariant under addition of the 2-torsion point $(0,-1)$.

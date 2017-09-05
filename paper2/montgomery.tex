@@ -16,39 +16,37 @@ For $P=(x,y)\in M_{A,B}$, $-P=(x,-y)$.
 Furthermore, the addition and doubling formulae for
 $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
 %
-\begin{itemize}
-\item When $(x_1,y_1)\neq(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = B\left(\frac{y_2 - y_1} {x_2 - x_1}\right)^2 - A - x_1 - x_2 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2} \\
-    y_3 & = \frac{(2x_1 + x_2 + A)(y_2 - y_1)} {x_2 - x_1} - \frac{B(y_2 - y_1)^3} {(x_2 - x_1)^3} - y_1
-  \end{align*}
-\item When $(x_1,y_1)=(x_2,y_2)$:
-  \begin{align*}
-    x_3 & = \frac{(x_1^2 - 1)^2} {4x_1(x_1^2 + Ax_1 + 1)}  \\
-    y_3 & = \frac{(2x_1 + x_1 + A)(3x_1^2 + 2Ax_1 + 1)} {2By_1} - \frac{B(3x_1^2 + 2Ax_1 + 1)^3} {(2By_1)^3} - y_1
-  \end{align*}
-\end{itemize}
+\[ \text{When }(x_1,y_1)\neq(x_2,y_2):\left\{\begin{aligned}
+      x_3 & = B\left(\frac{y_2 - y_1} {x_2 - x_1}\right)^2 - A - x_1 - x_2 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2}, \\
+      y_3 & = \frac{(2x_1 + x_2 + A)(y_2 - y_1)} {x_2 - x_1} -
+      \frac{B(y_2 - y_1)^3} {(x_2 - x_1)^3} - y_1.
+    \end{aligned}\right. \] \[ \text{When }(x_1,y_1)=(x_2,y_2):\left\{\begin{aligned}
+      x_3 & = \frac{(x_1^2 - 1)^2} {4x_1(x_1^2 + Ax_1 + 1)},  \\
+      y_3 & = \frac{(2x_1 + x_1 + A)(3x_1^2 + 2Ax_1 + 1)} {2By_1} -
+      \frac{B(3x_1^2 + 2Ax_1 + 1)^3} {(2By_1)^3} - y_1.
+  \end{aligned}\right. \]
 %
 It was noted by Montgomery himself in his original paper that such
 curves can give rise to efficient scalar multiplication
 algorithms~\cite{1987-montgomery}.
 %
-Consider a random point $P\in M_{A,B}(\F{p^n})$ and let
-$nP=(X_n:Y_n:Z_n)$ in projective coordinate for any integer $n$.
+That is, consider a random point $P\in M_{A,B}(\F{p^n})$ and let
+$nP=(X_n:Y_n:Z_n)$ in projective coordinates for some integer $n$.
 %
 Then:
 %
-\begin{align*}
-  X_{m+n} & = Z_{m-n}[(X_m - Z_m)(X_n + Z_n) + (X_m + Z_m)(X_n - Z_n)]^2 \\
-  Z_{m+n} & = X_{m-n}[(X_m - Z_m)(X_n + Z_n) - (X_m + Z_m)(X_n - Z_n)]^2
-\end{align*}
+\[ \left\{\begin{aligned}
+      X_{m+n} & = Z_{m-n}[(X_m - Z_m)(X_n + Z_n) + (X_m + Z_m)(X_n - Z_n)]^2, \\
+      Z_{m+n} & = X_{m-n}[(X_m - Z_m)(X_n + Z_n) - (X_m + Z_m)(X_n -
+      Z_n)]^2.
+    \end{aligned}\right. \]
 %
 In particular, when $m=n$:
-\begin{align*}
-  X_{2n} & = (X_n + Z_n)^2(X_n - Z_n)^2 \\
-  Z_{2n} & = (4X_nZ_n)\left((X_n - Z_n)^2 + ((A+2)/4)(4X_nZ_n)\right) \\
-  4X_nZ_n & = ( X_n + Z_n)^2 - (X_n - Z_n)^2
-\end{align*}
+\[ \left\{\begin{aligned}
+      X_{2n} & = (X_n + Z_n)^2(X_n - Z_n)^2, \\
+      Z_{2n} & = (4X_nZ_n)\left((X_n - Z_n)^2 + ((A+2)/4)(4X_nZ_n)\right), \\
+      4X_nZ_n & = ( X_n + Z_n)^2 - (X_n - Z_n)^2.
+    \end{aligned}\right. \]
 %
 In this way, scalar multiplication on Montgomery curve can be
 performed without using $y$-coordinates, leading to fast
@@ -67,16 +65,15 @@ $Q=(x_2, y_2)$.
 %
 Let $P+Q=(x_3, y_3)$ and $P-Q=(x_4, y_4)$.
 %
-By addition formula, we have
+By the addition formula, we have
 \[ x_3 = \frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 - x_1)^2},
   x_4 =\frac{B(x_2y_1 - x_1y_2)^2} {x_1x_2(x_2 + x_1)^2}. \]
 %
 It follows that
 %
-\begin{align*}
-  x_3 + x_4&=\frac{2\left((x_1 + x_2)(x_1x_2 + 1) + 2Ax_1x_2\right)}{(x_1 - x_2)^2},\text{ and} \\
-  x_3x_4&=\frac{(1 - x_1x_2)^2}{(x_1 - x_2)^2}.
-\end{align*}
+\[ \left\{\begin{aligned} x_3 + x_4&=\frac{2\left((x_1 + x_2)(x_1x_2 + 1) + 2Ax_1x_2\right)}{(x_1 - x_2)^2}, \\
+      x_3x_4&=\frac{(1 - x_1x_2)^2}{(x_1 - x_2)^2}.
+    \end{aligned}\right. \]
 %
 Using the relationship between the roots of a quadratic polynomial and
 its coefficients, we obtain
@@ -94,7 +91,8 @@ as well as the subsequent summation polynomials via taking resultants:
 
   
 %--------------------------------
-\subsection{Action of 2-torsion points for Montgomery curves} \label{subsec:TSPL}
+\subsection{Small torsion points on Montgomery
+  curves} \label{subsec:TSPL}
 %------------------------
 A Montgomery curve always contains an affine 2-torsion point $T_2$.
 %
@@ -109,12 +107,12 @@ we get an equation $x^3+Ax^2+x=0$.
 The lefthand side factors into $x(x^2+Ax+1)=0$, so we get \[
   x=0,\frac{-A\pm\sqrt{A^2 - 4}}{2}. \]
 %
-Therefore, the set of points in a definition field $F_{p^n}$
-on a Montgomery curve includes
-at least two 2-torsion points, namely, $\mathcal O$ and $(0,0)$.
+Therefore, the set of rational points over the definition field
+$F_{p^n}$ of a Montgomery curve includes at least two 2-torsion
+points, namely, $\mathcal O$ and $(0,0)$.
 %
 The other 2-torsion points may or may not be rational, so we will
-focus on the 2-torsion point $(0,0)$ in this paper.
+focus on $(0,0)$ in this paper.
 %
 Substituting $(x_2,y_2)=(0,0)$ into the addition formula for
 Montgomery curves, we get that for any point $P=(x,y)\in M_{A,B}$,
@@ -123,7 +121,7 @@ $P+(0,0)=(1/x,-y/x^2)$.
 To be able to exploit the symmetry of addition of $T_2=(0,0)$, we need
 to choose the factor base
 $\mathcal F=\{(x,y)\in E(\F{p^n}):x\in V\subset\F{p^n}\}$ invariant
-under addition of the 2-torsion point.
+under addition of $T_2$.
 %
 This means that $V$ needs to be closed under taking multiplicative
 inverses.
@@ -135,9 +133,8 @@ In this case, $f_m$ is invariant under the action of
 $x_i\mapsto 1/x_i$.
 %
 Unfortunately, such an action is not linear and hence not easy to
-handle in polynomial system solving process.
+handle in polynomial system solving.
 %
 How to take advantage of such kind of symmetry in PDP is still an open
-problem in the research direction of solving ECDLP using index
-calculus algorithms.
+research problem.
 

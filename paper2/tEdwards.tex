@@ -2,7 +2,7 @@
 % (twisted) Edwards curve
 %
 
-\subsection{What summation polynomials are easier to solve?}
+\subsection{Which terms are missing for (twisted) Edwards curves?}
 \label{sec:twisted-edwards-summation-polynomial}
 
 % In this section, we present the main result of this paper, namely,
@@ -30,25 +30,23 @@
 % forms.
 
 
-We will show that the summation polynomials for (twisted) Edwards form
-of elliptic curves \emph{mainly} have terms of \emph{even} degrees.
+In this section, we will show that the summation polynomials for
+(twisted) Edwards curves \emph{mainly} have terms of \emph{even}
+degrees.
 %
-The set of terms of even degrees are closed under multiplication, so
-intuitively polynomials mainly consisting of even-degree terms also
-``generate'' such kind of polynomials after taking resultants.
-%
-We believe that this kind of summation polynomials are easier to
-solve, which is main reason for the efficiency gain observed in the
-case of (twisted) Edwards curves.
+The set of terms of even degrees is closed under multiplication, so
+intuitively this kind of polynomials are easier to solve, which can be
+the main reason for the efficiency gain observed in the case of
+(twisted) Edwards curves.
 
-We shall make such intuition precise in Theorem~\ref{th:main}, but
-before we state the main result, we need to clarify some of our
-terminology for ease of exposition.
+We shall make this intuition precise in Theorem~\ref{th:main}, but
+before we state the main result, we need to clarify our terminology
+for ease of exposition.
 %
 When a multivariate polynomial is regarded as a univariate polynomial
 in one of its variables $T$, we say that the coefficient $a_i$ of a
-term $a_iT^i$ is an \emph{even- or odd-degree coefficient} depending
-on whether $i$ is even or odd, respectively.
+term $a_iT^i$ is an \emph{even or odd-degree coefficient} depending on
+whether $i$ is even or odd, respectively.
 %
 Note that these coefficients are themselves multivariate polynomials
 in one fewer variables.
@@ -64,15 +62,15 @@ $e_i$ are even; it is \emph{of (homogeneous) odd parity} if all $e_i$
 are odd.
 %
 A monomial is \emph{of homogeneous parity} if it is either of
-homogeneous even parity or of homogeneous odd parity.
+homogeneous even or odd parity.
 %
 Note that the definition of monomials of odd parity depends on the
 total number of variables in the polynomial, which is not the case for
 monomials of even parity because we regard 0 as even.
 %
 For example, the monomial $x_1x_2$ is a monomial of odd parity in a
-polynomial in $x_1$ and $x_2$ but not any more in another polynomial
-in $x_1,\ldots,x_n$ for $n>2$.
+polynomial in $x_1$ and $x_2$ but not so in another polynomial in
+$x_1,\ldots,x_n$ for $n>2$.
 
 By abuse of language, we say that a polynomial is \emph{of even or odd
   parity} if it is a linear combination of monomials of even or odd
@@ -80,52 +78,52 @@ parity, respectively; that a polynomial is \emph{of homogeneous
   parity} if it is a linear combination of monomials of homogeneous
 parity.
 %
-The set of polynomials of even parity are closed under addition and
-multiplication and hence forms a subring.
+The set of polynomials of even parity is closed under polynomial
+addition and multiplication and hence forms a subring.
 %
-On the other hand, a polynomial $f$ in $x_1,\ldots,x_n$ of homogeneous
-odd parity has the form
-$\sum_i c_i\left(\prod_{j=1} x_j^{e_{ij}}\right)$, for $e_{ij}$ odd.
+On the other hand, a polynomial $f$ in $x_1,\ldots,x_n$ of odd parity
+must have the form $\sum_i c_i\left(\prod_{j=1} x_j^{e_{ij}}\right)$,
+for $e_{ij}$ odd.
 %
-Therefore, if $f$ is a polynomial of homogeneous odd parity and $g$, a
-polynomial of even parity, then $fg$ is a polynomial of odd parity.
+Therefore, if $f$ is a polynomial of odd parity and $g$, a polynomial
+of even parity, then $fg$ must be of odd parity.
 
 \begin{theorem}
   % 
   \label{th:main}
   % 
   Let $\mathcal E$ be a family of elliptic curves such that its 3rd
-  summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
+  summation polynomial $f_{\mathcal E,3}(X_1,X_2,X_3)$ is of degree 2
   in each variable $X_i$ and of homogeneous parity.
   % 
-  Let $g_{m,\mathcal E}$ be the polynomial corresponding to the PDP of
+  Let $g_{\mathcal E,m}$ be the polynomial corresponding to the PDP of
   $m$-th order for $\mathcal E$ as described in
   Section~\ref{sec:summation-polynomial}.
   % 
   That is,
-  $g_{m,\mathcal E}(X_1,\ldots,X_m)=f_{m+1,\mathcal
-    E}(X_1,\ldots,X_m,x)$, where $x$ is a constant depending on the
-  point to be decomposed.
+  $g_{\mathcal E,m}(X_1,\ldots,X_m)=f_{\mathcal
+    E,m+1}(X_1,\ldots,X_m,x)$, where $x$ is a constant depending on
+  the point to be decomposed.
   % 
   \begin{enumerate}
     % 
-  \item If $m$ is even, then $g_{m,\mathcal E}$ has no monomials of
+  \item If $m$ is even, then $g_{\mathcal E,m}$ has no monomials of
     odd degrees.
     % 
-  \item If $m$ is odd, then $g_{m,\mathcal E}$ has some but not all
-    monomials of odd degrees, that is of homogenous parity.
+  \item If $m$ is odd, then $g_{\mathcal E,m}$ has some but not all
+    monomials of odd degrees.
     % 
   \end{enumerate}
   % 
 \end{theorem}
 %
-Among the four forms of elliptic curves presented in the last two
-sections, only the (twisted) Edwards form satisfies the premises of
+Among the four forms of elliptic curves that we have investigated in
+this paper, only the (twisted) Edwards form satisfies the premises of
 Theorem~\ref{th:main}.
 %
-As we will see in Section~\ref{sec:experiment}, the solving time for
-the summation polynomials of (twisted) Edwards form is thus
-significantly faster than that of the other forms.
+As we have seen in Section~\ref{sec:experiment}, the PDP solving time
+for the (twisted) Edwards form is thus significantly faster than that
+for the other forms.
 
 We will prove Theorem~\ref{th:main} in the rest of this section, for
 which we will need the following lemmas.
@@ -205,38 +203,38 @@ which we will need the following lemmas.
   \label{th:summation-polynomial}
   %
   Let $\mathcal E$ be a family of elliptic curves such that its 3rd
-  summation polynomial $f_{3,\mathcal E}(X_1,X_2,X_3)$ is of degree 2
+  summation polynomial $f_{\mathcal E,3}(X_1,X_2,X_3)$ is of degree 2
   in each variable $X_i$ and of homogeneous parity.
   % 
   Then any subsequent summation polynomial
-  $f_{m,\mathcal E}(X_1,\ldots,X_m)$ for $m>3$ is of homogeneous
+  $f_{\mathcal E,m}(X_1,\ldots,X_m)$ for $m>3$ is of homogeneous
   parity.
   % 
 \end{lemma}
 % 
 \begin{proof}
   %
-  As the summation polynomial $f_{m+1,\mathcal E}$ for
-  $m\geq 3$ is defined recursively from $f_{m,\mathcal E}$ and
-  $f_{3,\mathcal E}$ via taking resultants
-  \[ f_{m+1,\mathcal E}(X_1,\dots,X_{m+1}) = \res_X\left(f_{m,\mathcal
-        E}(X_1,\dots,X_{m-1},X),f_{3,\mathcal
-        E}(X_m,X_{m+1},X)\right), \]
+  As the summation polynomial $f_{\mathcal E,m+1}$ for $m\geq 3$ is
+  defined recursively from $f_{\mathcal E,m}$ and $f_{\mathcal E,3}$
+  via taking resultants
+  \[ f_{\mathcal E,m+1}(X_1,\dots,X_{m+1}) = \res_X\left(f_{\mathcal
+        E,m}(X_1,\dots,X_{m-1},X),f_{\mathcal
+        E,3}(X_m,X_{m+1},X)\right), \]
   % 
   we shall prove this lemma by induction on $m$.
   %
   Let
-  $f_{m,\mathcal
-    E}(X_1,\ldots,X_{m-1},X)=a_{2^{m-2}}X^{2^{m-2}}+\cdots+a_1X+a_0$
-  and $f_{3,\mathcal E}(X_m,X_{m+1},X)=b_2X^2+b_1X+b_0$.
+  $f_{\mathcal
+    E,m}(X_1,\ldots,X_{m-1},X)=a_{2^{m-2}}X^{2^{m-2}}+\cdots+a_1X+a_0$
+  and $f_{\mathcal E,3}(X_m,X_{m+1},X)=b_2X^2+b_1X+b_0$.
   % 
-  By the premises that $f_{3,\mathcal E}$ is of homogeneous parity,
+  By the premise that $f_{\mathcal E,3}$ is of homogeneous parity,
   $b_0$ and $b_2$ must consist only of monomials (in $X_m$ and
   $X_{m+1}$) of even parity.
   % 
   Furthermore, $b_1=cX_mX_{m+1}$ for some constant $c$.
   % 
-  This is because $f_{3,\mathcal E}$ is of degree 2 in each variable,
+  This is because $f_{\mathcal E,3}$ is of degree 2 in each variable,
   for which the only monomial of odd parity is $X_mX_{m+1}X$.
 
   Now consider a term $c_kX_{m+1}^k$ of
@@ -279,12 +277,12 @@ which we will need the following lemmas.
     % 
     By induction hypothesis, $a_{\beta_i}$ is a polynomial in
     $X_1,\ldots,X_{m-1}$ of odd parity because it comes from
-    $a_{\beta_i} X^{\beta_i}$ in $f_{m,\mathcal E}$.
+    $a_{\beta_i} X^{\beta_i}$ in $f_{\mathcal E,m}$.
     %
     It follows that each summand is a polynomial of odd parity because
     it is a product of a polynomial of even parity
-    ($a_{\gamma_i} b_0^{\delta_i} b_2^{\epsilon_i}$) and a polynomial
-    of odd parity ($a_{\beta_i} X_m^kX_{m+1}^k$).
+    $a_{\gamma_i} b_0^{\delta_i} b_2^{\epsilon_i}$ and a polynomial of
+    odd parity $a_{\beta_i} X_m^kX_{m+1}^k$.
     % 
     Hence $c_kX_{m+1}^k$ is a polynomial of odd parity.
     %
@@ -295,23 +293,23 @@ which we will need the following lemmas.
 \end{proof}
 
 By Lemma~\ref{th:summation-polynomial},
-$g_{m,\mathcal E}(X_1,\ldots,X_m)=f_{m+1,\mathcal
-  E}(X_1,\ldots,X_m,x)$ is of homogeneous parity.
+$g_{\mathcal E,m}(X_1,\ldots,X_m)=f_{\mathcal
+  E,m+1}(X_1,\ldots,X_m,x)$ is of homogeneous parity.
 %
 Obviously, the monomials of even parity will remain of even degree
 after $x$ is substituted.
 %
 If $m$ is even, then the monomials of odd parity in
-$f_{m+1,\mathcal E}$ will become of even degree after $x$ is
+$f_{\mathcal E,m+1}$ will become of even degree after $x$ is
 substituted because an even number of odd numbers sum to an even
 number.
 %
 Similarly if $m$ is odd, then the monomials of odd parity in
-$f_{m+1,\mathcal E}$ will become of odd degree after $x$ is
+$f_{\mathcal E,m+1}$ will become of odd degree after $x$ is
 substituted.
 %
 However, those odd-degree monomials that are \emph{not} of homogeneous
-parity, e.g., $X_1^2X_2$, cannot appear in $g_{m,\mathcal E}$ by
+parity, e.g., $X_1^2X_2$, cannot appear in $g_{\mathcal E,m}$ by
 Lemma~\ref{th:summation-polynomial}.
 %
 This completes the proof of Theorem~\ref{th:main}.

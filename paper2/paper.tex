@@ -7,7 +7,17 @@
 %
 \documentclass{llncs}
 %
-\usepackage{algpseudocode,amsfonts,amsmath,amssymb,mathrsfs,multirow,latexsym}
+\usepackage{algpseudocode,amsfonts,amsmath,amssymb}
+\usepackage[scale=.78]{geometry}
+% \geometry{
+%   a4paper,         % or letterpaper
+%   textwidth=15cm,  % llncs has 12.2cm
+%   textheight=24cm, % llncs has 19.3cm
+%   heightrounded,   % integer number of lines
+%   hratio=1:1,      % horizontally centered
+%   vratio=2:3,      % not vertically centered
+% }
+\usepackage{latexsym,mathrsfs,multirow}
 %
 \DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\res}{Res}
@@ -22,7 +32,7 @@
 \begin{document}
 %
 \title{On the computational complexity of ECDLP for elliptic curves in
-  various forms}
+  various forms using index calculus}
 %
 %\titlerunning{}
 %
@@ -44,8 +54,8 @@
   exponential-time, generic discrete logarithm algorithms such as
   Pollard's rho method~\cite{1978-pollard-kangaroo}.
 %
-  Recently, there is a line of research on index calculus algorithms
-  for ECDLP started by Semaev, Gaudry, and
+  Recently, there is a line of research on index calculus for ECDLP
+  started by Semaev, Gaudry, and
   Diem~\cite{DBLP:journals/iacr/Semaev04,DBLP:journals/jsc/Gaudry09,DBLP:journals/moc/Diem11}.
 %
   Under certain heuristic assumptions, such algorithms could lead to
@@ -57,25 +67,25 @@
   Hessian~\cite{DBLP:conf/ches/Smart01},
   Montgomery~\cite{1987-montgomery}, (twisted)
   Edwards~\cite{DBLP:journals/iacr/BernsteinL07,DBLP:journals/iacr/BernsteinBJLP08},
-  and Weierstrass using index calculus algorithms.
+  and Weierstrass using index calculus.
 %
   The research question we would like to answer is: Using index
-  calculus algorithm, is there any significant difference in the
-  computational complexity of solving ECDLP for elliptic curves in
-  various forms?
+  calculus, is there any significant difference in the computational
+  complexity of solving ECDLP for elliptic curves in various forms?
 %
   We will provide some insights and empirical evidence showing an
   affirmative answer in this paper.
 %
-  \keywords{ECDLP, index calculus, elliptic curves cryptography,
-    security evaluation}
+  \keywords{ECDLP, index calculus, summation polynomial, security
+    evaluation}
 \end{abstract}
 
 \input{introduction}
 \input{index-calculus}
-\section{Montgomery curves and Hessian curves}
-  \input{montgomery}
-  \input{hessian}
+\section{Montgomery and Hessian curves}
+\label{sec:montgomery-hessian}
+\input{montgomery}
+\input{hessian}
 \input{experiment}
 \input{analysis}
 
