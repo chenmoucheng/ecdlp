@@ -1,10 +1,10 @@
 \section{Experiments on PDP solving}
 \label{sec:experiment}
 
-We have conducted a set of experiments to compare the difficulty of
-solving ECDLP for four different curves: Hessian($H$), Weierstrass($W$),
-Montgomery($M$), and twisted Edwards($tE$) over \F{p^n}.
-%
+In this section, we report the set of experiments we have conducted to
+compare the computational complexity of PDP on four different curves:
+Hessian($H$), Weierstrass($W$), Montgomery($M$), and twisted
+Edwards($tE$).
 
 \subsection{Experimental setup}
 \label{subsec:conditions}
@@ -12,11 +12,11 @@ Montgomery($M$), and twisted Edwards($tE$) over \F{p^n}.
 \input{isomorphisms}
 
 As explained in Section~\ref{sec:index-calculus-ecdlp}, we focus on
-PDP computation in these experiments, as the linear algebra step is
-already well understood.
+PDP in these experiments, as the linear algebra step is already well
+understood.
 %
 Furthermore, we focus on the bottleneck computation in PDP, namely,
-the cost of the F4 algorithm for computing Gr\"obner bases for
+the cost of the F4 algorithm for computing Gr\"obner bases of the
 polynomial systems obtained after rewriting using the elementary
 symmetric polynomials and applying the Weil restriction technique to
 summation polynomials.
@@ -24,12 +24,12 @@ summation polynomials.
 This way we will be taking advantage of the symmetry of $S_m$ acting
 on point decompositions.
 % 
-However, we \emph{did not} exploit the symmetry of other group actions
-than that of $S_m$.
+However, we \emph{did not} exploit symmetry of any other group
+actions.
 %
 This is because we want to compare the \emph{intrinsic} computational
-complexity of PDP solving for various curves and hence only consider
-the symmetry that is present in \emph{all} curves.
+complexity of PDP and hence only consider the symmetry that is present
+in \emph{all} curves.
 %
 Exploiting further curve-specific symmetry whenever possible will
 result in further speed-up, but it would be independent of our
@@ -44,7 +44,7 @@ degree reached during the execution of the F4 algorithm.
 %
 The last metric is usually referred to as the ``degree of regularity''
 in the literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, which
-provides an upper bound for the size of the Macaulay submatrices
+provides an upper bound for the sizes of the Macaulay submatrices
 involved in the computation.
 %
 The ``Matcost'' is a number output by the MAGMA implementation of the
@@ -56,7 +56,7 @@ relations we obtain once successfully solving a PDP instance.
 %
 It is an important factor to consider, as it determines how many PDP
 instances we need to successfully solve in order to have enough
-relations to complete an index calculus attack against ECDLP.
+relations for a complete ECDLP attack using index calculus.
 
 \subsection{Experimental results}
 %
@@ -64,21 +64,21 @@ relations to complete an index calculus attack against ECDLP.
 
 We present our experimental results for the case of $n=5$.
 %
-Here our factor base is determined by taking $V$ as the base field \F
-p of \F{p^n}.
+Here we choose our factor base by taking $V$ as the base field \F p of
+\F{p^n}.
 %
 \input{result1}
 
 We can clearly see that the PDP solving time and Matcost for twisted
-Edwards curves is much smaller than the other curves for different $q$
-and $m$.
+Edwards curves are much smaller than those for the other curves.
 %
 In contrast, the degree of regularity for Montgomery and twisted
-Edwards curves is smaller than the other curves in the case of $m=4$.
+Edwards curves is smaller than that of the other curves in the case of
+$m=4$.
 %
 Also, we can see that the rank for Hessian and Weierstrass curves is 1
-in all cases, where for Montgomery and twisted Edwards curves, it is 4
-and 5 in the case of $m=3$ and $m=4$, respectively.
+in all cases, whereas for Montgomery and twisted Edwards curves, it is
+4 and 5 in the case of $m=3$ and $m=4$, respectively.
 %
 % We further analyze which terms are missing from the summation
 % polynomials for curves in different forms.

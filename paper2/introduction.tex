@@ -9,12 +9,11 @@ deployment, as it can achieve the same level of security as RSA using
 much shorter keys and ciphertexts.
 %
 The security of elliptic curve cryptography is closely related to the
-computational complexity of solving the elliptic curve discrete
-logarithm problem (ECDLP).
+computational complexity of the elliptic curve discrete logarithm
+problem (ECDLP).
 %
 Let $p$ be a prime number and $E$, a nonsingular elliptic curve over
-\F{p^n}, the finite field of $p^n$ elements for some positive integer
-$n$.
+\F{p^n}, the finite field of $p^n$ elements.
 %
 That is, $E$ is a plane algebraic curve defined by the equation
 $y^2=x^3+ax+b$ for $a,b\in\F{p^n}$ such that
@@ -45,8 +44,8 @@ Gaudry for a more comprehensive and in-depth account of the recent
 development of ECDLP algorithms along various
 directions~\cite{DBLP:journals/dcc/GalbraithG16}.
 
-In this paper, we investigate the computational complexity of solving
-ECDLP for elliptic curves in various forms---including
+In this paper, we investigate the computational complexity of ECDLP
+for elliptic curves in various forms---including
 Hessian~\cite{DBLP:conf/ches/Smart01},
 Montgomery~\cite{1987-montgomery}, (twisted)
 Edwards~\cite{DBLP:journals/iacr/BernsteinL07,DBLP:journals/iacr/BernsteinBJLP08},
@@ -54,7 +53,7 @@ and Weierstrass using index calculus.
 %
 Recently, elliptic curves of various forms such as
 Curve25519~\cite{DBLP:conf/pkc/Bernstein06} have been drawing a lot of
-attention in deployment, partly because some of them allow fast
+attention in deployment, partly because some of them allow for fast
 implementation and security against timing-based side channel attacks.
 %
 Furthermore, we can construct these curves not only over prime fields
@@ -74,24 +73,23 @@ integer arithmetics on modern
 microprocessors~\cite{DBLP:conf/crypto/BaileyP98}.
 %
 As we will see, our experimental results show quite significant
-difference in the computational complexity of solving ECDLP for
-elliptic curves in various forms over OEFs.
+difference in the computational complexity of ECDLP for elliptic
+curves in various forms over OEFs.
 
 The rest of this paper is organized as follows.
 %
 In Section~\ref{sec:previous-work}, we will review the relevant
-literature, giving an high-level overview for solving ECDLP using
+literature, giving an high-level overview of attacking ECDLP using
 index calculus and the state of the art in this research direction.
 %
 In Section~\ref{sec:montgomery-hessian}, we will present how we can
 attack ECDLP using index calculus for elliptic curves in Montgomery
 and Hessian forms.
 %
-In Section~\ref{sec:experiment}, we experimentally compare the
-computational complexity of index calculus for elliptic curves in
-various forms.
+In Section~\ref{sec:experiment}, we will experimentally compare its
+computational complexity for elliptic curves in various forms.
 %
-Finally, we conclude this paper by analyzing why ECDLP for elliptic
-curves in certain forms may be ``easier'' to attack using index
-calculus in Section~\ref{sec:analysis}.
+Finally, we will conclude this paper by analyzing why ECDLP for
+elliptic curves in certain forms may be ``easier'' to attack using
+index calculus in Section~\ref{sec:analysis}.
 %

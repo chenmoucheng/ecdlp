@@ -14,20 +14,19 @@ basis of $\mathscr S_{D_n}$ in comparison with the Weierstrass case,''
 cf.~Section~4.1.1 of their
 paper~\cite{DBLP:journals/joc/FaugereGHR14}.
 %
-Unfortunately, this \emph{cannot} explain the difference in solving
-time between (twisted) Edwards and Montgomery forms, as the highest
-degrees appearing in the computation of Gr\"obner bases are \emph{the
-  same} for these two forms.
+Unfortunately, this \emph{cannot} explain the difference between
+(twisted) Edwards and Montgomery curves, as the highest degrees
+appearing in the computation of Gr\"obner bases are \emph{the same}
+for these two curves.
 %
-Therefore, there must be other reasons, which we will explore further
-in this section.
+Therefore, there must be other reasons.
 %
-Table~\ref{tb:terms} shows the sparsity before and after Weil
-restriction for each of the four curves under investigation in the
-case of $m=2,3,4$.
+Table~\ref{tb:terms} shows the sparsity of the polynomials before and
+after Weil restriction for each of the four curves under investigation
+in the case of $m=2,3,4$.
 %
-As there are $n$ equations after Weil restriction, we are only showing
-the average numbers.
+As there are $n$ polynomials after Weil restriction, we only show the
+average numbers here.
 %
 We also include the maximum number of terms for a polynomial of degree
 $2^{(m+1)-2}$ in $m$ variables.
@@ -37,12 +36,12 @@ $2^{(m+1)-2}$ in $m$ variables.
 We can see that total number of terms for twisted Edwards curves is
 significantly fewer than that for the other curves in all cases.
 %
-Naturally, this could lead to smaller matrices and hence faster
-solving time with the F4 algorithm.
+Naturally, this could lead to faster solving time with the F4
+algorithm.
 %
 We also note that, except for twisted Edwards curves, the summation
-polynomials for the other curves are all 100\% dense without any
-missing terms.
+polynomials before Weil restriction for the other curves are all 100\%
+dense without any missing terms.
 
 % We further analyze which terms are missing from the summation
 % polynomials for curves in different forms.
@@ -56,12 +55,11 @@ missing terms.
 
 
 \subsection{What price for a highly symmetric factor base?}
+\label{sec:price}
 
 Last but not least, we discuss the price needed to pay to have a
-highly symmetric factor base $\mathcal F$ that is invariant under
-additional group actions than that of the symmetric group $S_m$.
-%
-We first note that the action of $S_m$ do not give any new relations.
+highly symmetric factor base $\mathcal F$ that is invariant under more
+group actions in addition to that of the symmetric group $S_m$.
 %
 As previewed in Section~\ref{sec:symmetry-decomposition-probability},
 we would expect that the effect of the decrease in decomposition

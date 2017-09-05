@@ -25,8 +25,7 @@ $Q\in\langle P\rangle$.
 \item Collect a set $\mathcal R$ of \emph{relations} by decomposing
   random points $a_iP+b_iQ$ into a sum of points from $\mathcal F$,
   i.e.,
-  \[ \mathcal
-    R=\left\{a_iP+b_iQ=\sum_{j=1}^mP_{i,j}:P_{i,j}\in\mathcal
+  \[ \mathcal R=\left\{a_iP+b_iQ=\sum_jP_{i,j}:P_{i,j}\in\mathcal
       F\right\}. \]
 %
 \item When $|\mathcal R|\approx|\mathcal F|$, eliminate the righthand
@@ -56,11 +55,12 @@ $P_1,\dots,P_m\in\mathcal F$ such that \[ R=P_1 + \cdots + P_m. \]
 We can solve PDP by considering when a set of points sum to zero on an
 elliptic curve.
 %
-It is straightforward that if two points sum to zero on a Weierstrass
-curve, then their $x$-coordinates must be equal.
+It is straightforward that if two points sum to zero on an elliptic
+curve $E: y^2=x^3+ax+b$ in Weierstrass form, then their
+$x$-coordinates must be equal.
 %
 Let us now consider the simplest yet nontrivial case where three
-points on a Weierstrass curve $y^2=x^3+ax+b$ sum to zero.
+points on $E$ sum to zero.
 %
 Let
 \[ Z=\left\{\begin{aligned}
@@ -95,8 +95,8 @@ Starting from the 3rd summation polynomial, we can recursively
 construct the subsequent summation polynomials $f_m$ for $m>3$ via
 taking resultants.
 %
-As a result, the degree of each variable in the $m$-th summation
-polynomial grows exponentially as $m$, i.e., $2^{m-2}$.
+As a result, the degree of each variable in $f_m$ is $2^{m-2}$, which
+grows exponentially as $m$.
 %
 This is the observation Semaev made in his seminal
 work~\cite{DBLP:journals/iacr/Semaev04}.
@@ -143,8 +143,9 @@ Therefore, we would like to pose some restrictions on $X_1$ and $X_2$
 to reduce the dimension to zero so that the solving time can be more
 manageable.
 
-When looking for solutions to a polynomial in $\F{p^n}[X]$ in \F{p^n},
-we can view it as a commutative affine algebra
+When looking for solutions to a polynomial
+$f=\sum a_iX^i\in\F{p^n}[X]$ in \F{p^n}, we can view $\F{p^n}[X]$ as a
+commutative affine algebra
 $\mathcal A=\F{p^n}[X]/(X^{p^n} -
 X)\cong\F{p^n}[X_1,\ldots,X_n]/(X_1^p - X_1,\ldots,X_n^p - X_n)$.
 %
@@ -152,8 +153,8 @@ This can be done by identifying the indeterminate $X$ as
 $X_1\theta_1+\cdots+X_n\theta_n$, where $(\theta_1,\ldots,\theta_n)$
 is a basis for \F{p^n} over \F p.
 %
-Hence, a polynomial $f=\sum a_iX^i\in\F{p^n}[X]$ can be identified as
-a polynomial $f_1\theta_1+\cdots+f_n\theta_n$, where
+Hence, $f$ can be identified as a polynomial
+$f_1\theta_1+\cdots+f_n\theta_n$, where
 $f_1,\ldots,f_n\in\mathcal A'=\F p[X_1,\ldots,X_n]/(X_1^p -
 X_1,\ldots,X_n^p - X_n)$, by appropriately sending each coefficient
 $a_i\in\F{p^n}$ to $a_i^{(1)}\theta_1+\cdots+a_i^{(n)}\theta_n$ for
@@ -185,21 +186,22 @@ Such rewriting can reduce the degree of summation polynomials and
 significantly speed up point
 decomposition~\cite{DBLP:conf/eurocrypt/FaugerePPR12,DBLP:conf/iwsec/HuangPST13}.
 
-We might be able to exploit additional symmetry using actions of other
-groups, e.g., when the factor base is invariant under addition of
-small torsion points~\cite{DBLP:journals/joc/FaugereGHR14}.
+We might be able to exploit additional symmetry brought by actions of
+other groups, e.g., when the factor base is invariant under addition
+of small torsion points.
 %
-For example, consider a relation $R$ under the action of addition of a
-2-torsion point $T_2$:
-\begin{align*}
-  R & = P_1+\cdots+P_n \\
-    & =
-      (P_1+u_1T_2)+\cdots+(P_{n-1}+u_{n-1}T_2)+\left(P_n+\left(\sum_{i=1}^{n-1}u_i\right)T_2\right).
-\end{align*}
+For example, consider a decomposition of a point $R$ under the action
+of addition of a 2-torsion point $T_2$:
+\[ R = P_1+\cdots+P_n =
+  (P_1+u_1T_2)+\cdots+(P_{n-1}+u_{n-1}T_2)+\left(P_n+\left(\sum_{i=1}^{n-1}u_i\right)T_2\right). \]
 %
-Clearly this holds for any $u_1,\ldots,u_{n-1}\in\{0,1\}$, and
-$P_i\in\mathcal F$ implies that $P_i+u_iT_2\in\mathcal F$ because the
-factor base $\mathcal F$ is invariant under addition of $T_2$.
+Clearly this holds for any $u_1,\ldots,u_{n-1}\in\{0,1\}$, so a
+decomposition can give rise to $2^{n-1-1}$ other decompositions.
+%
+Similar to rewriting using the elementary symmetric polynomials for
+the action of $S_m$, we can also take advantage of this additional
+symmetry by appropriate
+rewriting~\cite{DBLP:journals/joc/FaugereGHR14}.
 
 Naturally, such kind of speed-up is curve-specific.
 %
@@ -222,15 +224,13 @@ curves~\cite{DBLP:journals/joc/FaugereGHR14}.
 %
 For the sake of completeness, we include some of their results here.
 %
-An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the
-equation \begin{equation*}
-  x^2+y^2=1+dx^2y^2 \label{eq:edwards-curve} \end{equation*} for
-certain $d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
+An Edwards curve over \F{p^n} for $p\neq 2$ is defined by the equation
+$x^2+y^2=1+dx^2y^2$ for certain
+$d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinL07}.
 %
 A twisted Edwards curve $tE_{a,d}$ over \F{p^n} for $p\neq 2$ is
-defined by the equation \begin{equation*}
-  ax^2+y^2=1+dx^2y^2 \label{eq:twisted-edwards-curve} \end{equation*}
-for certain $a,d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
+defined by the equation $ax^2+y^2=1+dx^2y^2$ for certain
+$a,d\in\F{p^n}$~\cite{DBLP:journals/iacr/BernsteinBJLP08}.
 %
 A twisted Edwards curve is a quadratic twist of an Edwards curve by
 $a_0=1/(a-d)$.
@@ -249,16 +249,14 @@ $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
       y_3 & = \frac{y_1^2 - ax_1^2}{1 - dx_1^2y_1^2}.
     \end{aligned}\right. \]
 %
-As given by Faug\`ere, Gaudry, Hout, and
-Renault~\cite{DBLP:journals/joc/FaugereGHR14}, the 3rd summation
-polynomial for twisted Edwards curve is
+The 3rd summation polynomial for twisted Edwards curves is
 %
 \begin{align*}
   f_{tE, 3}(Y_1,Y_2,Y_3) = & \left(Y_1^2Y_2^2 - Y_1^2 - Y_2^2 +
                              \frac{a}{d}\right)Y_3^2  +
                              2\frac{d-a}{d}Y_1Y_2Y_3 +
                              \frac{a}{d}\left(Y_1^2 + Y_2^2 - 1\right)
-                             - Y_1^2Y_2^2.
+                             - Y_1^2Y_2^2~\cite{DBLP:journals/joc/FaugereGHR14}.
 \end{align*}
 %
 As usual, subsequent summation polynomials can be obtained by taking
@@ -275,14 +273,13 @@ inevitably be accompanied by \emph{decrease in decomposition
 %
 For example, if a factor base $\mathcal F$ is invariant under addition
 of a 2-torsion point, then the decomposition probability for PDP of
-$m$-th order should decrease by a factor of $2^{m-1}$, as is the case
-in the example of Section~\ref{sec:exploit-symmetry}.
+$m$-th order should decrease by a factor of $2^{m-1}$.
 %
-This is similar to the fact that the decomposition probability
-decreases by a factor of $m!$ due to the symmetry of the symmetric
-group $S_m$ acting on $\mathcal F$.
+This is due to the same reason that the decomposition probability
+decreases by a factor of $m!$ because the symmetric group $S_m$ acts
+on $\mathcal F$.
 
-However, such a simple fact seems to have been largely ignored in the
+However, this simple fact seems to have been largely ignored in the
 literature.
 %
 For example, Faug\`ere, Gaudry, Hout, and Renault explicitly stated in
@@ -297,20 +294,14 @@ obtain $2^{n-1}$ solutions if we can successfully solve a PDP
 instance.
 %
 (Unfortunately this is also \emph{not true} in general.  We will come
-back to it in more detail in Section~\ref{sec:experiment}.)
+back to it in more detail in Section~\ref{sec:price}.)
 % 
 However, when estimating the cost of a complete ECDLP attack, they
-also proposed to \emph{collapse} these $2^{n-1}$ relations into one in
-order to reduce the size of the factor base and thus the linear
-algebra cost, cf.~Remark 5 of the paper.
+proposed to \emph{collapse} these $2^{n-1}$ relations into one in
+order to reduce the size of the factor base and thus the cost of the
+linear algebra, cf.~Remark 5 of the paper.
 %
 In this case, the decrease in decomposition probability \emph{does}
 have an adverse effect, and their estimation for the overall ECDLP
 cost ended up being overoptimistic by a factor of at least $2^{n-1}$.
-
-To stay focused and make our discussion more manageable, we will not
-dive into any further detail along this direction.
-%
-That is, we will restrict ourselves to considering only the
-``standard'' factor bases (modulo negation) in the rest of this paper.
 
