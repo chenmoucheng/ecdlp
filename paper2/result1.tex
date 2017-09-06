@@ -1,78 +1,27 @@
 
 \begin{table}[!h]
 \centering
-\caption{$m=3$}
-\label{tb:m=3}
-\begin{tabular}{llrrrr}
+\caption{Experimental results on PDP solving for the case of $n=5$}
+\label{tb:pdpsolving}
+\begin{tabular}{lllrrrr}
 \hline
-\multicolumn{1}{|c|}{$q$}                    & \multicolumn{1}{l|}{Curve}       & \multicolumn{1}{l|}{Time} & \multicolumn{1}{l|}{Dreg} & \multicolumn{1}{l|}{Matcost} & \multicolumn{1}{l|}{Rank} \\ \hline
-\multicolumn{1}{|l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41420.4} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42132.0} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61127.9} & \multicolumn{1}{r|}{4}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.4}  & \multicolumn{1}{r|}{4}    \\ \hline \vspace{-3mm}
-                                           &                                  & \multicolumn{1}{l}{}      & \multicolumn{1}{l}{}      & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{}      \\ \hline
-\multicolumn{1}{|l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42336.8} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41259}   & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61239}   & \multicolumn{1}{r|}{4}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.36} & \multicolumn{1}{r|}{4}    \\ \hline
+\multicolumn{1}{|l|}{$m$}                & \multicolumn{1}{l|}{$p$}                  & \multicolumn{1}{l|}{Curve}       & \multicolumn{1}{l|}{Time}  & \multicolumn{1}{l|}{Dreg} & \multicolumn{1}{l|}{Matcost}     & \multicolumn{1}{l|}{Rank} \\ \hline \hline
+\multicolumn{1}{|l|}{\multirow{8}{*}{3}} & \multicolumn{1}{l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42336.8}     & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41259.0}     & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61239.0}     & \multicolumn{1}{r|}{4}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                    & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.4}      & \multicolumn{1}{r|}{4}    \\ \cline{2-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41420.4}     & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42132.0}     & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61127.9}     & \multicolumn{1}{r|}{4}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}     & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.4}      & \multicolumn{1}{r|}{4}    \\ \hline \vspace{-3.2mm}
+                                         &                                           &                                  &                            &                           &                                  &                           \\ \hline
+\multicolumn{1}{|l|}{\multirow{8}{*}{4}} & \multicolumn{1}{l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.990}  & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066100000} & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.680}  & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12064700000} & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.489} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11399100000} & \multicolumn{1}{r|}{5}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.150} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54093000}    & \multicolumn{1}{r|}{5}    \\ \cline{2-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.459} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12069800000} & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.659} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066400000} & \multicolumn{1}{r|}{1}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.280} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11401700000} & \multicolumn{1}{r|}{5}    \\ \cline{3-7} 
+\multicolumn{1}{|l|}{}                   & \multicolumn{1}{l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.119} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54102900}    & \multicolumn{1}{r|}{5}    \\ \hline
 \end{tabular}
 \end{table}
-
-\begin{table}[!h]
-\centering
-\caption{$m=4$}
-\label{tb:m=4}
-\begin{tabular}{clrrrr}
-\hline
-\multicolumn{1}{|c|}{$q$}                  & \multicolumn{1}{l|}{Curve}       & \multicolumn{1}{l|}{Time}  & \multicolumn{1}{l|}{Dreg} & \multicolumn{1}{l|}{Matcost}     & \multicolumn{1}{l|}{Rank} \\ \hline
-\multicolumn{1}{|l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.459} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12069800000} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.659} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066400000} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.280} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11401700000} & \multicolumn{1}{r|}{5}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.119} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54102900}    & \multicolumn{1}{r|}{5}    \\ \hline
- \vspace{-3mm}                                          &                                  & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}      & \multicolumn{1}{l}{}             & \multicolumn{1}{l}{}      \\ \hline
-\multicolumn{1}{|l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.990} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066100000} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.680} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12064700000} & \multicolumn{1}{r|}{1}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.489} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11399100000} & \multicolumn{1}{r|}{5}    \\ \cline{2-6} 
-\multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.150} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54093000}    & \multicolumn{1}{r|}{5}    \\ \hline
-\end{tabular}
-\end{table}
-
-
-% \begin{table}[!h]
-% \centering
-% \caption{$m=3$}
-% \label{tb:m=3}
-% \begin{tabular}{llrrr}
-% \hline
-% \multicolumn{1}{|l|}{$q$}                  & \multicolumn{1}{l|}{Curve}       & \multicolumn{1}{l|}{Time} & \multicolumn{1}{l|}{Dreg} & \multicolumn{1}{l|}{Matcost} \\ \hline
-% \multicolumn{1}{|l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41420.4} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42132.0} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61127.9} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.4}  \\ \hline \vspace{-3mm}
-%                                            &                                  &                           &                           &                              \\ \hline
-% \multicolumn{1}{|l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{42336.8} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{41259.0} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{61239.0} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0}    & \multicolumn{1}{r|}{6}    & \multicolumn{1}{r|}{6308.4}  \\ \hline
-% \end{tabular}
-% \end{table}
-
-
-% \begin{table}[!h]
-% \centering
-% \caption{$m=4$}
-% \label{tb:m=4}
-% \begin{tabular}{llrrr}
-% \hline
-% \multicolumn{1}{|l|}{$q$}                  & \multicolumn{1}{l|}{Curve}       & \multicolumn{1}{l|}{Time}  & \multicolumn{1}{l|}{Dreg} & \multicolumn{1}{l|}{Matcost}     \\ \hline
-% \multicolumn{1}{|l|}{\multirow{4}{*}{251}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.459} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12069800000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.659} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066400000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.280} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11401700000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.119} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54102900}    \\ \hline \vspace{-3mm}
-%                                            &                                  &                            &                           &                                  \\ \hline
-% \multicolumn{1}{|l|}{\multirow{4}{*}{239}} & \multicolumn{1}{l|}{Hessian}     & \multicolumn{1}{r|}{3.990} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12066100000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Weierstrass} & \multicolumn{1}{r|}{3.680} & \multicolumn{1}{r|}{19}   & \multicolumn{1}{r|}{12064700000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{Montgomery}  & \multicolumn{1}{r|}{3.489} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{11399100000} \\ \cline{2-5} 
-% \multicolumn{1}{|l|}{}                     & \multicolumn{1}{l|}{tEdwards}    & \multicolumn{1}{r|}{0.150} & \multicolumn{1}{r|}{18}   & \multicolumn{1}{r|}{54093000}    \\ \hline
-% \end{tabular}
-% \end{table}
