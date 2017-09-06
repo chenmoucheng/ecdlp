@@ -101,7 +101,31 @@ y' = & \frac{\zeta x^2 - \zeta^2y}{\zeta^2 - xy}.
 %
 Obviously, typical factor bases are not invariant under addition of
 this 2-torsion point in general.
+
+A Hessian curve always contains a 3-torsion point $T_3$ such that
+$3T_3=\mathcal O$~\cite{DBLP:conf/ches/Smart01}.
 %
-Therefore, it is not clearly how to exploit such symmetry for Hessian
-curves.
+If we let $T_3=(x,y)$, then we see that $2(x,y)=-(x,y)=(y,x)$,
+substituting which into the doubling formula, we get:
+\[ \left\{\begin{aligned} \frac{y(1-x^3)}{x^3-y^3}&=y, \\
+      \frac{x(y^3-1)}{x^3-y^3}&=x. \end{aligned}\right. \]
+%
+Since $x$ and $y$ cannot be zero at the same time, we have
+$x^3-y^3=1-x^3=y^3-1$, or $x^3=y^3=1$.
+%
+Now since $p^n=2\bmod 3$, $\F{p^n}$ does not have any primitive cubic
+roots of unity, so $x=y=1$, and $T_3=(1,1)$.
+%
+By the addition formula, if $P=(x,y)$, then \[
+  P+T_3=(x,y)+(1,1)=\left(\frac{y^2-x}{1-xy},\frac{x^2-y}{1-xy}\right). \] 
+%
+However, for $P\in\mathcal F$, we only know that
+$t=x+y\in V\subset\F{p^n}$, but we know nothing about $1-xy$, which
+can lie outside of $V$.
+%
+So again, typical factor bases are not invariant under addition of
+this 3-torsion point in general.
+%
+Therefore, it is not clearly how to exploit such symmetry brought by
+addition of small torsion points for Hessian curves.
 
