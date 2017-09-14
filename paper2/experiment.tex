@@ -1,7 +1,7 @@
 \section{Experiments on PDP solving}
 \label{sec:experiment}
 
-In this section, we report the set of experiments we have conducted to
+This section shows our experimental results, which we have conducted to
 compare the computational complexity of PDP on four different curves:
 Hessian($H$), Weierstrass($W$), Montgomery($M$), and twisted
 Edwards($tE$).
@@ -35,38 +35,40 @@ Exploiting further curve-specific symmetry whenever possible will
 result in further speed-up, but it would be independent of our
 findings here.
 
+
+\subsection{Experimental results}
+%
+\label{sec:experiment-result}
+
+Table\ref{tb:pdpsolving} presents our experimental results for the case of $n=5$.
+%
+Here we choose our factor base by taking $V$ as the base field \F p of
+\F{p^n}.
+%
 All our experiment are done using the MAGMA computation algebra system
 (version 2.23-1) on a single core of an Intel Xeon CPU E7-4830 v4
 running at 2~GHz.
 %
-The main cost metrics are running time, Matcost, and the maximum step
-degree reached during the execution of the F4 algorithm.
+Comparisons to solve each PDP are done by running time (in second),
+Dreg, Matcost, and Rank.
 %
-The last metric is usually referred to as the ``degree of regularity''
-in the literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, which
+the ``Dreg'' is the maximum step degree reached during the execution of the F4 algorithm, 
+which referred to as the ``degree of regularity''
+in the literature~\cite{DBLP:conf/indocrypt/GalbraithG14}, and
 provides an upper bound for the sizes of the Macaulay submatrices
-involved in the computation.
+involved in the computation, 
 %
-The ``Matcost'' is a number output by the MAGMA implementation of the
+the ``Matcost'' is a number output by the MAGMA implementation of the
 F4 algorithm and provides an estimate of the linear algebra cost
-during the execution of the F4 algorithm.
-
-Lastly, we also report on ``rank,'' the number of linearly independent
+during the execution of the F4 algorithm,
+%
+and finally the ``Rank'' is the number of linearly independent
 relations we obtain once successfully solving a PDP instance.
 %
 It is an important factor to consider, as it determines how many PDP
 instances we need to successfully solve in order to have enough
 relations for a complete ECDLP attack using index calculus.
 
-\subsection{Experimental results}
-%
-\label{sec:experiment-result}
-
-We present our experimental results for the case of $n=5$.
-%
-Here we choose our factor base by taking $V$ as the base field \F p of
-\F{p^n}.
-%
 \input{result1}
 
 We can clearly see that the PDP solving time and Matcost for twisted
