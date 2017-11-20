@@ -16,13 +16,19 @@ For $P=(x,y)\in H_d$, $-P=(y,x)$.
 Furthermore, the addition and doubling formulae for
 $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
 %
-\[ \text{When }(x_1,y_1)\neq(x_2,y_2):\left\{\begin{aligned}
+\begin{flalign*}
+  \text{When }(x_1,y_1)\neq(x_2,y_2):\left\{\begin{aligned}
       x_3 & = \frac{y_1^2x_2 - y_2^2x_1}{x_2y_2 - x_1y_1}, \\
       y_3 & = \frac{x_1^2y_2 - x_2^2y_1}{x_2y_2 - x_1y_1}.
-    \end{aligned}\right. \text{When }(x_1,y_1)=(x_2,y_2):\left\{\begin{aligned}
+    \end{aligned}\right. &&
+\end{flalign*}
+%
+\begin{flalign*}
+  \text{When }(x_1,y_1)=(x_2,y_2):\left\{\begin{aligned}
       x_3 & = \frac{y_1(1 - x_1^3)}{x_1^3 - y_1^3}, \\
       y_3 & = \frac{x_1(y_1^3 - 1)}{x_1^3 - y_1^3}.
-    \end{aligned}\right. \]
+    \end{aligned}\right. &&
+\end{flalign*}
 
 \subsection{Summation polynomials for Hessian curves}
 \label{sec:hessian-t2}
@@ -60,9 +66,9 @@ the 3rd summation polynomial:
   f_{H,3}(T_1,T_2,T_3) = & T_1^2T_2^2T_3 + dT_1^2T_2^2 + T_1^2T_2T_3^2
                            + dT_1^2T_2T_3 + dT_1^2T_3^2 - T_1^2 + \\
                          & T_1T_2^2T_3^2 + dT_1T_2^2T_3 + dT_1T_2T_3^2
-                           + 3d^2T_1T_2T_3 + 2T_1T_2 + 2T_1T_3 + 2dT_1
-                           + \\
-                         & dT_2^2T_3^2 - T_2^2 + 2T_2T_3 + 2dT_2 - T_3^2 + 2dT_3 + 3d^2,
+                           + 3d^2T_1T_2T_3 + 2T_1T_2 + 2T_1T_3 + \\
+                         & 2dT_1 + dT_2^2T_3^2 - T_2^2 + 2T_2T_3 +
+                           2dT_2 - T_3^2 + 2dT_3 + 3d^2,
 \end{align*}
 %
 as well as the subsequent summation polynomials via taking resultants:

@@ -240,26 +240,32 @@ For $P=(x,y)\in tE_{a,d}$, $-P=(-x,y)$.
 Furthermore, the addition and doubling formulae for
 $(x_3,y_3)=(x_1,y_1)+(x_2,y_2)$ are given as follows.
 %
-\[ \text{When }(x_1,y_1)\neq (x_2,y_2):\left\{\begin{aligned}
+\begin{flalign*}
+  \text{When }(x_1,y_1)\neq (x_2,y_2):\left\{\begin{aligned}
       x_3 & = \frac{x_1y_2 + y_1x_2}{1 + dx_1x_2y_1y_2}, \\
       y_3 & = \frac{y_1y_2 - ax_1x_2}{1 - dx_1x_2y_1y_2}.
-    \end{aligned}\right. \text{When
-  }(x_1,y_1)=(x_2,y_2):\left\{\begin{aligned}
+    \end{aligned}\right. &&
+\end{flalign*}
+%
+\begin{flalign*}
+  \text{When }(x_1,y_1)=(x_2,y_2):\left\{\begin{aligned}
       x_3 & = \frac{2x_1y_1}{1 + dx_1^2y_1^2}, \\
       y_3 & = \frac{y_1^2 - ax_1^2}{1 - dx_1^2y_1^2}.
-    \end{aligned}\right. \]
+    \end{aligned}\right. &&
+\end{flalign*}
 %
 The 3rd summation polynomial for twisted Edwards curves is
 %
 \begin{align*}
   f_{tE, 3}(Y_1,Y_2,Y_3) = & \left(Y_1^2Y_2^2 - Y_1^2 - Y_2^2 +
-                             \frac{a}{d}\right)Y_3^2  +
-                             2\frac{d-a}{d}Y_1Y_2Y_3 +
+                             \frac{a}{d}\right)Y_3^2  \\
+                           & + 2\frac{d-a}{d}Y_1Y_2Y_3 +
                              \frac{a}{d}\left(Y_1^2 + Y_2^2 - 1\right)
-                             - Y_1^2Y_2^2~\cite{DBLP:journals/joc/FaugereGHR14}.
+                             -
+                             Y_1^2Y_2^2~\cite{DBLP:journals/joc/FaugereGHR14}.
 \end{align*}
 %
-As usual, subsequent summation polynomials can be obtained by taking
+Again subsequent summation polynomials are obtained by taking
 resultants.
 
 
