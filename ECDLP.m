@@ -170,19 +170,44 @@ WeilRestriction := function(I)
 end function;
 
 
-Checkmonomial := procedure(I)
+CountTerms := procedure(I)
+  print "Odd, Even ";
+  oddsum := 0;
+  evensum := 0;
+  oddindex := [];
+  if not elim then
+    ibegin := 1; iend := 2*m - 2; step := 1;
+  else
+    ibegin := 2*m - 1; iend := 3*m - 2; step := 2;
+  end if;
+  case Rank(I):
+    when M:
+      for i := ibegin to iend by step do
+        Append(~oddindex,i);
+      end for;
+    when M*n:
+      for i := ibegin to iend by step do
+        oddindex cat:= [1+n*(i-1)..n*i];
+      end for;
+    else:
+      print "unexpected polynomial";
+  end case;
   for f in Basis(I) do
-  	numberofodd := 0;
+    numberofodd := 0;
     for mon in Monomials(f) do
       degreeofodd := 0;
-      for i := (2*m - 1) to (3*m - 2) by 2 do
+      for i in oddindex do
         degreeofodd +:= Exponents(mon)[i];
       end for;
       if IsOdd(degreeofodd) then numberofodd +:= 1; end if;
     end for;
-    print "Odd degree terms: ", numberofodd;
-    print "Even degree terms: ", #Monomials(f) - numberofodd;
+    numberofeven := #Monomials(f) - numberofodd;
+    numberofodd, ",", numberofeven;
+    oddsum +:= numberofodd;
+    evensum +:= numberofeven;
   end for;
+  print "sum";
+  oddsum, ",", evensum;
 end procedure;
 
 
@@ -211,6 +236,7 @@ ECDLPDecompose := function(E,Q : Al := "All")
   if not elim then
     if IsVerbose("User1") then print "  ... skipped"; end if;
     Irewritten := E["Isummation"] + Icondition;
+    print"before weil-restriction:"; CountTerms(Irewritten);
   else
     case m:
       when 2:
@@ -226,7 +252,7 @@ ECDLPDecompose := function(E,Q : Al := "All")
     end case;
     b := GetVerbose("Faugere"); SetVerbose("Faugere",GetVerbose("User2")*2);
     Irewritten := EliminationIdeal(I + Icondition + E["Iauxiliary"],Seqset(s));
-    Checkmonomial(Irewritten);
+    print"before weil-restriction:"; CountTerms(Irewritten);
     SetVerbose("Faugere",0);
     assert #Basis(Irewritten) eq 1;
     if IsVerbose("User1") then print "Degree & #terms:",TotalDegree(f),#Terms(f) where f is Basis(Irewritten)[1]; end if;
@@ -234,6 +260,7 @@ ECDLPDecompose := function(E,Q : Al := "All")
   if IX then Irewritten +:= E["Iauxiliary"]; end if;
 
   Jp := WeilRestriction(Irewritten) + E["Jcondition"];
+  print"after weil-restriction:"; CountTerms(Jp);
   t0 := Cputime();
   Zp := CoreVariety(J,Jp : Al := Al);
   if IsVerbose("User1") then print "Point decomposition time:",Cputime(t0); end if;
