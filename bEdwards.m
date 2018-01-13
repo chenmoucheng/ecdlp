@@ -67,7 +67,23 @@ E["VtoFB"] := function(t)
   return Qs;
 end function;
 
-E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); Groebner(E["Iauxiliary"]);
+MakeT4Invariant := function(I)
+  F := [];
+  for f in Basis(I) do
+    if Degree(f) eq 1 then
+      Append(~F, f);
+    else 
+      range := u cat [x*(x+1) : x in t] cat s cat [r];
+      g :=  hom< R->R | range >(f) where R is Parent(f);
+      Append(~F, g);
+    end if;
+  end for;
+  return Ideal(F);
+end function;
+
+E["Iauxiliary"] := Ideal({s[i] - RewriteESP(t,i) : i in [1..m]}); 
+if T4 then E["Iauxiliary"] := MakeT4Invariant(E["Iauxiliary"]) end if;
+Groebner(E["Iauxiliary"]);
 E["Jcondition"] := Ideal(&cat[T[i][(l + 1)..n] cat S[i][(i*(l - 1) + 2)..n] : i in [1..m]]);
 
 /*

@@ -24,6 +24,7 @@ n  := 5;          print "n =",n;
 q  := 2^31;       print "q =",q;
 T2 := false;      print "T2 =",T2;
 IX := false;      print "IX =",IX;
+T4 := true;      print "T4 =", T4;
 Al := "Groebner"; print "Al =",Al;
 
 npoints := 1; print "npoints =",npoints;
@@ -33,6 +34,7 @@ ntrials := 2; print "ntrials =",ntrials;
 
 assert not (l eq 1 and IX);
 elim := (l eq 1) or (l gt 1 and IX);
+print "elim =", elim;
 
 // Base and extension fields
 
