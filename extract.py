@@ -36,20 +36,18 @@ def do(URL):
   gap = []
   output = []
   parameters = []
-  header = ["Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
-            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
-            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank",
-            "Curve", "Matcost", "Time", "Dreg", "Gap", "Rank"]
+  header = ["Curve", "Matcost", "Time", "Dreg", "Gap", "Rank"]*5
   output_rows = []
   core = False
+  rank_bl = False
+  output_rows.append([URL])
   output_rows.append(header)
-
 
   for line in root.text.split("\n"):
   #for line in open("input.txt", 'r'):
     pickup("([A-z]([A-z0-9])?\s=\s.+)", line, parameters)
 
-    pickup("Working on ([A-z]+) Elliptic.+", line, output)
+    pickup("Working on (\S+) Elliptic.+", line, output)
 
     # append output list for each set (experiment for 4 curves) finishing.
     if re.match("Finished Point .+",line) is not None:
@@ -77,12 +75,17 @@ def do(URL):
         D = []  
         core = False
 
-    pickup("\s\sGap degree.+ (\d+) .+=.+", line, gap)
+    pickup(".+Gap degree.+ (\d+) .+=.+", line, gap)
     if re.match("Rank of relation.+",line)is not None:
+      rank_bl = True
       output.append(','.join(map(str,gap)))
       gap = []
       pickup("Rank of relation matrix: (\d+)", line, output)
 
+    if re.match("Point B+.",line)is not None and not rank_bl:
+      output.append(','.join(map(str,gap)))
+      gap = []
+      output.append('no rank')
 
   output_rows.insert(0,parameters)
 
@@ -101,9 +104,9 @@ def do(URL):
   spreadsheet_id = "1opFSZCBUryQBTF2JrmRGKubJdd_j2aeAAPYQzWMb-Ys"
 
   values = output_rows
-  #newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
-  newsheet_title = ' '.join(parameters[1:4])
-
+  # newsheet_title = datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
+  newsheet_title = ' '.join(parameters[1:4])+" "+datetime.datetime.today().strftime("%H:%M:%S")
+ # newsheet_title = "testtest"
   create_sheet_body = {
     "requests": [
       {
@@ -120,7 +123,7 @@ def do(URL):
   response = request.execute()
   newsheetId = response["replies"][0]["addSheet"]["properties"]["sheetId"]
 
-  newsheetrange = newsheet_title + "!A:X"
+  newsheetrange = newsheet_title + "!A:AD"
   data = [
   {
     'range': newsheetrange,
